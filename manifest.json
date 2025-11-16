@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "Bookmark Manager Zero",
+  "version": "1.0",
+  "description": "A modern interface for the native Firefox bookmark manager.",
+  "permissions": [
+    "bookmarks",
+    "favicon"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "action": {
+    "default_title": "Open Bookmark Manager Zero",
+    "default_icon": {
+      "48": "icons/bookmark-48.png",
+      "96": "icons/bookmark-96.png"
+    }
+  },
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "icons": {
+    "48": "icons/bookmark-48.png",
+    "96": "icons/bookmark-96.png"
+  }
+}

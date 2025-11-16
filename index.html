@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bookmark Manager Zero</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+      }
+    </script>
+    <script type="importmap">
+      {
+        "imports": {
+          "react": "https://aistudiocdn.com/react@^19.2.0",
+          "react/": "https://aistudiocdn.com/react@^19.2.0/",
+          "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+          "react-dom": "https://aistudiocdn.com/react-dom@^19.2.0"
+        }
+      }
+    </script>
+    <script>
+      // Flicker-free dark mode handling
+      if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    </script>
+  </head>
+  <body class="bg-slate-100 text-slate-800 dark:bg-slate-900 dark:text-slate-200 font-sans antialiased">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+
+    <!-- 
+      Tailwind CDN Safelist for dynamic classes.
+      This hidden div contains all possible grid column classes that can be dynamically
+      applied by React. This ensures the JIT compiler generates the necessary CSS.
+    -->
+    <div class="hidden grid-cols-1 md:grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6"></div>
+  </body>
+</html>
