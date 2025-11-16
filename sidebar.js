@@ -9,7 +9,8 @@ let bookmarkTree = [];
 let searchTerm = '';
 let activeFilter = null;
 let expandedFolders = new Set();
-let theme = 'dark';
+let theme = 'blue-dark';
+let viewMode = 'list';
 let displayOptions = {
   title: true,
   url: true
@@ -23,8 +24,10 @@ const filterToggle = document.getElementById('filterToggle');
 const filterBar = document.getElementById('filterBar');
 const displayToggle = document.getElementById('displayToggle');
 const displayBar = document.getElementById('displayBar');
-const themeToggle = document.getElementById('themeToggle');
-const themeIcon = document.getElementById('themeIcon');
+const themeBtn = document.getElementById('themeBtn');
+const themeMenu = document.getElementById('themeMenu');
+const viewBtn = document.getElementById('viewBtn');
+const viewMenu = document.getElementById('viewMenu');
 const settingsBtn = document.getElementById('settingsBtn');
 const settingsMenu = document.getElementById('settingsMenu');
 const switchSideBtn = document.getElementById('switchSideBtn');
@@ -49,6 +52,7 @@ async function init() {
   }
 
   loadTheme();
+  loadView();
   await loadBookmarks();
   setupEventListeners();
   renderBookmarks();
@@ -57,34 +61,66 @@ async function init() {
 // Load theme preference
 function loadTheme() {
   if (isPreviewMode) {
-    theme = 'dark';
+    theme = 'blue-dark';
     applyTheme();
     return;
   }
 
   browser.storage.local.get('theme').then(result => {
-    theme = result.theme || 'dark';
+    theme = result.theme || 'blue-dark';
     applyTheme();
   });
 }
 
 // Apply theme
 function applyTheme() {
-  if (theme === 'dark') {
-    document.body.classList.add('dark');
-    themeIcon.textContent = '☀️';
-  } else {
-    document.body.classList.remove('dark');
-    themeIcon.textContent = '🌙';
-  }
+  // Remove all theme classes
+  document.body.classList.remove('dark', 'light', 'blue-dark');
+
+  // Add current theme class
+  document.body.classList.add(theme);
 }
 
-// Toggle theme
-function toggleTheme() {
-  theme = theme === 'light' ? 'dark' : 'light';
+// Set theme
+function setTheme(newTheme) {
+  theme = newTheme;
   applyTheme();
   if (!isPreviewMode) {
     browser.storage.local.set({ theme });
+  }
+}
+
+// Load view preference
+function loadView() {
+  if (isPreviewMode) {
+    viewMode = 'list';
+    applyView();
+    return;
+  }
+
+  browser.storage.local.get('viewMode').then(result => {
+    viewMode = result.viewMode || 'list';
+    applyView();
+  });
+}
+
+// Apply view
+function applyView() {
+  // Remove all view classes
+  bookmarkList.classList.remove('grid-view', 'grid-2', 'grid-3', 'grid-4', 'grid-5', 'grid-6');
+
+  // Add current view classes
+  if (viewMode !== 'list') {
+    bookmarkList.classList.add('grid-view', viewMode);
+  }
+}
+
+// Set view
+function setView(newView) {
+  viewMode = newView;
+  applyView();
+  if (!isPreviewMode) {
+    browser.storage.local.set({ viewMode });
   }
 }
 
@@ -663,6 +699,8 @@ function closeAllMenus() {
     menu.classList.remove('show');
   });
   settingsMenu.classList.remove('show');
+  themeMenu.classList.remove('show');
+  viewMenu.classList.remove('show');
 }
 
 // Check link status using background script
@@ -1208,8 +1246,35 @@ function setupEventListeners() {
     });
   });
 
-  // Theme toggle
-  themeToggle.addEventListener('click', toggleTheme);
+  // Theme menu
+  themeBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    themeMenu.classList.toggle('show');
+  });
+
+  // Theme selection
+  themeMenu.querySelectorAll('.action-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const selectedTheme = btn.dataset.theme;
+      setTheme(selectedTheme);
+      closeAllMenus();
+    });
+  });
+
+  // View menu
+  viewBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    viewMenu.classList.toggle('show');
+  });
+
+  // View selection
+  viewMenu.querySelectorAll('.action-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const selectedView = btn.dataset.view;
+      setView(selectedView);
+      closeAllMenus();
+    });
+  });
 
   // Settings menu
   settingsBtn.addEventListener('click', (e) => {
