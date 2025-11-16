@@ -883,52 +883,146 @@ async function deleteBookmark(id) {
   }
 }
 
-// Create new bookmark
-async function createNewBookmark() {
-  const url = prompt('Enter URL:');
-  if (!url) return;
+// Build folder list for dropdowns
+function buildFolderList(nodes, indent = 0) {
+  const folders = [];
+  for (const node of nodes) {
+    if (node.type === 'folder') {
+      folders.push({
+        id: node.id,
+        title: '  '.repeat(indent) + (node.title || 'Unnamed Folder'),
+        indent
+      });
+      if (node.children) {
+        folders.push(...buildFolderList(node.children, indent + 1));
+      }
+    }
+  }
+  return folders;
+}
 
-  const title = prompt('Enter title (optional):') || url;
+// Populate folder dropdown
+function populateFolderDropdown(selectElement) {
+  const folders = buildFolderList(bookmarkTree);
+  selectElement.innerHTML = '<option value="">Root</option>';
+  folders.forEach(folder => {
+    const option = document.createElement('option');
+    option.value = folder.id;
+    option.textContent = folder.title;
+    selectElement.appendChild(option);
+  });
+}
+
+// Open add bookmark modal
+function openAddBookmarkModal() {
+  const modal = document.getElementById('addBookmarkModal');
+  const titleInput = document.getElementById('newBookmarkTitle');
+  const urlInput = document.getElementById('newBookmarkUrl');
+  const folderSelect = document.getElementById('newBookmarkFolder');
+
+  titleInput.value = '';
+  urlInput.value = '';
+  populateFolderDropdown(folderSelect);
+
+  modal.classList.remove('hidden');
+  titleInput.focus();
+}
+
+// Close add bookmark modal
+function closeAddBookmarkModal() {
+  const modal = document.getElementById('addBookmarkModal');
+  modal.classList.add('hidden');
+}
+
+// Save new bookmark
+async function saveNewBookmark() {
+  const title = document.getElementById('newBookmarkTitle').value;
+  const url = document.getElementById('newBookmarkUrl').value;
+  const parentId = document.getElementById('newBookmarkFolder').value || undefined;
+
+  if (!url) {
+    alert('Please enter a URL');
+    return;
+  }
 
   if (isPreviewMode) {
     alert('✓ In preview mode. In the real extension, this would create a new bookmark.');
+    closeAddBookmarkModal();
     return;
   }
 
   try {
     await browser.bookmarks.create({
-      title,
-      url
+      title: title || url,
+      url,
+      parentId
     });
     await loadBookmarks();
     renderBookmarks();
+    closeAddBookmarkModal();
   } catch (error) {
     console.error('Error creating bookmark:', error);
     alert('Failed to create bookmark');
   }
 }
 
-// Create new folder
-async function createNewFolder() {
-  const title = prompt('Enter folder name:');
-  if (!title) return;
+// Open add folder modal
+function openAddFolderModal() {
+  const modal = document.getElementById('addFolderModal');
+  const nameInput = document.getElementById('newFolderName');
+  const parentSelect = document.getElementById('newFolderParent');
+
+  nameInput.value = '';
+  populateFolderDropdown(parentSelect);
+
+  modal.classList.remove('hidden');
+  nameInput.focus();
+}
+
+// Close add folder modal
+function closeAddFolderModal() {
+  const modal = document.getElementById('addFolderModal');
+  modal.classList.add('hidden');
+}
+
+// Save new folder
+async function saveNewFolder() {
+  const title = document.getElementById('newFolderName').value;
+  const parentId = document.getElementById('newFolderParent').value || undefined;
+
+  if (!title) {
+    alert('Please enter a folder name');
+    return;
+  }
 
   if (isPreviewMode) {
     alert('✓ In preview mode. In the real extension, this would create a new folder.');
+    closeAddFolderModal();
     return;
   }
 
   try {
     await browser.bookmarks.create({
       title,
-      type: 'folder'
+      type: 'folder',
+      parentId
     });
     await loadBookmarks();
     renderBookmarks();
+    closeAddFolderModal();
   } catch (error) {
     console.error('Error creating folder:', error);
     alert('Failed to create folder');
   }
+}
+
+// Legacy function wrappers for compatibility
+async function createNewBookmark() {
+  openAddBookmarkModal();
+}
+
+async function createNewFolder() {
+  openAddFolderModal();
 }
 
 // Filter and search bookmarks
@@ -1162,6 +1256,48 @@ function setupEventListeners() {
       saveEditModal();
     } else if (e.key === 'Escape') {
       closeEditModal();
+    }
+  });
+
+  // Add Bookmark modal event listeners
+  const addBookmarkModal = document.getElementById('addBookmarkModal');
+  const addBookmarkModalClose = document.getElementById('addBookmarkModalClose');
+  const addBookmarkModalCancel = document.getElementById('addBookmarkModalCancel');
+  const addBookmarkModalSave = document.getElementById('addBookmarkModalSave');
+  const addBookmarkModalOverlay = addBookmarkModal.querySelector('.modal-overlay');
+
+  addBookmarkModalClose.addEventListener('click', closeAddBookmarkModal);
+  addBookmarkModalCancel.addEventListener('click', closeAddBookmarkModal);
+  addBookmarkModalSave.addEventListener('click', saveNewBookmark);
+  addBookmarkModalOverlay.addEventListener('click', closeAddBookmarkModal);
+
+  addBookmarkModal.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      saveNewBookmark();
+    } else if (e.key === 'Escape') {
+      closeAddBookmarkModal();
+    }
+  });
+
+  // Add Folder modal event listeners
+  const addFolderModal = document.getElementById('addFolderModal');
+  const addFolderModalClose = document.getElementById('addFolderModalClose');
+  const addFolderModalCancel = document.getElementById('addFolderModalCancel');
+  const addFolderModalSave = document.getElementById('addFolderModalSave');
+  const addFolderModalOverlay = addFolderModal.querySelector('.modal-overlay');
+
+  addFolderModalClose.addEventListener('click', closeAddFolderModal);
+  addFolderModalCancel.addEventListener('click', closeAddFolderModal);
+  addFolderModalSave.addEventListener('click', saveNewFolder);
+  addFolderModalOverlay.addEventListener('click', closeAddFolderModal);
+
+  addFolderModal.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      saveNewFolder();
+    } else if (e.key === 'Escape') {
+      closeAddFolderModal();
     }
   });
 

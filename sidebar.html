@@ -866,11 +866,15 @@
             <path d="M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17M12,4.5C7,4.5 2.73,7.61 1,12C2.73,16.39 7,19.5 12,19.5C17,19.5 21.27,16.39 23,12C21.27,7.61 17,4.5 12,4.5Z"/>
           </svg>
         </button>
-        <button id="newBookmarkBtn" class="btn btn-primary" title="New Bookmark">
-          <span>➕</span>
+        <button id="newFolderBtn" class="btn btn-icon" title="New Folder">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M10,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V8C22,6.89 21.1,6 20,6H12L10,4M15,9V12H18V14H15V17H13V14H10V12H13V9H15Z"/>
+          </svg>
         </button>
-        <button id="newFolderBtn" class="btn" title="New Folder">
-          <span>📁</span>
+        <button id="newBookmarkBtn" class="btn btn-primary" title="New Bookmark">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M17,3H7A2,2 0 0,0 5,5V21L12,18L19,21V5C19,3.89 18.1,3 17,3M11,7H13V9H15V11H13V13H11V11H9V9H11V7Z"/>
+          </svg>
         </button>
       </div>
       <div class="toolbar-right">
@@ -968,6 +972,64 @@
     </div>
   </div>
 
-  <script src="sidebar.js?v=9"></script>
+  <!-- Add Bookmark Modal -->
+  <div id="addBookmarkModal" class="modal hidden">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Add New Bookmark</h3>
+        <button class="modal-close" id="addBookmarkModalClose">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="newBookmarkTitle">Title:</label>
+          <input type="text" id="newBookmarkTitle" class="form-input" placeholder="Bookmark title">
+        </div>
+        <div class="form-group">
+          <label for="newBookmarkUrl">URL:</label>
+          <input type="text" id="newBookmarkUrl" class="form-input" placeholder="https://example.com">
+        </div>
+        <div class="form-group">
+          <label for="newBookmarkFolder">Add to folder:</label>
+          <select id="newBookmarkFolder" class="form-input">
+            <option value="">Root</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" id="addBookmarkModalCancel">Cancel</button>
+        <button class="btn btn-primary" id="addBookmarkModalSave">Add Bookmark</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Folder Modal -->
+  <div id="addFolderModal" class="modal hidden">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Create New Folder</h3>
+        <button class="modal-close" id="addFolderModalClose">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="newFolderName">Folder name:</label>
+          <input type="text" id="newFolderName" class="form-input" placeholder="New Folder">
+        </div>
+        <div class="form-group">
+          <label for="newFolderParent">Create in:</label>
+          <select id="newFolderParent" class="form-input">
+            <option value="">Root</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" id="addFolderModalCancel">Cancel</button>
+        <button class="btn btn-primary" id="addFolderModalSave">Create Folder</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="sidebar.js?v=10"></script>
 </body>
 </html>
