@@ -748,30 +748,90 @@
 
     .content.grid-view.grid-2 {
       grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
     }
 
     .content.grid-view.grid-3 {
       grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
     }
 
     .content.grid-view.grid-4 {
       grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
     }
 
     .content.grid-view.grid-5 {
       grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
     }
 
     .content.grid-view.grid-6 {
       grid-template-columns: repeat(6, 1fr);
+      gap: 6px;
     }
 
+    /* Folders span full width and stack vertically */
+    .content.grid-view .folder-item {
+      grid-column: 1 / -1;
+      margin-bottom: 0;
+    }
+
+    /* Bookmarks get more compact as columns increase */
     .content.grid-view .bookmark-item {
       margin-bottom: 0;
     }
 
-    .content.grid-view .folder-item {
-      margin-bottom: 0;
+    /* 2-3 column grid - normal size */
+    .content.grid-view.grid-2 .bookmark-item,
+    .content.grid-view.grid-3 .bookmark-item {
+      padding: 10px 12px;
+    }
+
+    /* 4-5 column grid - compact */
+    .content.grid-view.grid-4 .bookmark-item,
+    .content.grid-view.grid-5 .bookmark-item {
+      padding: 8px 10px;
+    }
+
+    .content.grid-view.grid-4 .bookmark-title,
+    .content.grid-view.grid-5 .bookmark-title {
+      font-size: 12px;
+    }
+
+    .content.grid-view.grid-4 .bookmark-url,
+    .content.grid-view.grid-5 .bookmark-url {
+      font-size: 10px;
+    }
+
+    .content.grid-view.grid-4 .status-dot,
+    .content.grid-view.grid-5 .status-dot {
+      width: 16px;
+      height: 16px;
+      font-size: 12px;
+    }
+
+    /* 6 column grid - very compact */
+    .content.grid-view.grid-6 .bookmark-item {
+      padding: 6px 8px;
+    }
+
+    .content.grid-view.grid-6 .bookmark-title {
+      font-size: 11px;
+    }
+
+    .content.grid-view.grid-6 .bookmark-url {
+      font-size: 9px;
+    }
+
+    .content.grid-view.grid-6 .status-dot {
+      width: 14px;
+      height: 14px;
+      font-size: 10px;
+    }
+
+    .content.grid-view.grid-6 .bookmark-menu-btn {
+      font-size: 14px;
     }
 
     /* Modal Styles */
@@ -1140,6 +1200,6 @@
     </div>
   </div>
 
-  <script src="sidebar.js?v=11"></script>
+  <script src="sidebar.js?v=12"></script>
 </body>
 </html>
