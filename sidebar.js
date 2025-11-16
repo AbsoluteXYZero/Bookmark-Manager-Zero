@@ -328,13 +328,13 @@ function createFolderElement(folder) {
   folderDiv.innerHTML = `
     <div class="folder-header">
       <div class="folder-toggle ${isExpanded ? 'expanded' : ''}">▶</div>
-      <div class="folder-icon">
-        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M10,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V8C22,6.89 21.1,6 20,6H12L10,4Z"/>
+      <div class="folder-icon-container">
+        <svg class="folder-icon-outline" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M3 7C3 5.89543 3.89543 5 5 5H9L11 7H19C20.1046 7 21 7.89543 21 9V17C21 18.1046 20.1046 19 19 19H5C3.89543 19 3 18.1046 3 17V7Z"/>
         </svg>
+        <div class="folder-count">${childCount}</div>
       </div>
       <div class="folder-title">${escapeHtml(folder.title || 'Unnamed Folder')}</div>
-      <div class="folder-count-badge">${childCount}</div>
     </div>
     <div class="folder-children ${isExpanded ? 'show' : ''}"></div>
   `;

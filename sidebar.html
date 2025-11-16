@@ -478,14 +478,41 @@
       transform: rotate(90deg);
     }
 
-    .folder-icon {
-      width: 20px;
-      height: 20px;
+    .folder-icon-container {
+      position: relative;
+      width: 32px;
+      height: 32px;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--md-sys-color-on-surface-variant);
       flex-shrink: 0;
+      margin-right: 8px;
+    }
+
+    .folder-icon-outline {
+      position: absolute;
+      color: var(--md-sys-color-primary);
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .folder-header:hover .folder-icon-outline {
+      color: var(--md-sys-color-secondary);
+      transform: scale(1.05);
+    }
+
+    .folder-count {
+      position: relative;
+      z-index: 1;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--md-sys-color-primary);
+      letter-spacing: -0.5px;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .folder-header:hover .folder-count {
+      color: var(--md-sys-color-secondary);
+      transform: scale(1.1);
     }
 
     .folder-title {
@@ -493,31 +520,6 @@
       font-weight: 500;
       color: var(--md-sys-color-on-surface);
       font-size: 13px;
-      margin-right: 8px;
-    }
-
-    .folder-count-badge {
-      background: var(--md-sys-color-primary-container);
-      color: var(--md-sys-color-on-primary-container);
-      font-size: 11px;
-      font-weight: 600;
-      padding: 2px 8px;
-      border-radius: 12px;
-      min-width: 20px;
-      height: 20px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: var(--md-elevation-1);
-      letter-spacing: 0.3px;
-      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .folder-header:hover .folder-count-badge {
-      background: var(--md-sys-color-primary);
-      color: var(--md-sys-color-on-primary);
-      box-shadow: var(--md-elevation-2);
-      transform: scale(1.05);
     }
 
     .folder-children {
