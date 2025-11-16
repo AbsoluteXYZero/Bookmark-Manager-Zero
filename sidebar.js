@@ -24,6 +24,12 @@ const switchSideBtn = document.getElementById('switchSideBtn');
 
 // Initialize
 async function init() {
+  // Force update logo title to bypass cache
+  const logoTitle = document.querySelector('.logo-title');
+  const logoSubtitle = document.querySelector('.logo-subtitle');
+  if (logoTitle) logoTitle.textContent = 'Bookmark Manager Zero';
+  if (logoSubtitle) logoSubtitle.textContent = 'Firefox Edition';
+
   loadTheme();
   await loadBookmarks();
   setupEventListeners();
