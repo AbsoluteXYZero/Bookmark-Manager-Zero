@@ -457,11 +457,16 @@
       overflow: hidden;
       pointer-events: none;
       user-select: none;
-      background: var(--md-sys-color-surface-variant);
+      background: #e2e8f0;
       position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
+      border-left: 1px solid var(--md-sys-color-outline-variant);
+    }
+
+    .dark .bookmark-preview-container {
+      background: #1e293b;
     }
 
     .bookmark-item:hover .bookmark-preview-container {
@@ -472,14 +477,19 @@
       width: 100%;
       height: 100%;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       color: var(--md-sys-color-on-surface-variant);
-      font-size: 11px;
+      font-size: 10px;
+      font-weight: 500;
       pointer-events: none;
       position: absolute;
       top: 0;
       left: 0;
+      padding: 8px;
+      text-align: center;
+      z-index: 1;
     }
 
     .bookmark-preview-container .preview-image {

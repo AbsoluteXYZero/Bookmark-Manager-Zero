@@ -476,21 +476,30 @@ function createBookmarkElement(bookmark) {
 
   bookmarkDiv.addEventListener('mouseenter', () => {
     if (!previewLoaded && bookmark.url) {
+      console.log('Loading preview for:', bookmark.url);
       const previewUrl = getPreviewUrl(bookmark.url);
+      console.log('Preview URL:', previewUrl);
 
       if (previewUrl) {
+        // Make sure loading text is visible
+        previewLoading.style.display = 'flex';
+        previewLoading.textContent = 'Loading...';
+
         previewImage.onload = () => {
+          console.log('Preview loaded successfully');
           previewLoading.style.display = 'none';
           previewImage.classList.add('loaded');
           previewLoaded = true;
         };
 
-        previewImage.onerror = () => {
+        previewImage.onerror = (e) => {
+          console.error('Preview failed to load:', e);
           previewLoading.textContent = 'No preview';
           previewLoaded = true; // Don't try again
         };
 
         previewImage.src = previewUrl;
+        console.log('Image src set to:', previewImage.src);
       } else {
         previewLoading.textContent = 'No preview';
       }
