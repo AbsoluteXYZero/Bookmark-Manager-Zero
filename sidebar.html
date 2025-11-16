@@ -834,6 +834,34 @@
       font-size: 14px;
     }
 
+    /* Grid view for folder children */
+    .content.grid-view .folder-children.show {
+      display: grid;
+      gap: inherit;
+      margin-left: 0;
+      padding-left: 12px;
+    }
+
+    .content.grid-view.grid-2 .folder-children.show {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .content.grid-view.grid-3 .folder-children.show {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .content.grid-view.grid-4 .folder-children.show {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .content.grid-view.grid-5 .folder-children.show {
+      grid-template-columns: repeat(5, 1fr);
+    }
+
+    .content.grid-view.grid-6 .folder-children.show {
+      grid-template-columns: repeat(6, 1fr);
+    }
+
     /* Modal Styles */
     .modal {
       position: fixed;
@@ -1200,6 +1228,6 @@
     </div>
   </div>
 
-  <script src="sidebar.js?v=12"></script>
+  <script src="sidebar.js?v=13"></script>
 </body>
 </html>
