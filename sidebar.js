@@ -411,9 +411,13 @@ function createBookmarkElement(bookmark) {
 
   // Add click handler for bookmark (open in current tab)
   bookmarkDiv.addEventListener('click', (e) => {
-    if (!e.target.closest('.bookmark-menu-btn') && !e.target.closest('.bookmark-actions')) {
-      window.open(bookmark.url, '_self');
+    // Don't open if clicking on menu, actions, or preview
+    if (e.target.closest('.bookmark-menu-btn') ||
+        e.target.closest('.bookmark-actions') ||
+        e.target.closest('.bookmark-preview-container')) {
+      return;
     }
+    window.open(bookmark.url, '_self');
   });
 
   // Add menu toggle handler
@@ -450,9 +454,23 @@ function createBookmarkElement(bookmark) {
   const previewLoading = bookmarkDiv.querySelector('.preview-loading');
   let previewLoaded = false;
 
-  // Prevent clicks on preview from opening bookmark (extra safety)
+  // Prevent all interactions with preview (clicks, drags, context menu)
   previewContainer.addEventListener('click', (e) => {
     e.stopPropagation();
+    e.preventDefault();
+  });
+
+  previewContainer.addEventListener('mousedown', (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+  });
+
+  previewContainer.addEventListener('contextmenu', (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+  });
+
+  previewImage.addEventListener('dragstart', (e) => {
     e.preventDefault();
   });
 

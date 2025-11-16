@@ -451,11 +451,10 @@
     /* Bookmark Preview Styles */
     .bookmark-preview-container {
       position: absolute;
-      right: 45px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 140px;
-      height: 90px;
+      right: 55px;
+      top: 8px;
+      width: 120px;
+      height: 75px;
       background: var(--md-sys-color-surface);
       border: 2px solid var(--md-sys-color-primary);
       border-radius: 8px;
@@ -463,9 +462,10 @@
       opacity: 0;
       visibility: hidden;
       transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      z-index: 10;
+      z-index: 5;
       box-shadow: var(--md-elevation-3);
       pointer-events: none;
+      user-select: none;
     }
 
     .bookmark-item:hover .bookmark-preview-container {
@@ -483,6 +483,7 @@
       font-size: 11px;
       padding: 8px;
       text-align: center;
+      pointer-events: none;
     }
 
     .bookmark-preview-container .preview-image {
@@ -490,6 +491,9 @@
       height: 100%;
       object-fit: cover;
       display: none;
+      pointer-events: none;
+      user-select: none;
+      -webkit-user-drag: none;
     }
 
     .bookmark-preview-container .preview-image.loaded {
