@@ -653,6 +653,39 @@
       box-shadow: var(--md-elevation-3);
     }
 
+    /* Display Toggle Styles */
+    .display-toggle {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--md-sys-color-surface-container);
+      border: 1px solid transparent;
+      border-radius: 10px;
+      padding: 5px 10px;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--md-sys-color-on-surface);
+      white-space: nowrap;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: var(--md-elevation-1);
+      user-select: none;
+    }
+
+    .display-toggle:hover {
+      background: var(--md-sys-color-surface-container-high);
+      box-shadow: var(--md-elevation-2);
+      transform: translateY(-1px);
+      border-color: var(--md-sys-color-outline);
+    }
+
+    .display-toggle input[type="checkbox"] {
+      width: 14px;
+      height: 14px;
+      cursor: pointer;
+      accent-color: var(--md-sys-color-primary);
+    }
+
     /* Settings Menu Dropdown */
     .settings-menu {
       position: absolute;
@@ -705,6 +738,11 @@
         <button id="filterToggle" class="btn btn-icon" title="Filters">
           <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
             <path d="M4.25,5.61C6.27,8.2,10,13,10,13v6c0,0.55,0.45,1,1,1h2c0.55,0,1-0.45,1-1v-6c0,0,3.72-4.8,5.74-7.39 C20.25,4.95,19.78,4,18.95,4H5.04C4.21,4,3.74,4.95,4.25,5.61z"/>
+          </svg>
+        </button>
+        <button id="displayToggle" class="btn btn-icon" title="Display Options">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17M12,4.5C7,4.5 2.73,7.61 1,12C2.73,16.39 7,19.5 12,19.5C17,19.5 21.27,16.39 23,12C21.27,7.61 17,4.5 12,4.5Z"/>
           </svg>
         </button>
         <button id="newBookmarkBtn" class="btn btn-primary" title="New Bookmark">
@@ -765,6 +803,26 @@
     </button>
   </div>
 
+  <div id="displayBar" class="filters hidden">
+    <div style="font-size: 11px; color: var(--md-sys-color-on-surface-variant); font-weight: 500; white-space: nowrap;">Display:</div>
+    <label class="display-toggle" title="Show/hide bookmark titles">
+      <input type="checkbox" id="displayTitle" checked>
+      <span>Title</span>
+    </label>
+    <label class="display-toggle" title="Show/hide bookmark URLs">
+      <input type="checkbox" id="displayUrl" checked>
+      <span>URL</span>
+    </label>
+    <label class="display-toggle" title="Show/hide bookmark keywords">
+      <input type="checkbox" id="displayKeywords" checked>
+      <span>Keywords</span>
+    </label>
+    <label class="display-toggle" title="Show/hide bookmark tags">
+      <input type="checkbox" id="displayTags" checked>
+      <span>Tags</span>
+    </label>
+  </div>
+
   <div class="content" id="bookmarkList">
     <div style="text-align: center; padding: 40px 20px; color: var(--md-sys-color-on-surface-variant);">
       <div style="font-size: 48px; margin-bottom: 12px; opacity: 0.5;">🔖</div>
@@ -772,6 +830,6 @@
     </div>
   </div>
 
-  <script src="sidebar.js?v=6"></script>
+  <script src="sidebar.js?v=7"></script>
 </body>
 </html>

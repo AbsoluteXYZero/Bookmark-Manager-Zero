@@ -10,12 +10,20 @@ let searchTerm = '';
 let activeFilter = null;
 let expandedFolders = new Set();
 let theme = 'dark';
+let displayOptions = {
+  title: true,
+  url: true,
+  keywords: true,
+  tags: true
+};
 
 // DOM Elements
 const bookmarkList = document.getElementById('bookmarkList');
 const searchInput = document.getElementById('searchInput');
 const filterToggle = document.getElementById('filterToggle');
 const filterBar = document.getElementById('filterBar');
+const displayToggle = document.getElementById('displayToggle');
+const displayBar = document.getElementById('displayBar');
 const themeToggle = document.getElementById('themeToggle');
 const themeIcon = document.getElementById('themeIcon');
 const settingsBtn = document.getElementById('settingsBtn');
@@ -384,14 +392,28 @@ function createBookmarkElement(bookmark) {
   const statusDotHtml = getStatusDotHtml(linkStatus);
   const shieldHtml = getShieldHtml(safetyStatus);
 
+  // Build bookmark info HTML based on display options
+  let bookmarkInfoHtml = '';
+  if (displayOptions.title) {
+    bookmarkInfoHtml += `<div class="bookmark-title">${escapeHtml(bookmark.title || bookmark.url)}</div>`;
+  }
+  if (displayOptions.url) {
+    bookmarkInfoHtml += `<div class="bookmark-url">${escapeHtml(new URL(bookmark.url).hostname)}</div>`;
+  }
+  if (displayOptions.keywords && bookmark.keyword) {
+    bookmarkInfoHtml += `<div class="bookmark-keywords" style="font-size: 11px; color: var(--md-sys-color-tertiary);">🔑 ${escapeHtml(bookmark.keyword)}</div>`;
+  }
+  if (displayOptions.tags && bookmark.tags && bookmark.tags.length > 0) {
+    bookmarkInfoHtml += `<div class="bookmark-tags">${bookmark.tags.map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join('')}</div>`;
+  }
+
   bookmarkDiv.innerHTML = `
     <div class="status-indicators">
       ${statusDotHtml}
       ${shieldHtml}
     </div>
     <div class="bookmark-info">
-      <div class="bookmark-title">${escapeHtml(bookmark.title || bookmark.url)}</div>
-      <div class="bookmark-url">${escapeHtml(new URL(bookmark.url).hostname)}</div>
+      ${bookmarkInfoHtml}
     </div>
     <button class="bookmark-menu-btn">⋮</button>
     <div class="bookmark-actions">
@@ -915,6 +937,47 @@ function setupEventListeners() {
   // Filter toggle
   filterToggle.addEventListener('click', () => {
     filterBar.classList.toggle('hidden');
+  });
+
+  // Display toggle
+  displayToggle.addEventListener('click', () => {
+    displayBar.classList.toggle('hidden');
+  });
+
+  // Display option toggles
+  const displayTitle = document.getElementById('displayTitle');
+  const displayUrl = document.getElementById('displayUrl');
+  const displayKeywords = document.getElementById('displayKeywords');
+  const displayTags = document.getElementById('displayTags');
+
+  displayTitle.addEventListener('change', (e) => {
+    // Ensure at least Title or URL is checked
+    if (!e.target.checked && !displayUrl.checked) {
+      e.target.checked = true;
+      return;
+    }
+    displayOptions.title = e.target.checked;
+    renderBookmarks();
+  });
+
+  displayUrl.addEventListener('change', (e) => {
+    // Ensure at least Title or URL is checked
+    if (!e.target.checked && !displayTitle.checked) {
+      e.target.checked = true;
+      return;
+    }
+    displayOptions.url = e.target.checked;
+    renderBookmarks();
+  });
+
+  displayKeywords.addEventListener('change', (e) => {
+    displayOptions.keywords = e.target.checked;
+    renderBookmarks();
+  });
+
+  displayTags.addEventListener('change', (e) => {
+    displayOptions.tags = e.target.checked;
+    renderBookmarks();
   });
 
   // Filter chips
