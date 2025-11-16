@@ -448,9 +448,12 @@ function createBookmarkElement(bookmark) {
       return; // Don't show preview when hovering over menu
     }
 
+    console.log('Mouse entered bookmark:', bookmark.title);
+
     previewTimeout = setTimeout(() => {
+      console.log('Triggering preview after delay');
       showPreview(bookmark.url, bookmarkDiv);
-    }, 500); // 500ms delay before showing
+    }, 300); // Reduced to 300ms for faster response
   });
 
   bookmarkDiv.addEventListener('mouseleave', () => {
@@ -463,12 +466,20 @@ function createBookmarkElement(bookmark) {
 
 // Get preview URL for a bookmark
 function getPreviewUrl(url) {
-  // Using thum.io free screenshot service
-  // Note: In production, you may want to use a paid service or self-hosted solution
+  // Using multiple screenshot services with fallback
   try {
     const encodedUrl = encodeURIComponent(url);
-    return `https://image.thum.io/get/width/400/crop/600/noanimate/${url}`;
+
+    // Option 1: screenshotapi.net (more reliable, free tier available)
+    return `https://shot.screenshotapi.net/screenshot?token=DEMO&url=${encodedUrl}&width=400&output=image&file_type=png&wait_for_event=load`;
+
+    // Option 2: Alternative - api.apiflash.com (has free tier)
+    // return `https://api.apiflash.com/v1/urltoimage?access_key=DEMO&url=${encodedUrl}&width=400`;
+
+    // Option 3: thumbnail.ws (simple, no auth needed)
+    // return `https://api.thumbnail.ws/api/free/thumbnail/get?url=${encodedUrl}&width=400`;
   } catch (error) {
+    console.error('Error generating preview URL:', error);
     return '';
   }
 }
@@ -476,13 +487,21 @@ function getPreviewUrl(url) {
 // Show bookmark preview
 function showPreview(url, bookmarkElement) {
   const container = document.getElementById('bookmarkPreview');
+
+  if (!container) {
+    console.error('Preview container not found!');
+    return;
+  }
+
   const image = container.querySelector('.preview-image');
   const loading = container.querySelector('.preview-loading');
 
-  if (!container) return;
-
   // Position the preview relative to the bookmark item
   const rect = bookmarkElement.getBoundingClientRect();
+
+  console.log('Showing preview for:', url);
+  console.log('Bookmark position:', rect);
+  console.log('Preview will appear at:', { top: rect.top, left: rect.right + 10 });
 
   // Position to the right of the sidebar, aligned with the bookmark's top
   container.style.top = `${rect.top}px`;
@@ -494,18 +513,23 @@ function showPreview(url, bookmarkElement) {
   loading.textContent = 'Loading preview...';
 
   const previewUrl = getPreviewUrl(url);
+  console.log('Preview URL:', previewUrl);
+
   if (!previewUrl) {
     loading.textContent = 'Preview unavailable';
+    console.error('Failed to generate preview URL');
     return;
   }
 
   // Load the preview image
   image.onload = () => {
+    console.log('Preview image loaded successfully');
     loading.style.display = 'none';
     image.style.display = 'block';
   };
 
-  image.onerror = () => {
+  image.onerror = (e) => {
+    console.error('Preview image failed to load:', e);
     loading.style.display = 'block';
     loading.textContent = 'Preview unavailable';
     image.style.display = 'none';
