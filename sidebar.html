@@ -479,27 +479,13 @@
     }
 
     .folder-icon {
-      position: relative;
       width: 20px;
       height: 20px;
       display: flex;
       align-items: center;
       justify-content: center;
       color: var(--md-sys-color-on-surface-variant);
-    }
-
-    .folder-count {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 8px;
-      font-weight: 700;
-      color: var(--md-sys-color-on-surface);
-      min-width: 14px;
-      text-align: center;
-      line-height: 1;
-      text-shadow: 0 0 2px var(--md-sys-color-surface);
+      flex-shrink: 0;
     }
 
     .folder-title {
@@ -507,6 +493,31 @@
       font-weight: 500;
       color: var(--md-sys-color-on-surface);
       font-size: 13px;
+      margin-right: 8px;
+    }
+
+    .folder-count-badge {
+      background: var(--md-sys-color-primary-container);
+      color: var(--md-sys-color-on-primary-container);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 12px;
+      min-width: 20px;
+      height: 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--md-elevation-1);
+      letter-spacing: 0.3px;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .folder-header:hover .folder-count-badge {
+      background: var(--md-sys-color-primary);
+      color: var(--md-sys-color-on-primary);
+      box-shadow: var(--md-elevation-2);
+      transform: scale(1.05);
     }
 
     .folder-children {
