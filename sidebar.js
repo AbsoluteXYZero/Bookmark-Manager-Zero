@@ -498,14 +498,21 @@ function showPreview(url, bookmarkElement) {
 
   // Position the preview relative to the bookmark item
   const rect = bookmarkElement.getBoundingClientRect();
+  const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
   console.log('Showing preview for:', url);
   console.log('Bookmark position:', rect);
-  console.log('Preview will appear at:', { top: rect.top, left: rect.right + 10 });
+  console.log('Scroll position:', scrollTop);
 
-  // Position to the right of the sidebar, aligned with the bookmark's top
-  container.style.top = `${rect.top}px`;
-  container.style.left = `${rect.right + 10}px`;
+  // Position to the right of the bookmark item
+  // Using absolute positioning, so we need to account for scroll
+  const topPos = rect.top + scrollTop;
+  const leftPos = rect.right + 10;
+
+  console.log('Preview will appear at:', { top: topPos, left: leftPos });
+
+  container.style.top = `${topPos}px`;
+  container.style.left = `${leftPos}px`;
 
   container.classList.add('show');
   loading.style.display = 'block';

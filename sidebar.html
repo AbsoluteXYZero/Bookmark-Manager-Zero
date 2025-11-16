@@ -450,14 +450,14 @@
 
     /* Bookmark Preview Styles */
     #bookmarkPreview {
-      position: fixed;
+      position: absolute;
       background: var(--md-sys-color-surface-container);
       border: 2px solid var(--md-sys-color-primary);
       border-radius: 12px;
       box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
       padding: 12px;
-      width: 400px;
-      max-width: 400px;
+      width: 300px;
+      max-width: 300px;
       opacity: 0;
       visibility: hidden;
       transform: translateX(-10px) scale(0.98);
@@ -470,6 +470,7 @@
       opacity: 1;
       visibility: visible;
       transform: translateX(0) scale(1);
+      pointer-events: auto;
     }
 
     #bookmarkPreview .preview-loading {
