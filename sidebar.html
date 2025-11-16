@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Bookmark Manager Zero</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --md-sys-color-primary: #6366f1;
+      --md-sys-color-on-primary: #ffffff;
+      --md-sys-color-primary-container: #e0e7ff;
+      --md-sys-color-on-primary-container: #1e1b4b;
+      --md-sys-color-secondary: #818cf8;
+      --md-sys-color-surface: #fefefe;
+      --md-sys-color-surface-variant: #f1f5f9;
+      --md-sys-color-surface-container: #e2e8f0;
+      --md-sys-color-surface-container-high: #cbd5e1;
+      --md-sys-color-on-surface: #0f172a;
+      --md-sys-color-on-surface-variant: #475569;
+      --md-sys-color-outline: #94a3b8;
+      --md-sys-color-outline-variant: #cbd5e1;
+      --md-sys-color-error: #ef4444;
+      --md-sys-color-success: #10b981;
+      --md-sys-color-warning: #f59e0b;
+      --md-elevation-1: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --md-elevation-2: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+      --md-elevation-3: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    }
+
+    .dark {
+      --md-sys-color-primary: #818cf8;
+      --md-sys-color-on-primary: #1e1b4b;
+      --md-sys-color-primary-container: #312e81;
+      --md-sys-color-on-primary-container: #e0e7ff;
+      --md-sys-color-secondary: #a5b4fc;
+      --md-sys-color-surface: #0f172a;
+      --md-sys-color-surface-variant: #1e293b;
+      --md-sys-color-surface-container: #334155;
+      --md-sys-color-surface-container-high: #475569;
+      --md-sys-color-on-surface: #f1f5f9;
+      --md-sys-color-on-surface-variant: #cbd5e1;
+      --md-sys-color-outline: #64748b;
+      --md-sys-color-outline-variant: #475569;
+      --md-elevation-1: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+      --md-elevation-2: 0 4px 6px -1px rgb(0 0 0 / 0.3);
+      --md-elevation-3: 0 10px 15px -3px rgb(0 0 0 / 0.3);
+    }
+
+    body {
+      font-family: 'Google Sans', 'Segoe UI', Roboto, -apple-system, sans-serif;
+      background: var(--md-sys-color-surface);
+      color: var(--md-sys-color-on-surface);
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .header {
+      background: linear-gradient(135deg, var(--md-sys-color-surface) 0%, var(--md-sys-color-surface-variant) 100%);
+      backdrop-filter: blur(20px);
+      padding: 16px 12px 12px;
+      border-bottom: 1px solid var(--md-sys-color-outline-variant);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--md-sys-color-primary) 0%, var(--md-sys-color-secondary) 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      box-shadow: var(--md-elevation-2);
+    }
+
+    .logo-text {
+      flex: 1;
+    }
+
+    .logo-title {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--md-sys-color-on-surface);
+      line-height: 1.2;
+      letter-spacing: -0.5px;
+    }
+
+    .logo-subtitle {
+      font-size: 11px;
+      color: var(--md-sys-color-on-surface-variant);
+      margin-top: 2px;
+      letter-spacing: 0.1px;
+    }
+
+    .search-container {
+      position: relative;
+      margin-bottom: 12px;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 12px 16px 12px 40px;
+      border: none;
+      border-radius: 20px;
+      background: var(--md-sys-color-surface-container);
+      color: var(--md-sys-color-on-surface);
+      font-size: 13px;
+      outline: none;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: var(--md-elevation-1);
+    }
+
+    .search-input:focus {
+      background: var(--md-sys-color-surface-container-high);
+      box-shadow: var(--md-elevation-2);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--md-sys-color-on-surface-variant);
+      width: 16px;
+      height: 16px;
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .toolbar-left, .toolbar-right {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .btn {
+      padding: 8px 12px;
+      border: none;
+      border-radius: 16px;
+      background: var(--md-sys-color-surface-container);
+      color: var(--md-sys-color-on-surface);
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: var(--md-elevation-1);
+      letter-spacing: 0.2px;
+    }
+
+    .btn:hover {
+      background: var(--md-sys-color-surface-container-high);
+      box-shadow: var(--md-elevation-2);
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      background: var(--md-sys-color-primary);
+      color: var(--md-sys-color-on-primary);
+    }
+
+    .btn-primary:hover {
+      background: var(--md-sys-color-secondary);
+      box-shadow: var(--md-elevation-3);
+    }
+
+    .btn-icon {
+      width: 36px;
+      height: 36px;
+      padding: 0;
+      justify-content: center;
+      border-radius: 50%;
+    }
+
+    .content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px;
+      scroll-behavior: smooth;
+    }
+
+    /* Bookmark Item Styles */
+    .bookmark-item {
+      background: var(--md-sys-color-surface-container);
+      border-radius: 12px;
+      padding: 10px 12px;
+      margin-bottom: 8px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+      box-shadow: var(--md-elevation-1);
+      border: 1px solid transparent;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .bookmark-item:hover {
+      background: var(--md-sys-color-surface-container-high);
+      box-shadow: var(--md-elevation-2);
+      transform: translateY(-1px);
+      border-color: var(--md-sys-color-outline);
+      z-index: 2;
+    }
+
+    .bookmark-item:has(.bookmark-actions.show) {
+      z-index: 10000;
+    }
+
+    .bookmark-item:active {
+      cursor: grabbing;
+      transform: scale(1.02);
+      z-index: 100;
+    }
+
+    .status-indicators {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 6px;
+      flex-shrink: 0;
+      min-height: 20px;
+    }
+
+    .status-dot {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      font-size: 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: help;
+      line-height: 1;
+      transform: translateY(-2px);
+    }
+
+    .status-dot-green {
+      color: var(--md-sys-color-success);
+    }
+
+    .status-dot-red {
+      color: var(--md-sys-color-error);
+    }
+
+    .status-dot-yellow {
+      color: var(--md-sys-color-warning);
+    }
+
+    .status-dot-gray {
+      color: var(--md-sys-color-outline);
+    }
+
+    .shield-indicator {
+      width: 16px;
+      height: 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: help;
+      transition: all 0.2s;
+      border-radius: 4px;
+    }
+
+    .shield-indicator svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .shield-safe {
+      color: var(--md-sys-color-success);
+    }
+
+    .shield-warning {
+      color: var(--md-sys-color-warning);
+    }
+
+    .shield-unsafe {
+      color: var(--md-sys-color-error);
+    }
+
+    .shield-indicator:hover {
+      transform: scale(1.2);
+    }
+
+    .bookmark-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .bookmark-title {
+      font-weight: 500;
+      font-size: 13px;
+      color: var(--md-sys-color-on-surface);
+      line-height: 1.4;
+      margin-bottom: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .bookmark-url {
+      font-size: 11px;
+      color: var(--md-sys-color-on-surface-variant);
+      line-height: 1.3;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-family: 'Courier New', monospace;
+    }
+
+    .bookmark-tags {
+      display: flex;
+      gap: 4px;
+      margin-top: 6px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      background: var(--md-sys-color-primary-container);
+      color: var(--md-sys-color-on-primary-container);
+      padding: 2px 6px;
+      border-radius: 8px;
+      font-size: 10px;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .bookmark-menu-btn {
+      background: none;
+      border: none;
+      font-size: 16px;
+      color: var(--md-sys-color-on-surface-variant);
+      cursor: pointer;
+      padding: 4px 6px;
+      border-radius: 6px;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+
+    .bookmark-menu-btn:hover {
+      background: var(--md-sys-color-outline-variant);
+      color: var(--md-sys-color-on-surface);
+    }
+
+    .bookmark-actions {
+      position: absolute;
+      top: 100%;
+      right: 12px;
+      background: var(--md-sys-color-surface);
+      border: 1px solid var(--md-sys-color-outline-variant);
+      border-radius: 12px;
+      padding: 6px 0;
+      box-shadow: var(--md-elevation-3);
+      z-index: 9999;
+      min-width: 180px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-8px);
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .bookmark-actions.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .action-btn {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 10px 14px;
+      text-align: left;
+      cursor: pointer;
+      font-size: 12px;
+      color: var(--md-sys-color-on-surface);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.2s;
+    }
+
+    .action-btn:hover {
+      background: var(--md-sys-color-surface-container);
+    }
+
+    .action-btn.danger {
+      color: var(--md-sys-color-error);
+    }
+
+    .action-btn .icon {
+      width: 14px;
+      height: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .action-btn .icon svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    /* Folder Styles */
+    .folder-item {
+      margin-bottom: 8px;
+    }
+
+    .folder-header {
+      padding: 10px 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .folder-header:hover {
+      transform: translateY(-1px);
+    }
+
+    .folder-toggle {
+      font-size: 10px;
+      color: var(--md-sys-color-on-surface-variant);
+      transition: transform 0.2s;
+      width: 14px;
+      text-align: center;
+    }
+
+    .folder-toggle.expanded {
+      transform: rotate(90deg);
+    }
+
+    .folder-icon {
+      position: relative;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--md-sys-color-on-surface-variant);
+    }
+
+    .folder-count {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 8px;
+      font-weight: 700;
+      color: var(--md-sys-color-on-surface);
+      min-width: 14px;
+      text-align: center;
+      line-height: 1;
+      text-shadow: 0 0 2px var(--md-sys-color-surface);
+    }
+
+    .folder-title {
+      flex: 1;
+      font-weight: 500;
+      color: var(--md-sys-color-on-surface);
+      font-size: 13px;
+    }
+
+    .folder-children {
+      margin-left: 24px;
+      margin-top: 6px;
+      padding-left: 12px;
+      border-left: 2px solid var(--md-sys-color-outline-variant);
+      display: none;
+    }
+
+    .folder-children.show {
+      display: block;
+    }
+
+    /* Filter Bar Styles */
+    .filters {
+      background: var(--md-sys-color-surface-variant);
+      border-bottom: 1px solid var(--md-sys-color-outline-variant);
+      padding: 10px 12px;
+      overflow: hidden;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      max-height: 80px;
+      opacity: 1;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .filters.hidden {
+      max-height: 0;
+      opacity: 0;
+      padding: 0 12px;
+      border-bottom: none;
+    }
+
+    .filter-chip {
+      background: var(--md-sys-color-surface-container);
+      border: 1px solid transparent;
+      border-radius: 10px;
+      padding: 5px 10px;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--md-sys-color-on-surface);
+      white-space: nowrap;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      box-shadow: var(--md-elevation-1);
+    }
+
+    .filter-chip:hover {
+      background: var(--md-sys-color-surface-container-high);
+      box-shadow: var(--md-elevation-2);
+      transform: translateY(-1px);
+      border-color: var(--md-sys-color-outline);
+    }
+
+    .filter-chip.active {
+      background: var(--md-sys-color-primary-container);
+      color: var(--md-sys-color-on-primary-container);
+      border-color: var(--md-sys-color-primary);
+      box-shadow: var(--md-elevation-2);
+    }
+
+    .filter-chip.active:hover {
+      background: var(--md-sys-color-primary-container);
+      transform: translateY(-1px);
+      box-shadow: var(--md-elevation-3);
+    }
+
+    /* Settings Menu Dropdown */
+    .settings-menu {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background: var(--md-sys-color-surface);
+      border: 1px solid var(--md-sys-color-outline-variant);
+      border-radius: 12px;
+      padding: 6px 0;
+      box-shadow: var(--md-elevation-3);
+      z-index: 9999;
+      min-width: 200px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-8px);
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      margin-top: 4px;
+    }
+
+    .settings-menu.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .settings-btn-wrapper {
+      position: relative;
+    }
+  </style>
+</head>
+<body class="dark">
+  <div class="header">
+    <div class="logo-container">
+      <div class="logo-icon">🔖</div>
+      <div class="logo-text">
+        <div class="logo-title">Bookmark Manager</div>
+        <div class="logo-subtitle">Firefox Edition</div>
+      </div>
+    </div>
+
+    <div class="search-container">
+      <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+      </svg>
+      <input type="text" class="search-input" id="searchInput" placeholder="Search bookmarks...">
+    </div>
+
+    <div class="toolbar">
+      <div class="toolbar-left">
+        <button id="filterToggle" class="btn btn-icon" title="Filters">
+          <span>≡</span>
+        </button>
+        <button id="newBookmarkBtn" class="btn btn-primary" title="New Bookmark">
+          <span>➕</span>
+        </button>
+        <button id="newFolderBtn" class="btn" title="New Folder">
+          <span>📁</span>
+        </button>
+      </div>
+      <div class="toolbar-right">
+        <button id="themeToggle" class="btn btn-icon" title="Toggle Theme">
+          <span id="themeIcon">☀️</span>
+        </button>
+        <div class="settings-btn-wrapper">
+          <button id="settingsBtn" class="btn btn-icon" title="Settings">
+            <span>⚙️</span>
+          </button>
+          <div id="settingsMenu" class="settings-menu">
+            <button class="action-btn" id="switchSideBtn">
+              <span class="icon">↔️</span>
+              <span>Switch Sidebar Side</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="filterBar" class="filters hidden">
+    <div style="font-size: 11px; color: var(--md-sys-color-on-surface-variant); font-weight: 500; white-space: nowrap;">Filter:</div>
+    <button class="filter-chip" data-filter="live" title="Show only live links">
+      <span style="color: var(--md-sys-color-success);">●</span>
+      <span>Live</span>
+    </button>
+    <button class="filter-chip" data-filter="dead" title="Show only dead links">
+      <span style="color: var(--md-sys-color-error);">●</span>
+      <span>Dead</span>
+    </button>
+    <button class="filter-chip" data-filter="safe" title="Show only safe URLs">
+      <svg width="12" height="12" fill="var(--md-sys-color-success)" viewBox="0 0 24 24">
+        <path d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M10,17L6,13L7.41,11.59L10,14.18L16.59,7.59L18,9L10,17Z"/>
+      </svg>
+      <span>Safe</span>
+    </button>
+    <button class="filter-chip" data-filter="suspicious" title="Show only suspicious URLs">
+      <svg width="12" height="12" fill="var(--md-sys-color-warning)" viewBox="0 0 24 24">
+        <path d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M13,7H11V13H13V7M13,17H11V15H13V17Z"/>
+      </svg>
+      <span>Suspicious</span>
+    </button>
+    <button class="filter-chip" data-filter="unsafe" title="Show only unsafe URLs">
+      <svg width="12" height="12" fill="var(--md-sys-color-error)" viewBox="0 0 24 24">
+        <path d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M12,7C13.1,7 14,7.9 14,9V10.5L15.5,10.5C16.3,10.5 17,11.2 17,12V16C17,16.8 16.3,17.5 15.5,17.5H8.5C7.7,17.5 7,16.8 7,16V12C7,11.2 7.7,10.5 8.5,10.5H10V9C10,7.9 10.9,7 12,7M12,8.2C11.2,8.2 10.8,8.7 10.8,9V10.5H13.2V9C13.2,8.7 12.8,8.2 12,8.2Z"/>
+      </svg>
+      <span>Unsafe</span>
+    </button>
+  </div>
+
+  <div class="content" id="bookmarkList">
+    <div style="text-align: center; padding: 40px 20px; color: var(--md-sys-color-on-surface-variant);">
+      <div style="font-size: 48px; margin-bottom: 12px; opacity: 0.5;">🔖</div>
+      <div style="font-size: 14px;">Loading bookmarks...</div>
+    </div>
+  </div>
+
+  <script src="sidebar.js"></script>
+</body>
+</html>
