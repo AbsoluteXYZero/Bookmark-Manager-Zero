@@ -43,6 +43,8 @@ const settingsBtn = document.getElementById('settingsBtn');
 const settingsMenu = document.getElementById('settingsMenu');
 const openInTabBtn = document.getElementById('openInTabBtn');
 const closeExtensionBtn = document.getElementById('closeExtensionBtn');
+const clearCacheBtn = document.getElementById('clearCacheBtn');
+const rescanBookmarksBtn = document.getElementById('rescanBookmarksBtn');
 
 // Undo toast DOM elements
 const undoToast = document.getElementById('undoToast');
@@ -2703,6 +2705,69 @@ async function closeExtension() {
   }
 }
 
+// Clear cache for link status and safety checks
+async function clearCache() {
+  if (isPreviewMode) {
+    alert('🧹 In the Firefox extension, this would clear the cache for link and safety checks.');
+    return;
+  }
+
+  try {
+    // Remove both cache keys from storage
+    await browser.storage.local.remove(['linkStatusCache', 'safetyStatusCache']);
+
+    console.log('Cache cleared successfully');
+    alert('Cache cleared! All bookmark checks will be refreshed on next scan.');
+  } catch (error) {
+    console.error('Error clearing cache:', error);
+    alert('Failed to clear cache. Please try again.');
+  }
+}
+
+// Rescan all bookmarks (clear cache and force re-check)
+async function rescanAllBookmarks() {
+  if (isPreviewMode) {
+    alert('🔄 In the Firefox extension, this would clear cache and rescan all bookmarks.');
+    return;
+  }
+
+  try {
+    // Clear cache first
+    await browser.storage.local.remove(['linkStatusCache', 'safetyStatusCache']);
+
+    // Clear the checkedBookmarks set to allow re-checking
+    checkedBookmarks.clear();
+
+    // Reset all bookmark statuses to unknown
+    function resetBookmarkStatuses(nodes) {
+      nodes.forEach(node => {
+        if (node.type === 'bookmark' && node.url) {
+          updateBookmarkInTree(node.id, {
+            linkStatus: 'unknown',
+            safetyStatus: 'unknown'
+          });
+        }
+        if (node.type === 'folder' && node.children) {
+          resetBookmarkStatuses(node.children);
+        }
+      });
+    }
+
+    resetBookmarkStatuses(bookmarkTree);
+    renderBookmarks();
+
+    console.log('Starting rescan of all bookmarks...');
+
+    // Trigger automatic re-check
+    await autoCheckBookmarkStatuses();
+
+    console.log('Rescan complete!');
+  } catch (error) {
+    console.error('Error rescanning bookmarks:', error);
+    alert('Failed to rescan bookmarks. Please try again.');
+  }
+}
+
 // Setup event listeners
 function setupEventListeners() {
   // Search
@@ -2833,6 +2898,18 @@ function setupEventListeners() {
   // Export bookmarks (backup)
   exportBookmarksBtn.addEventListener('click', () => {
     exportBookmarks();
+    closeAllMenus();
+  });
+
+  // Clear cache
+  clearCacheBtn.addEventListener('click', async () => {
+    await clearCache();
+    closeAllMenus();
+  });
+
+  // Rescan all bookmarks
+  rescanBookmarksBtn.addEventListener('click', async () => {
+    await rescanAllBookmarks();
     closeAllMenus();
   });
 
