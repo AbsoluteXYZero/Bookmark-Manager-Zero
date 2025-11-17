@@ -1273,8 +1273,10 @@ function matchesFilter(bookmark) {
   switch (activeFilter) {
     case 'live':
       return linkStatus === 'live';
+    case 'broken':
+      return linkStatus === 'parked';
     case 'dead':
-      return linkStatus === 'dead' || linkStatus === 'parked';
+      return linkStatus === 'dead';
     case 'safe':
       return safetyStatus === 'safe';
     case 'suspicious':
