@@ -214,6 +214,7 @@ async function loadBookmarks() {
 }
 
 // Automatically check bookmark statuses for unchecked bookmarks
+// Uses rate limiting to prevent browser overload
 async function autoCheckBookmarkStatuses() {
   const bookmarksToCheck = [];
 
@@ -233,46 +234,61 @@ async function autoCheckBookmarkStatuses() {
 
   if (bookmarksToCheck.length === 0) return;
 
-  console.log(`Auto-checking ${bookmarksToCheck.length} bookmarks...`);
+  console.log(`Auto-checking ${bookmarksToCheck.length} bookmarks in batches...`);
 
   // Mark these bookmarks as being checked to prevent re-checking
   bookmarksToCheck.forEach(item => checkedBookmarks.add(item.id));
 
-  // Set all to checking status
-  bookmarksToCheck.forEach(item => {
-    updateBookmarkInTree(item.id, {
-      linkStatus: 'checking',
-      safetyStatus: 'checking'
-    });
-  });
-  renderBookmarks();
+  // Process bookmarks in batches to prevent browser overload
+  const BATCH_SIZE = 5; // Check 5 bookmarks at a time
+  const BATCH_DELAY = 1000; // 1 second delay between batches
 
-  // Check all bookmarks in parallel
-  const checkPromises = bookmarksToCheck.map(async (item) => {
-    try {
-      const [linkStatus, safetyStatus] = await Promise.all([
-        checkLinkStatus(item.url),
-        checkSafetyStatus(item.url)
-      ]);
-      return { id: item.id, linkStatus, safetyStatus };
-    } catch (error) {
-      console.error(`Error checking bookmark ${item.id} (${item.url}):`, error);
-      return { id: item.id, linkStatus: 'dead', safetyStatus: 'unknown' };
+  for (let i = 0; i < bookmarksToCheck.length; i += BATCH_SIZE) {
+    const batch = bookmarksToCheck.slice(i, i + BATCH_SIZE);
+
+    // Set batch to checking status
+    batch.forEach(item => {
+      updateBookmarkInTree(item.id, {
+        linkStatus: 'checking',
+        safetyStatus: 'checking'
+      });
+    });
+    renderBookmarks();
+
+    // Check this batch in parallel
+    const checkPromises = batch.map(async (item) => {
+      try {
+        const [linkStatus, safetyStatus] = await Promise.all([
+          checkLinkStatus(item.url),
+          checkSafetyStatus(item.url)
+        ]);
+        return { id: item.id, linkStatus, safetyStatus };
+      } catch (error) {
+        console.error(`Error checking bookmark ${item.id} (${item.url}):`, error);
+        return { id: item.id, linkStatus: 'dead', safetyStatus: 'unknown' };
+      }
+    });
+
+    const results = await Promise.all(checkPromises);
+
+    // Update results for this batch
+    results.forEach(result => {
+      updateBookmarkInTree(result.id, {
+        linkStatus: result.linkStatus,
+        safetyStatus: result.safetyStatus
+      });
+    });
+    renderBookmarks();
+
+    console.log(`Checked batch ${Math.floor(i / BATCH_SIZE) + 1}/${Math.ceil(bookmarksToCheck.length / BATCH_SIZE)} (${results.length} bookmarks)`);
+
+    // Wait before processing next batch (except for the last batch)
+    if (i + BATCH_SIZE < bookmarksToCheck.length) {
+      await new Promise(resolve => setTimeout(resolve, BATCH_DELAY));
     }
-  });
+  }
 
-  const results = await Promise.all(checkPromises);
-
-  // Batch update all results
-  results.forEach(result => {
-    updateBookmarkInTree(result.id, {
-      linkStatus: result.linkStatus,
-      safetyStatus: result.safetyStatus
-    });
-  });
-  renderBookmarks();
-
-  console.log(`Finished checking ${results.length} bookmarks`);
+  console.log(`Finished checking all ${bookmarksToCheck.length} bookmarks`);
 }
 
 // Mock bookmark data for preview mode
