@@ -5,7 +5,8 @@
   "description": "A modern interface for the native Firefox bookmark manager.",
   "permissions": [
     "bookmarks",
-    "storage"
+    "storage",
+    "tabs"
   ],
   "host_permissions": [
     "<all_urls>"

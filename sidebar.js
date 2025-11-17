@@ -1437,12 +1437,26 @@ async function handleBookmarkAction(action, bookmark) {
         // In preview mode, just open normally
         window.open(bookmark.url, '_blank');
       } else {
-        // Create tab and then toggle reader mode
-        const tab = await browser.tabs.create({ url: bookmark.url });
-        // Wait for page to start loading, then toggle reader mode
-        setTimeout(() => {
-          browser.tabs.toggleReaderMode(tab.id);
-        }, 1000);
+        try {
+          // Create tab and wait for it to load before toggling reader mode
+          const tab = await browser.tabs.create({ url: bookmark.url });
+
+          // Listen for the tab to finish loading
+          const listener = (tabId, changeInfo) => {
+            if (tabId === tab.id && changeInfo.status === 'complete') {
+              browser.tabs.toggleReaderMode(tab.id).catch(err => {
+                console.log('Reader mode not available for this page:', err);
+              });
+              browser.tabs.onUpdated.removeListener(listener);
+            }
+          };
+
+          browser.tabs.onUpdated.addListener(listener);
+        } catch (error) {
+          console.error('Error opening reader mode:', error);
+          // Fallback to normal tab
+          window.open(bookmark.url, '_blank');
+        }
       }
       break;
 
