@@ -389,7 +389,7 @@ function getStatusDotHtml(linkStatus) {
 function getShieldHtml(safetyStatus) {
   const shieldSvgs = {
     'safe': `
-      <span class="shield-indicator shield-safe" title="VirusTotal URL scan:
+      <span class="shield-indicator shield-safe" title="VirusTotal URL Scan:
 Safe - No threats detected by VirusTotal">
         <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
           <path d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M10,17L6,13L7.41,11.59L10,14.18L16.59,7.59L18,9L10,17Z"/>
@@ -397,7 +397,7 @@ Safe - No threats detected by VirusTotal">
       </span>
     `,
     'warning': `
-      <span class="shield-indicator shield-warning" title="VirusTotal URL scan:
+      <span class="shield-indicator shield-warning" title="VirusTotal URL Scan:
 Suspicious - Some security vendors flagged this URL">
         <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
           <path d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M13,7H11V13H13V7M13,17H11V15H13V17Z"/>
@@ -405,7 +405,7 @@ Suspicious - Some security vendors flagged this URL">
       </span>
     `,
     'unsafe': `
-      <span class="shield-indicator shield-unsafe" title="VirusTotal URL scan:
+      <span class="shield-indicator shield-unsafe" title="VirusTotal URL Scan:
 Malicious - Multiple threats detected! DO NOT VISIT">
         <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
           <path d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M12,7C13.1,7 14,7.9 14,9V10.5L15.5,10.5C16.3,10.5 17,11.2 17,12V16C17,16.8 16.3,17.5 15.5,17.5H8.5C7.7,17.5 7,16.8 7,16V12C7,11.2 7.7,10.5 8.5,10.5H10V9C10,7.9 10.9,7 12,7M12,8.2C11.2,8.2 10.8,8.7 10.8,9V10.5H13.2V9C13.2,8.7 12.8,8.2 12,8.2Z"/>
@@ -413,7 +413,7 @@ Malicious - Multiple threats detected! DO NOT VISIT">
       </span>
     `,
     'checking': `
-      <span class="shield-indicator shield-scanning" title="VirusTotal URL scan:
+      <span class="shield-indicator shield-scanning" title="VirusTotal URL Scan:
 Scanning with VirusTotal...">
         <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
           <path d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1Z"/>
@@ -421,7 +421,7 @@ Scanning with VirusTotal...">
       </span>
     `,
     'unknown': `
-      <span class="shield-indicator shield-unknown" title="VirusTotal URL scan:
+      <span class="shield-indicator shield-unknown" title="VirusTotal URL Scan:
 Unable to scan - Link unreachable or not yet checked">
         <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
           <path d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M12.5,7V12.5H11V7H12.5M12.5,14V15.5H11V14H12.5Z"/>
