@@ -1434,8 +1434,9 @@ async function handleBookmarkAction(action, bookmark) {
     case 'reader-view':
       // Open in text-only reader view
       if (isPreviewMode) {
-        // In preview mode, just open normally
-        window.open(bookmark.url, '_blank');
+        // In preview mode, use relative URL to reader.html
+        const readerUrl = `reader.html?url=${encodeURIComponent(bookmark.url)}`;
+        window.open(readerUrl, '_blank');
       } else {
         // Open the reader view directly
         const readerUrl = browser.runtime.getURL(`reader.html?url=${encodeURIComponent(bookmark.url)}`);
