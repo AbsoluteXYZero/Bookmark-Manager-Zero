@@ -21,6 +21,16 @@ const PARKING_DOMAINS = [
  * @returns {Promise<'live' | 'dead' | 'parked'>} The status of the link.
  */
 const checkLinkStatus = async (url) => {
+  // Check if the URL itself is on a parking domain
+  try {
+    const urlHost = new URL(url).hostname.toLowerCase();
+    if (PARKING_DOMAINS.some(domain => urlHost.includes(domain))) {
+      return 'parked';
+    }
+  } catch (e) {
+    // Invalid URL, continue with fetch attempt
+  }
+
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 10000); // 10-second timeout
 
