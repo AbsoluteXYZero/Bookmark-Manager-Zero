@@ -333,6 +333,14 @@ function getMockBookmarks() {
     },
     {
       id: '18',
+      title: 'Parked Domain Example',
+      url: 'https://parked-domain-example.com',
+      type: 'bookmark',
+      linkStatus: 'parked',
+      safetyStatus: 'unknown'
+    },
+    {
+      id: '19',
       title: 'Malicious Site Example',
       url: 'https://dangerous-example.com',
       type: 'bookmark',
