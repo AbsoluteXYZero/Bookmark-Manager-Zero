@@ -1432,27 +1432,12 @@ async function handleBookmarkAction(action, bookmark) {
       break;
 
     case 'reader-view':
-      // Open in text-only reader view
+      // Open in text-only view using Textise
+      const textiseUrl = `https://www.textise.net/showText.aspx?strURL=${encodeURIComponent(bookmark.url)}`;
       if (isPreviewMode) {
-        // In preview mode, construct proper URL for htmlpreview or local file
-        let readerUrl;
-        if (window.location.href.includes('htmlpreview.github.io')) {
-          // Parse the htmlpreview URL structure
-          // Current: https://htmlpreview.github.io/?https://github.com/USER/REPO/blob/BRANCH/sidebar.html
-          // Target: https://htmlpreview.github.io/?https://github.com/USER/REPO/blob/BRANCH/reader.html?url=...
-          const currentUrl = window.location.href;
-          const githubUrl = currentUrl.split('htmlpreview.github.io/?')[1];
-          const readerGithubUrl = githubUrl.replace('sidebar.html', `reader.html?url=${encodeURIComponent(bookmark.url)}`);
-          readerUrl = `https://htmlpreview.github.io/?${readerGithubUrl}`;
-        } else {
-          // For local files, use simple relative URL
-          readerUrl = `reader.html?url=${encodeURIComponent(bookmark.url)}`;
-        }
-        window.open(readerUrl, '_blank');
+        window.open(textiseUrl, '_blank');
       } else {
-        // Open the reader view directly
-        const readerUrl = browser.runtime.getURL(`reader.html?url=${encodeURIComponent(bookmark.url)}`);
-        browser.tabs.create({ url: readerUrl });
+        browser.tabs.create({ url: textiseUrl });
       }
       break;
 
