@@ -35,6 +35,7 @@ const zoomSlider = document.getElementById('zoomSlider');
 const zoomValue = document.getElementById('zoomValue');
 const settingsBtn = document.getElementById('settingsBtn');
 const settingsMenu = document.getElementById('settingsMenu');
+const openInTabBtn = document.getElementById('openInTabBtn');
 const switchSideBtn = document.getElementById('switchSideBtn');
 
 // Initialize
@@ -743,6 +744,44 @@ async function deleteFolder(id) {
   }
 }
 
+// Adjust dropdown position to prevent overflow
+function adjustDropdownPosition(dropdown) {
+  if (!dropdown) return;
+
+  // Reset any previous adjustments
+  dropdown.style.left = '';
+  dropdown.style.right = '';
+  dropdown.style.transform = '';
+
+  // Wait for next frame to ensure menu is visible and has dimensions
+  requestAnimationFrame(() => {
+    const rect = dropdown.getBoundingClientRect();
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+
+    // Check horizontal overflow
+    if (rect.right > viewportWidth) {
+      // Menu extends beyond right edge
+      const overflow = rect.right - viewportWidth;
+      dropdown.style.right = '0';
+      dropdown.style.transform = `translateX(-${overflow + 8}px)`;
+    } else if (rect.left < 0) {
+      // Menu extends beyond left edge
+      dropdown.style.left = '0';
+      dropdown.style.right = 'auto';
+    }
+
+    // Check vertical overflow
+    if (rect.bottom > viewportHeight) {
+      // Menu extends beyond bottom edge - show above button instead
+      dropdown.style.top = 'auto';
+      dropdown.style.bottom = '100%';
+      dropdown.style.marginBottom = '4px';
+      dropdown.style.marginTop = '0';
+    }
+  });
+}
+
 // Close all open menus
 function closeAllMenus() {
   document.querySelectorAll('.bookmark-actions.show').forEach(menu => {
@@ -1209,6 +1248,24 @@ function showError(message) {
   `;
 }
 
+// Open extension in new tab
+async function openInNewTab() {
+  if (isPreviewMode) {
+    alert('🗗 In the Firefox extension, this would open Bookmark Manager Zero in a new tab for a full-page view.');
+    return;
+  }
+
+  try {
+    // Get the extension's URL for the sidebar page
+    const extensionUrl = browser.runtime.getURL('sidebar.html');
+    // Open it in a new tab
+    await browser.tabs.create({ url: extensionUrl });
+  } catch (error) {
+    console.error('Error opening in new tab:', error);
+    alert('Failed to open in new tab');
+  }
+}
+
 // Switch sidebar side
 async function switchSidebarSide() {
   if (isPreviewMode) {
@@ -1301,6 +1358,9 @@ function setupEventListeners() {
   themeBtn.addEventListener('click', (e) => {
     e.stopPropagation();
     themeMenu.classList.toggle('show');
+    if (themeMenu.classList.contains('show')) {
+      adjustDropdownPosition(themeMenu);
+    }
   });
 
   // Theme selection
@@ -1316,6 +1376,9 @@ function setupEventListeners() {
   viewBtn.addEventListener('click', (e) => {
     e.stopPropagation();
     viewMenu.classList.toggle('show');
+    if (viewMenu.classList.contains('show')) {
+      adjustDropdownPosition(viewMenu);
+    }
   });
 
   // View selection
@@ -1331,6 +1394,9 @@ function setupEventListeners() {
   zoomBtn.addEventListener('click', (e) => {
     e.stopPropagation();
     zoomMenu.classList.toggle('show');
+    if (zoomMenu.classList.contains('show')) {
+      adjustDropdownPosition(zoomMenu);
+    }
   });
 
   // Zoom slider
@@ -1343,6 +1409,15 @@ function setupEventListeners() {
   settingsBtn.addEventListener('click', (e) => {
     e.stopPropagation();
     settingsMenu.classList.toggle('show');
+    if (settingsMenu.classList.contains('show')) {
+      adjustDropdownPosition(settingsMenu);
+    }
+  });
+
+  // Open in new tab
+  openInTabBtn.addEventListener('click', () => {
+    openInNewTab();
+    closeAllMenus();
   });
 
   // Switch sidebar side
