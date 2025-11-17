@@ -621,10 +621,11 @@ function createBookmarkElement(bookmark) {
 
   // Add click handler for bookmark (open in current tab)
   bookmarkDiv.addEventListener('click', (e) => {
-    // Don't open if clicking on menu, actions, or preview
+    // Don't open if clicking on menu, actions, preview, or status indicators
     if (e.target.closest('.bookmark-menu-btn') ||
         e.target.closest('.bookmark-actions') ||
-        e.target.closest('.bookmark-preview-container')) {
+        e.target.closest('.bookmark-preview-container') ||
+        e.target.closest('.status-indicators')) {
       return;
     }
     window.open(bookmark.url, '_self');
