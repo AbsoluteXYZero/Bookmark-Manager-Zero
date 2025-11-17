@@ -1401,15 +1401,17 @@ async function closeExtension() {
 
 // Open VirusTotal report in new tab
 async function openVirusTotalReport(url) {
-  if (isPreviewMode) {
-    alert(`🔍 In the Firefox extension, this would open VirusTotal report for:\n${url}`);
-    return;
-  }
-
   try {
     // Create VirusTotal search URL - this will show existing results or allow scanning
     const vtUrl = `https://www.virustotal.com/gui/search/${encodeURIComponent(url)}`;
-    await browser.tabs.create({ url: vtUrl });
+
+    if (isPreviewMode) {
+      // In preview mode, use window.open since browser.tabs is not available
+      window.open(vtUrl, '_blank');
+    } else {
+      // In extension mode, use browser.tabs.create for proper tab management
+      await browser.tabs.create({ url: vtUrl });
+    }
   } catch (error) {
     console.error('Error opening VirusTotal report:', error);
     alert('Failed to open VirusTotal report');
