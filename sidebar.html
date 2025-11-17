@@ -87,6 +87,14 @@
       position: sticky;
       top: 0;
       z-index: 100;
+      position: relative;
+    }
+
+    .header-settings {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      z-index: 101;
     }
 
     .logo-container {
@@ -1055,6 +1063,19 @@
 </head>
 <body class="blue-dark">
   <div class="header">
+    <div class="header-settings">
+      <div class="settings-btn-wrapper">
+        <button id="settingsBtn" class="btn btn-icon" title="Settings">
+          <span>⚙️</span>
+        </button>
+        <div id="settingsMenu" class="settings-menu">
+          <button class="action-btn" id="switchSideBtn">
+            <span class="icon">↔️</span>
+            <span>Switch Sidebar Side</span>
+          </button>
+        </div>
+      </div>
+    </div>
     <div class="logo-container">
       <div class="logo-icon">🔖</div>
       <div class="logo-text">
@@ -1167,17 +1188,6 @@
                 <span>200%</span>
               </div>
             </div>
-          </div>
-        </div>
-        <div class="settings-btn-wrapper">
-          <button id="settingsBtn" class="btn btn-icon" title="Settings">
-            <span>⚙️</span>
-          </button>
-          <div id="settingsMenu" class="settings-menu">
-            <button class="action-btn" id="switchSideBtn">
-              <span class="icon">↔️</span>
-              <span>Switch Sidebar Side</span>
-            </button>
           </div>
         </div>
       </div>
@@ -1318,6 +1328,6 @@
     </div>
   </div>
 
-  <script src="sidebar.js?v=15"></script>
+  <script src="sidebar.js?v=16"></script>
 </body>
 </html>
