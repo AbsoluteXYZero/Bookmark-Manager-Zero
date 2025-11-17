@@ -215,8 +215,63 @@ const checkLinkStatus = async (url) => {
   }
 };
 
-// Check URL safety using URLhaus API
-// URLhaus by abuse.ch - free malware URL database
+// URLhaus malicious URL database (downloaded from text file)
+// Using abuse.ch's plain text list - updated continuously
+let maliciousUrlsSet = new Set();
+let urlhausLastUpdate = 0;
+const URLHAUS_UPDATE_INTERVAL = 24 * 60 * 60 * 1000; // 24 hours
+
+// Download and parse URLhaus malicious URLs text file
+const updateURLhausDatabase = async () => {
+  try {
+    console.log(`[URLhaus] Downloading malicious URLs database...`);
+
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 60000); // 60s timeout for download
+
+    const response = await fetch('https://urlhaus.abuse.ch/downloads/text/', {
+      signal: controller.signal
+    });
+
+    clearTimeout(timeout);
+
+    if (!response.ok) {
+      console.error(`[URLhaus] Failed to download database: ${response.status}`);
+      return false;
+    }
+
+    const text = await response.text();
+    const lines = text.split('\n');
+
+    // Clear existing set
+    maliciousUrlsSet.clear();
+
+    // Parse lines (skip comments starting with #)
+    let count = 0;
+    for (const line of lines) {
+      const trimmed = line.trim();
+      if (trimmed && !trimmed.startsWith('#')) {
+        maliciousUrlsSet.add(trimmed.toLowerCase());
+        count++;
+      }
+    }
+
+    urlhausLastUpdate = Date.now();
+    console.log(`[URLhaus] Database updated: ${count} malicious URLs loaded`);
+
+    // Store update timestamp
+    await browser.storage.local.set({
+      urlhausLastUpdate: urlhausLastUpdate
+    });
+
+    return true;
+  } catch (error) {
+    console.error(`[URLhaus] Error updating database:`, error);
+    return false;
+  }
+};
+
+// Check URL safety using URLhaus downloaded database
 const checkURLSafety = async (url) => {
   // Check cache first
   const cached = await getCachedResult(url, 'safetyStatusCache');
@@ -230,84 +285,39 @@ const checkURLSafety = async (url) => {
   let result;
 
   try {
-    const urlObj = new URL(url);
-    const hostname = urlObj.hostname.toLowerCase();
-
-    console.log(`[URLhaus] Checking ${hostname} via URLhaus HOST API`);
-
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 10000); // 10s timeout
-
-    // Try URLhaus HOST endpoint instead of URL endpoint
-    const apiUrl = 'https://urlhaus-api.abuse.ch/v1/host/';
-
-    // Prepare POST body (URL-encoded) - use hostname instead of full URL
-    const formData = new URLSearchParams();
-    formData.append('host', hostname);
-
-    console.log(`[URLhaus] Request body:`, formData.toString());
-
-    const response = await fetch(apiUrl, {
-      method: 'POST',
-      signal: controller.signal,
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      body: formData.toString()
-    });
-
-    clearTimeout(timeout);
-
-    console.log(`[URLhaus] Response status: ${response.status}`);
-
-    if (!response.ok) {
-      console.log(`[URLhaus] Request failed with status ${response.status}`);
-      // Try to get error details
-      try {
-        const errorText = await response.text();
-        console.log(`[URLhaus] Error response body:`, errorText);
-      } catch (e) {
-        console.log(`[URLhaus] Could not read error response`);
-      }
-      result = 'unknown';
-      await setCachedResult(url, result, 'safetyStatusCache');
-      return result;
+    // Update database if needed (once per 24 hours)
+    const now = Date.now();
+    if (now - urlhausLastUpdate > URLHAUS_UPDATE_INTERVAL) {
+      console.log(`[URLhaus] Database is stale, updating...`);
+      await updateURLhausDatabase();
     }
 
-    const data = await response.json();
-    console.log(`[URLhaus] API response:`, data);
-
-    // Parse URLhaus HOST response
-    if (data.query_status === 'no_results') {
-      // Host not in URLhaus database = likely safe (or not yet discovered)
-      console.log(`[URLhaus] No results found - host not in database`);
-      result = 'safe';
-    } else if (data.query_status === 'ok') {
-      // Host found in database - check URLs
-      const urls = data.urls || [];
-      const urlCount = data.url_count || 0;
-
-      console.log(`[URLhaus] Host found with ${urlCount} URLs in database`);
-
-      if (urls.length === 0) {
-        // Host in DB but no URLs - probably old/cleaned
-        result = 'safe';
-      } else {
-        // Check if any URLs are currently online
-        const onlineUrls = urls.filter(u => u.url_status === 'online');
-
-        if (onlineUrls.length > 0) {
-          console.log(`[URLhaus] ${onlineUrls.length} active malware URLs found for this host`);
-          result = 'unsafe';
-        } else {
-          console.log(`[URLhaus] Host was malicious but URLs are now offline`);
-          result = 'warning';
-        }
+    // If database is empty, try to load it
+    if (maliciousUrlsSet.size === 0) {
+      console.log(`[URLhaus] Database empty, loading...`);
+      const success = await updateURLhausDatabase();
+      if (!success) {
+        console.log(`[URLhaus] Could not load database, returning unknown`);
+        result = 'unknown';
+        await setCachedResult(url, result, 'safetyStatusCache');
+        return result;
       }
+    }
+
+    // Normalize URL for lookup (remove protocol, trailing slash, lowercase)
+    const normalizedUrl = url.toLowerCase()
+      .replace(/^https?:\/\//, '')
+      .replace(/\/$/, '');
+
+    console.log(`[URLhaus] Checking URL against database: ${normalizedUrl}`);
+
+    // Check if URL is in the malicious set
+    if (maliciousUrlsSet.has(normalizedUrl)) {
+      console.log(`[URLhaus] ⚠️ URL found in malicious database!`);
+      result = 'unsafe';
     } else {
-      // Unexpected response
-      console.log(`[URLhaus] Unexpected query_status: ${data.query_status}`);
-      result = 'unknown';
+      console.log(`[URLhaus] ✓ URL not found in malicious database`);
+      result = 'safe';
     }
 
     console.log(`[URLhaus] Final result for ${url}: ${result}`);
