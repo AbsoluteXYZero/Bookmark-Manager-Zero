@@ -221,26 +221,28 @@ let maliciousUrlsSet = new Set();
 let urlhausLastUpdate = 0;
 const URLHAUS_UPDATE_INTERVAL = 24 * 60 * 60 * 1000; // 24 hours
 
-// Google Safe Browsing API configuration (optional fallback)
+// Check URL using Google Safe Browsing API (fallback/redundancy check)
 // Get a free API key at: https://developers.google.com/safe-browsing/v4/get-started
 // Free tier: 10,000 requests per day
-const GOOGLE_SAFE_BROWSING_API_KEY = ''; // Leave empty to disable Google Safe Browsing fallback
-
-// Check URL using Google Safe Browsing API (fallback/redundancy check)
+// API key is stored in browser.storage.local.googleSafeBrowsingApiKey
 const checkGoogleSafeBrowsing = async (url) => {
-  if (!GOOGLE_SAFE_BROWSING_API_KEY) {
-    console.log(`[Google SB] API key not configured, skipping`);
-    return 'unknown';
-  }
-
   try {
+    // Get API key from storage
+    const storage = await browser.storage.local.get('googleSafeBrowsingApiKey');
+    const apiKey = storage.googleSafeBrowsingApiKey;
+
+    if (!apiKey || apiKey.trim() === '') {
+      console.log(`[Google SB] API key not configured, skipping`);
+      return 'unknown';
+    }
+
     console.log(`[Google SB] Checking ${url}...`);
 
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 5000); // 5s timeout
 
     const response = await fetch(
-      `https://safebrowsing.googleapis.com/v4/threatMatches:find?key=${GOOGLE_SAFE_BROWSING_API_KEY}`,
+      `https://safebrowsing.googleapis.com/v4/threatMatches:find?key=${apiKey}`,
       {
         method: 'POST',
         signal: controller.signal,
@@ -387,8 +389,11 @@ const checkURLSafety = async (url) => {
 
     console.log(`[URLhaus] ✓ URL not found in malicious database`);
 
-    // URLhaus says safe - check Google Safe Browsing as redundancy
-    if (GOOGLE_SAFE_BROWSING_API_KEY) {
+    // URLhaus says safe - check Google Safe Browsing as redundancy if API key is configured
+    const storage = await browser.storage.local.get('googleSafeBrowsingApiKey');
+    const hasApiKey = storage.googleSafeBrowsingApiKey && storage.googleSafeBrowsingApiKey.trim() !== '';
+
+    if (hasApiKey) {
       console.log(`[Safety Check] URLhaus says safe, checking Google Safe Browsing as redundancy...`);
       const googleResult = await checkGoogleSafeBrowsing(url);
 

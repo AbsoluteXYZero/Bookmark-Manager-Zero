@@ -46,6 +46,7 @@ const openInTabBtn = document.getElementById('openInTabBtn');
 const closeExtensionBtn = document.getElementById('closeExtensionBtn');
 const clearCacheBtn = document.getElementById('clearCacheBtn');
 const rescanBookmarksBtn = document.getElementById('rescanBookmarksBtn');
+const setApiKeyBtn = document.getElementById('setApiKeyBtn');
 
 // Undo toast DOM elements
 const undoToast = document.getElementById('undoToast');
@@ -2923,6 +2924,31 @@ function setupEventListeners() {
   // Rescan all bookmarks
   rescanBookmarksBtn.addEventListener('click', async () => {
     await rescanAllBookmarks();
+    closeAllMenus();
+  });
+
+  // Set Google API Key
+  setApiKeyBtn.addEventListener('click', async () => {
+    const currentKey = await browser.storage.local.get('googleSafeBrowsingApiKey');
+    const hasKey = currentKey.googleSafeBrowsingApiKey && currentKey.googleSafeBrowsingApiKey.length > 0;
+
+    const promptMessage = hasKey
+      ? 'Google Safe Browsing API Key is currently set.\n\nEnter a new key to update, or leave blank to remove:'
+      : 'Enter your Google Safe Browsing API Key:\n\n(Get a free key at: https://developers.google.com/safe-browsing/v4/get-started)\nFree tier: 10,000 requests/day\n\nLeave blank to disable Google Safe Browsing redundancy check.';
+
+    const apiKey = prompt(promptMessage, '');
+
+    if (apiKey !== null) { // User clicked OK (not Cancel)
+      if (apiKey.trim() === '') {
+        // Remove API key
+        await browser.storage.local.remove('googleSafeBrowsingApiKey');
+        alert('Google Safe Browsing API key removed.\n\nOnly URLhaus will be used for safety checking.');
+      } else {
+        // Save API key
+        await browser.storage.local.set({ googleSafeBrowsingApiKey: apiKey.trim() });
+        alert('Google Safe Browsing API key saved!\n\nSafety checking will now use:\n1. URLhaus (primary)\n2. Google Safe Browsing (redundancy)');
+      }
+    }
     closeAllMenus();
   });
 
