@@ -296,7 +296,10 @@ const checkURLSafety = async (url) => {
       console.log(`[VT Check] ${hostname} - Malicious: ${malicious}, Suspicious: ${suspicious}`);
 
       // Determine safety based on detections
-      if (malicious > 3) {
+      if (foundPatterns.length === 0) {
+        console.warn(`[VT Check] No patterns matched for ${hostname} - VT scraping may be broken!`);
+        result = 'unknown'; // Can't parse VT response
+      } else if (malicious > 3) {
         result = 'unsafe'; // Multiple vendors flagged as malicious
       } else if (malicious > 0 || suspicious > 5) {
         result = 'warning'; // Some detections or many suspicious
@@ -308,9 +311,9 @@ const checkURLSafety = async (url) => {
       return result;
 
     } catch (vtError) {
-      console.log(`[VT Check] Error scraping VT for ${hostname}:`, vtError.message);
-      // Fall back to safe on error (VT timeout, network issue, etc.)
-      result = 'safe';
+      console.error(`[VT Check] Error scraping VT for ${hostname}:`, vtError.message);
+      // Fall back to unknown on error - something is broken
+      result = 'unknown';
       await setCachedResult(url, result, 'safetyStatusCache');
       return result;
     }
@@ -337,6 +340,41 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
       sendResponse({ status });
     });
     return true; // Required to indicate an asynchronous response.
+  }
+
+  if (request.action === "testVirusTotal") {
+    // Manual VT test for debugging
+    (async () => {
+      try {
+        const urlObj = new URL(request.url);
+        const hostname = urlObj.hostname.toLowerCase();
+        const vtUrl = `https://www.virustotal.com/gui/search/${encodeURIComponent(hostname)}`;
+
+        console.log(`[VT TEST] Manual test for ${hostname}`);
+        console.log(`[VT TEST] Fetching ${vtUrl}`);
+
+        const response = await fetch(vtUrl, {
+          headers: {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101 Firefox/91.0'
+          }
+        });
+
+        console.log(`[VT TEST] Response status: ${response.status}`);
+        console.log(`[VT TEST] Response headers:`, [...response.headers.entries()]);
+
+        const html = await response.text();
+        console.log(`[VT TEST] HTML length: ${html.length}`);
+        console.log(`[VT TEST] First 1000 chars:`, html.substring(0, 1000));
+        console.log(`[VT TEST] Search for "malicious":`, html.includes('malicious'));
+        console.log(`[VT TEST] Search for "suspicious":`, html.includes('suspicious'));
+
+        sendResponse({ success: true, htmlLength: html.length, status: response.status });
+      } catch (error) {
+        console.error(`[VT TEST] Error:`, error);
+        sendResponse({ success: false, error: error.message });
+      }
+    })();
+    return true;
   }
 
   if (request.action === "getPageContent") {

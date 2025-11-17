@@ -46,6 +46,7 @@ const openInTabBtn = document.getElementById('openInTabBtn');
 const closeExtensionBtn = document.getElementById('closeExtensionBtn');
 const clearCacheBtn = document.getElementById('clearCacheBtn');
 const rescanBookmarksBtn = document.getElementById('rescanBookmarksBtn');
+const testVTBtn = document.getElementById('testVTBtn');
 
 // Undo toast DOM elements
 const undoToast = document.getElementById('undoToast');
@@ -2925,6 +2926,23 @@ function setupEventListeners() {
   // Rescan all bookmarks
   rescanBookmarksBtn.addEventListener('click', async () => {
     await rescanAllBookmarks();
+    closeAllMenus();
+  });
+
+  // Test VirusTotal (Debug)
+  testVTBtn.addEventListener('click', async () => {
+    const testUrl = prompt('Enter a URL to test with VirusTotal:\n\n(Open browser console F12, then click Inspect on extension in about:debugging to see results)', 'https://example.com');
+    if (testUrl) {
+      try {
+        const response = await browser.runtime.sendMessage({
+          action: 'testVirusTotal',
+          url: testUrl
+        });
+        alert(`VirusTotal Test:\n\nStatus: ${response.status || response.error}\nHTML Length: ${response.htmlLength || 'N/A'}\n\nCheck the extension console for detailed logs.\n\nTo see logs: about:debugging -> This Firefox -> Bookmark Manager Zero -> Inspect`);
+      } catch (error) {
+        alert(`Test failed: ${error.message}`);
+      }
+    }
     closeAllMenus();
   });
 
