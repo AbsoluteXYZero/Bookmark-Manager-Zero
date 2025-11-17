@@ -1408,9 +1408,17 @@ async function handleBookmarkAction(action, bookmark) {
       break;
 
     case 'reader-view':
-      // Open in Firefox Reader View mode
-      const readerUrl = `about:reader?url=${encodeURIComponent(bookmark.url)}`;
-      window.open(readerUrl, '_blank');
+      // Open in Firefox Reader View mode using tabs API
+      if (isPreviewMode) {
+        // In preview mode, just open normally
+        window.open(bookmark.url, '_blank');
+      } else {
+        // Use Firefox tabs API to open in reader mode
+        browser.tabs.create({
+          url: bookmark.url,
+          openInReaderMode: true
+        });
+      }
       break;
 
     case 'edit':
