@@ -948,7 +948,18 @@ function createBookmarkElement(bookmark) {
         e.target.closest('.status-indicators')) {
       return;
     }
-    window.open(bookmark.url, '_self');
+    // Open in active tab
+    if (isPreviewMode) {
+      window.open(bookmark.url, '_blank');
+    } else {
+      browser.tabs.query({ active: true, currentWindow: true }).then(tabs => {
+        if (tabs[0]) {
+          browser.tabs.update(tabs[0].id, { url: bookmark.url });
+        } else {
+          browser.tabs.create({ url: bookmark.url });
+        }
+      });
+    }
   });
 
   // Add menu toggle handler
@@ -1855,11 +1866,25 @@ function updateBookmarkInTree(bookmarkId, updates) {
 async function handleBookmarkAction(action, bookmark) {
   switch (action) {
     case 'open':
-      window.open(bookmark.url, '_self');
+      // Open in active tab
+      if (isPreviewMode) {
+        window.open(bookmark.url, '_blank');
+      } else {
+        const tabs = await browser.tabs.query({ active: true, currentWindow: true });
+        if (tabs[0]) {
+          browser.tabs.update(tabs[0].id, { url: bookmark.url });
+        } else {
+          browser.tabs.create({ url: bookmark.url });
+        }
+      }
       break;
 
     case 'open-new-tab':
-      window.open(bookmark.url, '_blank');
+      if (isPreviewMode) {
+        window.open(bookmark.url, '_blank');
+      } else {
+        browser.tabs.create({ url: bookmark.url });
+      }
       break;
 
     case 'reader-view':
