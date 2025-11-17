@@ -1402,8 +1402,18 @@ async function closeExtension() {
 // Open VirusTotal report in new tab
 async function openVirusTotalReport(url) {
   try {
-    // Create VirusTotal search URL - this will show existing results or allow scanning
-    const vtUrl = `https://www.virustotal.com/gui/search/${encodeURIComponent(url)}`;
+    // Extract domain from URL for VirusTotal lookup
+    let domain;
+    try {
+      const urlObj = new URL(url);
+      domain = urlObj.hostname;
+    } catch (e) {
+      // If URL parsing fails, try using the URL as-is
+      domain = url.replace(/^https?:\/\//, '').split('/')[0];
+    }
+
+    // Create VirusTotal domain lookup URL
+    const vtUrl = `https://www.virustotal.com/gui/domain/${domain}/detection`;
 
     if (isPreviewMode) {
       // In preview mode, use window.open since browser.tabs is not available
