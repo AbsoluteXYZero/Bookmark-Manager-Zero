@@ -225,6 +225,8 @@ const checkURLSafety = async (url) => {
     return cached;
   }
 
+  console.log(`[Safety Check] Starting safety check for ${url}`);
+
   let result;
 
   try {
@@ -232,17 +234,14 @@ const checkURLSafety = async (url) => {
     const hostname = urlObj.hostname.toLowerCase();
 
     // Quick check: Known safe domains - skip VirusTotal
+    // Keep this list VERY small to ensure most sites get checked via VT
     const safeDomains = [
-      'google.com', 'youtube.com', 'github.com', 'stackoverflow.com',
-      'wikipedia.org', 'mozilla.org', 'firefox.com', 'microsoft.com',
-      'apple.com', 'amazon.com', 'reddit.com', 'twitter.com', 'facebook.com',
-      'instagram.com', 'linkedin.com', 'netflix.com', 'adobe.com',
-      'dropbox.com', 'wordpress.com', 'blogspot.com', 'medium.com',
-      'npmjs.com', 'cloudflare.com', 'jsdelivr.com', 'cdnjs.com'
+      'google.com', 'youtube.com', 'github.com', 'mozilla.org'
     ];
 
     if (safeDomains.some(domain => hostname.endsWith(domain))) {
       result = 'safe';
+      console.log(`[Safety Check] ${hostname} is on safeDomains whitelist - skipping VT`);
       await setCachedResult(url, result, 'safetyStatusCache');
       return result;
     }
@@ -267,6 +266,8 @@ const checkURLSafety = async (url) => {
       const timeout = setTimeout(() => controller.abort(), 5000); // 5s timeout
 
       const vtUrl = `https://www.virustotal.com/gui/search/${encodeURIComponent(hostname)}`;
+      console.log(`[VT Check] Fetching ${vtUrl}`);
+
       const response = await fetch(vtUrl, {
         signal: controller.signal,
         headers: {
@@ -283,6 +284,11 @@ const checkURLSafety = async (url) => {
       }
 
       const html = await response.text();
+      console.log(`[VT Check] Received HTML for ${hostname}, length: ${html.length}`);
+
+      // Log a sample of the HTML to help debug
+      const htmlSample = html.substring(0, 500);
+      console.log(`[VT Check] HTML sample: ${htmlSample}`);
 
       // Look for detection indicators in the HTML
       // VT embeds data in script tags and meta tags
@@ -297,17 +303,20 @@ const checkURLSafety = async (url) => {
 
       let malicious = 0;
       let suspicious = 0;
+      let foundPatterns = [];
 
       for (const pattern of detectionPatterns) {
         const match = html.match(pattern);
         if (match) {
           const count = parseInt(match[1]);
+          foundPatterns.push(`${pattern.source}: ${count}`);
           if (pattern.source.includes('malicious')) malicious = count;
           if (pattern.source.includes('suspicious')) suspicious = count;
           if (pattern.source.includes('positives')) malicious = Math.max(malicious, count);
         }
       }
 
+      console.log(`[VT Check] ${hostname} - Found patterns: ${foundPatterns.join(', ')}`);
       console.log(`[VT Check] ${hostname} - Malicious: ${malicious}, Suspicious: ${suspicious}`);
 
       // Determine safety based on detections
