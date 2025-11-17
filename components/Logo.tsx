@@ -20,9 +20,14 @@ export const Logo: React.FC = () => (
       </svg>
     </div>
     <div>
-      <h1 className="text-3xl font-bold text-slate-900 dark:text-slate-100 tracking-tight">
-        Bookmark Manager Zero
-      </h1>
+      <div className="flex items-center gap-2">
+        <h1 className="text-3xl font-bold text-slate-900 dark:text-slate-100 tracking-tight">
+          Bookmark Manager Zero
+        </h1>
+        <span className="px-2 py-0.5 text-xs font-semibold bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full">
+          v0.3
+        </span>
+      </div>
       <p className="text-slate-500 dark:text-slate-400 mt-1">
         A modern interface for your native Firefox bookmarks.
       </p>
