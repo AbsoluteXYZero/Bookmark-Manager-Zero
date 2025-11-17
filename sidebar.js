@@ -2297,23 +2297,47 @@ function setupEventListeners() {
     }
   });
 
-  // Listen for bookmark changes (only in extension mode)
+  // BIDIRECTIONAL SYNC: Listen for bookmark changes (only in extension mode)
+  // This ensures the extension automatically updates when bookmarks change in Firefox
   if (!isPreviewMode) {
-    browser.bookmarks.onCreated.addListener(() => {
-      loadBookmarks().then(renderBookmarks);
+    let syncTimeout = null;
+
+    // Debounced sync function to prevent excessive reloads
+    const syncBookmarks = (eventType) => {
+      clearTimeout(syncTimeout);
+      syncTimeout = setTimeout(async () => {
+        try {
+          console.log(`[Bookmark Sync] ${eventType} - Syncing bookmarks from Firefox...`);
+          await loadBookmarks();
+          renderBookmarks();
+          console.log('[Bookmark Sync] ✓ Sync complete');
+        } catch (error) {
+          console.error('[Bookmark Sync] Failed to sync:', error);
+        }
+      }, 100); // 100ms debounce
+    };
+
+    browser.bookmarks.onCreated.addListener((id, bookmark) => {
+      console.log('[Bookmark Sync] Bookmark created:', bookmark.title || bookmark.url);
+      syncBookmarks('onCreated');
     });
 
-    browser.bookmarks.onRemoved.addListener(() => {
-      loadBookmarks().then(renderBookmarks);
+    browser.bookmarks.onRemoved.addListener((id, removeInfo) => {
+      console.log('[Bookmark Sync] Bookmark removed:', id);
+      syncBookmarks('onRemoved');
     });
 
-    browser.bookmarks.onChanged.addListener(() => {
-      loadBookmarks().then(renderBookmarks);
+    browser.bookmarks.onChanged.addListener((id, changeInfo) => {
+      console.log('[Bookmark Sync] Bookmark changed:', changeInfo);
+      syncBookmarks('onChanged');
     });
 
-    browser.bookmarks.onMoved.addListener(() => {
-      loadBookmarks().then(renderBookmarks);
+    browser.bookmarks.onMoved.addListener((id, moveInfo) => {
+      console.log('[Bookmark Sync] Bookmark moved:', id);
+      syncBookmarks('onMoved');
     });
+
+    console.log('[Bookmark Sync] ✓ Real-time bidirectional sync enabled');
   }
 }
 
