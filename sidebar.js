@@ -281,6 +281,22 @@ function getMockBookmarks() {
           type: 'bookmark',
           linkStatus: 'live',
           safetyStatus: 'safe'
+        },
+        {
+          id: '20',
+          title: 'GitHub (Duplicate)',
+          url: 'https://github.com',
+          type: 'bookmark',
+          linkStatus: 'live',
+          safetyStatus: 'safe'
+        },
+        {
+          id: '21',
+          title: 'Google Search',
+          url: 'https://www.google.com',
+          type: 'bookmark',
+          linkStatus: 'live',
+          safetyStatus: 'safe'
         }
       ]
     },
@@ -309,6 +325,53 @@ function getMockBookmarks() {
           id: '15',
           title: 'Material Design',
           url: 'https://material.io',
+          type: 'bookmark',
+          linkStatus: 'live',
+          safetyStatus: 'safe'
+        },
+        {
+          id: '22',
+          title: 'MDN Docs (Duplicate)',
+          url: 'https://developer.mozilla.org',
+          type: 'bookmark',
+          linkStatus: 'live',
+          safetyStatus: 'safe'
+        },
+        {
+          id: '23',
+          title: 'Google',
+          url: 'https://www.google.com',
+          type: 'bookmark',
+          linkStatus: 'live',
+          safetyStatus: 'safe'
+        }
+      ]
+    },
+    {
+      id: '24',
+      title: 'Favorites',
+      type: 'folder',
+      children: [
+        {
+          id: '25',
+          title: 'GitHub - My Favorite',
+          url: 'https://github.com',
+          type: 'bookmark',
+          linkStatus: 'live',
+          safetyStatus: 'safe'
+        },
+        {
+          id: '26',
+          title: 'Google Homepage',
+          url: 'https://www.google.com',
+          type: 'bookmark',
+          linkStatus: 'live',
+          safetyStatus: 'safe'
+        },
+        {
+          id: '27',
+          title: 'Stack Overflow Q&A',
+          url: 'https://stackoverflow.com',
           type: 'bookmark',
           linkStatus: 'live',
           safetyStatus: 'safe'
