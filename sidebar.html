@@ -265,6 +265,33 @@
       z-index: 100;
     }
 
+    /* Drag and drop indicators */
+    .bookmark-item.drop-before::before,
+    .folder-item.drop-before::before {
+      content: '';
+      position: absolute;
+      top: -4px;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--md-sys-color-primary);
+      border-radius: 2px;
+      z-index: 1000;
+    }
+
+    .bookmark-item.drop-after::after,
+    .folder-item.drop-after::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--md-sys-color-primary);
+      border-radius: 2px;
+      z-index: 1000;
+    }
+
     .status-indicators {
       display: flex;
       align-items: center;
@@ -1361,6 +1388,6 @@
     </div>
   </div>
 
-  <script src="sidebar.js?v=34"></script>
+  <script src="sidebar.js?v=35"></script>
 </body>
 </html>

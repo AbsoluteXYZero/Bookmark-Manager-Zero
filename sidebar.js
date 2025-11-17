@@ -490,6 +490,7 @@ function createFolderElement(folder) {
   const folderDiv = document.createElement('div');
   folderDiv.className = 'folder-item';
   folderDiv.dataset.id = folder.id;
+  folderDiv.draggable = true;
 
   const isExpanded = expandedFolders.has(folder.id);
   const childCount = countBookmarks(folder);
@@ -546,6 +547,40 @@ function createFolderElement(folder) {
       await handleFolderAction(action, folder);
       closeAllMenus();
     });
+  });
+
+  // Drag and drop handlers for folders
+  folderDiv.addEventListener('dragstart', (e) => {
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/plain', folder.id);
+    e.dataTransfer.setData('itemType', 'folder');
+    folderDiv.style.opacity = '0.5';
+  });
+
+  folderDiv.addEventListener('dragend', () => {
+    folderDiv.style.opacity = '1';
+    removeAllDropIndicators();
+  });
+
+  folderDiv.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+    handleDragOver(e, folderDiv);
+  });
+
+  folderDiv.addEventListener('dragleave', (e) => {
+    if (!folderDiv.contains(e.relatedTarget)) {
+      removeDropIndicator(folderDiv);
+    }
+  });
+
+  folderDiv.addEventListener('drop', async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    removeAllDropIndicators();
+
+    const draggedId = e.dataTransfer.getData('text/plain');
+    await handleDrop(draggedId, folder.id, folderDiv);
   });
 
   // Render children if expanded
@@ -655,11 +690,34 @@ function createBookmarkElement(bookmark) {
   bookmarkDiv.addEventListener('dragstart', (e) => {
     e.dataTransfer.effectAllowed = 'move';
     e.dataTransfer.setData('text/plain', bookmark.id);
+    e.dataTransfer.setData('itemType', 'bookmark');
     bookmarkDiv.style.opacity = '0.5';
   });
 
   bookmarkDiv.addEventListener('dragend', () => {
     bookmarkDiv.style.opacity = '1';
+    removeAllDropIndicators();
+  });
+
+  bookmarkDiv.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+    handleDragOver(e, bookmarkDiv);
+  });
+
+  bookmarkDiv.addEventListener('dragleave', (e) => {
+    if (!bookmarkDiv.contains(e.relatedTarget)) {
+      removeDropIndicator(bookmarkDiv);
+    }
+  });
+
+  bookmarkDiv.addEventListener('drop', async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    removeAllDropIndicators();
+
+    const draggedId = e.dataTransfer.getData('text/plain');
+    await handleDrop(draggedId, bookmark.id, bookmarkDiv);
   });
 
   // Preview hover handler - load image on first hover
@@ -727,6 +785,106 @@ function getPreviewUrl(url) {
     console.error('Error generating preview URL:', error);
     return '';
   }
+}
+
+// Drag and drop helper functions
+function handleDragOver(e, targetElement) {
+  const rect = targetElement.getBoundingClientRect();
+  const midpoint = rect.top + rect.height / 2;
+  const dropPosition = e.clientY < midpoint ? 'before' : 'after';
+
+  removeAllDropIndicators();
+
+  if (dropPosition === 'before') {
+    targetElement.classList.add('drop-before');
+  } else {
+    targetElement.classList.add('drop-after');
+  }
+}
+
+function removeDropIndicator(element) {
+  element.classList.remove('drop-before', 'drop-after');
+}
+
+function removeAllDropIndicators() {
+  document.querySelectorAll('.drop-before, .drop-after').forEach(el => {
+    el.classList.remove('drop-before', 'drop-after');
+  });
+}
+
+async function handleDrop(draggedId, targetId, targetElement) {
+  if (draggedId === targetId) return; // Can't drop on itself
+
+  if (isPreviewMode) {
+    console.log(`Preview mode: Would move ${draggedId} relative to ${targetId}`);
+    return;
+  }
+
+  try {
+    // Get the position to drop (before or after target)
+    const dropBefore = targetElement.classList.contains('drop-before');
+
+    // Find the dragged and target items in the tree
+    const draggedItem = findBookmarkById(bookmarkTree, draggedId);
+    const targetItem = findBookmarkById(bookmarkTree, targetId);
+
+    if (!draggedItem || !targetItem) {
+      console.error('Could not find dragged or target item');
+      return;
+    }
+
+    // Get target's parent
+    const targetParent = findParentById(bookmarkTree, targetId);
+    const targetParentId = targetParent ? targetParent.id : undefined;
+
+    // Get target's index in its parent
+    let targetIndex;
+    if (targetParent) {
+      targetIndex = targetParent.children.findIndex(child => child.id === targetId);
+    } else {
+      targetIndex = bookmarkTree.findIndex(item => item.id === targetId);
+    }
+
+    // Calculate new index based on drop position
+    const newIndex = dropBefore ? targetIndex : targetIndex + 1;
+
+    // Move the bookmark
+    await browser.bookmarks.move(draggedId, {
+      parentId: targetParentId,
+      index: newIndex
+    });
+
+    // Reload and re-render
+    await loadBookmarks();
+    renderBookmarks();
+  } catch (error) {
+    console.error('Error moving bookmark:', error);
+    alert('Failed to move item');
+  }
+}
+
+// Helper function to find bookmark by ID in tree
+function findBookmarkById(nodes, id) {
+  for (const node of nodes) {
+    if (node.id === id) return node;
+    if (node.children) {
+      const found = findBookmarkById(node.children, id);
+      if (found) return found;
+    }
+  }
+  return null;
+}
+
+// Helper function to find parent of bookmark by ID
+function findParentById(nodes, childId, parent = null) {
+  for (const node of nodes) {
+    if (node.id === childId) return parent;
+    if (node.children) {
+      const found = findParentById(node.children, childId, node);
+      if (found) return found;
+    }
+  }
+  return null;
 }
 
 // Toggle folder expanded state
