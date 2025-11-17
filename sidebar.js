@@ -1437,11 +1437,12 @@ async function handleBookmarkAction(action, bookmark) {
         // In preview mode, just open normally
         window.open(bookmark.url, '_blank');
       } else {
-        // Use Firefox tabs API to open in reader mode
-        browser.tabs.create({
-          url: bookmark.url,
-          openInReaderMode: true
-        });
+        // Create tab and then toggle reader mode
+        const tab = await browser.tabs.create({ url: bookmark.url });
+        // Wait for page to start loading, then toggle reader mode
+        setTimeout(() => {
+          browser.tabs.toggleReaderMode(tab.id);
+        }, 1000);
       }
       break;
 
