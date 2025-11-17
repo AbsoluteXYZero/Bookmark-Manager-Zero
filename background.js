@@ -182,6 +182,20 @@ const checkURLSafety = async (url) => {
       const urlObj = new URL(url);
       hostname = urlObj.hostname.toLowerCase();
 
+      // Common safe domains (whitelist) - check FIRST
+      const safeDomains = [
+        'google.com', 'youtube.com', 'github.com', 'stackoverflow.com',
+        'wikipedia.org', 'mozilla.org', 'firefox.com', 'microsoft.com',
+        'apple.com', 'amazon.com', 'reddit.com', 'twitter.com', 'facebook.com',
+        'instagram.com', 'linkedin.com', 'netflix.com', 'adobe.com',
+        'dropbox.com', 'wordpress.com', 'blogspot.com', 'medium.com',
+        'npmjs.com', 'cloudflare.com', 'jsdelivr.com', 'cdnjs.com'
+      ];
+
+      if (safeDomains.some(domain => hostname.endsWith(domain))) {
+        return 'safe';
+      }
+
       // Known malicious/untrusted domain patterns (blacklist)
       // These are commonly used in phishing, malware, and scam campaigns
       const untrustedPatterns = [
@@ -198,6 +212,11 @@ const checkURLSafety = async (url) => {
         /\.link$/,
         /\.click$/,
         /\.review$/,
+        /\.tk$/,
+        /\.ml$/,
+        /\.ga$/,
+        /\.cf$/,
+        /\.gq$/,
         // Known phishing indicators
         /paypal.*verify/i,
         /amazon.*confirm/i,
@@ -211,31 +230,21 @@ const checkURLSafety = async (url) => {
         return 'unsafe';
       }
 
-      // Check for suspicious patterns (warnings, not necessarily unsafe)
+      // Check for suspicious patterns (URL shorteners, obfuscation)
       if (suspiciousPatterns.some(pattern => pattern.test(url))) {
         return 'warning';
       }
 
-      // Check for HTTPS (lack of HTTPS is a warning sign)
-      if (urlObj.protocol !== 'https:' && !hostname.includes('localhost')) {
+      // HTTP is slightly suspicious but not necessarily unsafe
+      // Only flag as warning if it's a domain that SHOULD use HTTPS
+      const shouldUseHttps = hostname.includes('login') || hostname.includes('account') || hostname.includes('secure');
+      if (urlObj.protocol !== 'https:' && !hostname.includes('localhost') && shouldUseHttps) {
         return 'warning';
       }
 
-      // Common safe domains (whitelist)
-      const safeDomains = [
-        'google.com', 'youtube.com', 'github.com', 'stackoverflow.com',
-        'wikipedia.org', 'mozilla.org', 'firefox.com', 'microsoft.com',
-        'apple.com', 'amazon.com', 'reddit.com', 'twitter.com', 'facebook.com',
-        'instagram.com', 'linkedin.com', 'netflix.com', 'adobe.com',
-        'dropbox.com', 'wordpress.com', 'blogspot.com', 'medium.com'
-      ];
-
-      if (safeDomains.some(domain => hostname.endsWith(domain))) {
-        return 'safe';
-      }
-
-      // If we can't determine, return unknown
-      return 'unknown';
+      // Default to safe for legitimate domains
+      // Only specific red flags should trigger warnings/unsafe
+      return 'safe';
 
     } catch (e) {
       console.warn('URL parsing failed for safety check:', url, e);
