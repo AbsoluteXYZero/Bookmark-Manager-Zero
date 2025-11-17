@@ -740,6 +740,14 @@ function createBookmarkElement(bookmark) {
         </span>
         <span>Open with Textise</span>
       </button>
+      <button class="action-btn" data-action="save-pdf">
+        <span class="icon">
+          <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20M10.1,11.4C10.08,11.44 9.81,13.16 8,16.09C8,16.09 4.5,17.91 5.33,19.27C6,20.35 7.65,19.23 9.07,16.59C9.07,16.59 10.89,15.95 13.31,15.77C13.31,15.77 17.17,17.5 17.7,15.66C18.22,13.8 14.64,14.22 14,14.41C14,14.41 12,13.06 11.5,11.2C11.5,11.2 12.64,7.25 10.89,7.3C9.14,7.35 9.8,10.43 10.1,11.4M10.91,12.44C10.94,12.45 11.38,13.65 12.8,14.9C12.8,14.9 10.47,15.36 9.41,15.8C9.41,15.8 10.41,14.07 10.91,12.44M14.84,15.16C15.42,15 17,14.91 16.88,15.45C16.78,15.97 14.88,15.23 14.84,15.16M10.58,10.34C10.58,10.34 9.7,8.24 10.38,8.23C11.07,8.22 10.88,10.05 10.58,10.34Z"/>
+          </svg>
+        </span>
+        <span>Save Page as PDF</span>
+      </button>
       <button class="action-btn" data-action="edit">
         <span class="icon">
           <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
@@ -1438,6 +1446,31 @@ async function handleBookmarkAction(action, bookmark) {
         window.open(textiseUrl, '_blank');
       } else {
         browser.tabs.create({ url: textiseUrl });
+      }
+      break;
+
+    case 'save-pdf':
+      // Save page as PDF
+      if (isPreviewMode) {
+        alert('PDF saving requires the Firefox extension. Please install the extension to use this feature.');
+      } else {
+        // Open the page in a new tab and save as PDF
+        const tab = await browser.tabs.create({ url: bookmark.url });
+
+        // Wait for the page to load before saving as PDF
+        const listener = (tabId, changeInfo) => {
+          if (tabId === tab.id && changeInfo.status === 'complete') {
+            browser.tabs.onUpdated.removeListener(listener);
+            // Trigger the save as PDF action
+            browser.tabs.saveAsPDF(tab.id).then(() => {
+              console.log('PDF save initiated');
+            }).catch(err => {
+              console.error('Failed to save PDF:', err);
+              alert('Failed to save page as PDF. Please try using the browser\'s built-in print-to-PDF feature.');
+            });
+          }
+        };
+        browser.tabs.onUpdated.addListener(listener);
       }
       break;
 
