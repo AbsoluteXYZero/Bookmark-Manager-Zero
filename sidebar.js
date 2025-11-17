@@ -371,18 +371,53 @@ function renderNodes(nodes, container) {
   });
 }
 
-// Get status dot HTML based on link status
+// Get status icon HTML based on link status
 function getStatusDotHtml(linkStatus) {
-  const statusMap = {
-    'live': { class: 'status-dot-green', title: 'Link is live and accessible' },
-    'dead': { class: 'status-dot-red', title: 'Link is dead or unreachable' },
-    'parked': { class: 'status-dot-yellow', title: 'Domain is parked' },
-    'checking': { class: 'status-dot-gray', title: 'Checking link status...' },
-    'unknown': { class: 'status-dot-gray', title: 'Status unknown' }
+  const statusIcons = {
+    'live': `
+      <span class="status-icon status-live" title="Link is live and accessible">
+        <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M3.9,12C3.9,10.29 5.29,8.9 7,8.9H11V7H7A5,5 0 0,0 2,12A5,5 0 0,0 7,17H11V15.1H7C5.29,15.1 3.9,13.71 3.9,12M8,13H16V11H8V13M17,7H13V8.9H17C18.71,8.9 20.1,10.29 20.1,12C20.1,13.71 18.71,15.1 17,15.1H13V17H17A5,5 0 0,0 22,12A5,5 0 0,0 17,7Z"/>
+        </svg>
+      </span>
+    `,
+    'dead': `
+      <span class="status-icon status-dead" title="Link is dead or unreachable">
+        <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M2,5.27L3.28,4L20,20.72L18.73,22L14.73,18H13V16.27L10.93,14.2C10.78,15.19 10.24,16.08 9.44,16.69L11.28,20.8L9.5,21.58L7.66,17.47C7.46,17.5 7.24,17.5 7,17.5C5.62,17.5 4.5,16.38 4.5,15C4.5,13.77 5.38,12.74 6.56,12.53L2,8M11,7H7.82L5.82,5H7A5,5 0 0,1 12,10V11.18L10.18,9.36C10.06,9.08 10,8.79 10,8.5C10,7.67 10.67,7 11.5,7H13V8.91L11,6.91M17,15.1C18.71,15.1 20.1,13.71 20.1,12C20.1,10.29 18.71,8.9 17,8.9H13V7H17A5,5 0 0,1 22,12C22,13.5 21.2,14.77 20,15.46V17.73C22.36,16.85 24,14.62 24,12A7,7 0 0,0 17,5H11.27L13.27,7H17C19.76,7 22,9.24 22,12C22,13.96 20.81,15.65 19.1,16.45L17,14.35V15.1M8,13H8.73L10.73,15H8V13Z"/>
+        </svg>
+      </span>
+    `,
+    'parked': `
+      <span class="status-icon status-parked" title="Domain is parked">
+        <svg width="14" height="14" viewBox="0 0 24 24">
+          <g fill="currentColor">
+            <path d="M3.9,12C3.9,10.29 5.29,8.9 7,8.9H11V7H7A5,5 0 0,0 2,12A5,5 0 0,0 7,17H11V15.1H7C5.29,15.1 3.9,13.71 3.9,12M8,13H16V11H8V13M17,7H13V8.9H17C18.71,8.9 20.1,10.29 20.1,12C20.1,13.71 18.71,15.1 17,15.1H13V17H17A5,5 0 0,0 22,12A5,5 0 0,0 17,7Z"/>
+          </g>
+          <g fill="#ef4444">
+            <circle cx="18" cy="6" r="5"/>
+            <text x="18" y="9.5" text-anchor="middle" font-size="10" font-weight="bold" fill="white">!</text>
+          </g>
+        </svg>
+      </span>
+    `,
+    'checking': `
+      <span class="status-icon status-checking" title="Checking link status...">
+        <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M3.9,12C3.9,10.29 5.29,8.9 7,8.9H11V7H7A5,5 0 0,0 2,12A5,5 0 0,0 7,17H11V15.1H7C5.29,15.1 3.9,13.71 3.9,12M8,13H16V11H8V13M17,7H13V8.9H17C18.71,8.9 20.1,10.29 20.1,12C20.1,13.71 18.71,15.1 17,15.1H13V17H17A5,5 0 0,0 22,12A5,5 0 0,0 17,7Z"/>
+        </svg>
+      </span>
+    `,
+    'unknown': `
+      <span class="status-icon status-unknown" title="Status unknown">
+        <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M3.9,12C3.9,10.29 5.29,8.9 7,8.9H11V7H7A5,5 0 0,0 2,12A5,5 0 0,0 7,17H11V15.1H7C5.29,15.1 3.9,13.71 3.9,12M8,13H16V11H8V13M17,7H13V8.9H17C18.71,8.9 20.1,10.29 20.1,12C20.1,13.71 18.71,15.1 17,15.1H13V17H17A5,5 0 0,0 22,12A5,5 0 0,0 17,7Z"/>
+        </svg>
+      </span>
+    `
   };
 
-  const status = statusMap[linkStatus] || statusMap['unknown'];
-  return `<span class="status-dot ${status.class}" title="${status.title}">●</span>`;
+  return statusIcons[linkStatus] || statusIcons['unknown'];
 }
 
 // Get shield indicator HTML based on safety status

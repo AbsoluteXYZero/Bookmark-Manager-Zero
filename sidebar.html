@@ -274,33 +274,40 @@
       min-height: 20px;
     }
 
-    .status-dot {
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      font-size: 20px;
+    .status-icon {
+      width: 16px;
+      height: 16px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       cursor: help;
-      line-height: 1;
-      transform: translateY(-2px);
     }
 
-    .status-dot-green {
+    .status-icon svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .status-live {
       color: var(--md-sys-color-success);
     }
 
-    .status-dot-red {
+    .status-dead {
       color: var(--md-sys-color-error);
     }
 
-    .status-dot-yellow {
+    .status-parked {
       color: var(--md-sys-color-warning);
     }
 
-    .status-dot-gray {
+    .status-checking {
       color: var(--md-sys-color-outline);
+      opacity: 0.7;
+    }
+
+    .status-unknown {
+      color: var(--md-sys-color-outline);
+      opacity: 0.5;
     }
 
     .shield-indicator {
@@ -882,11 +889,10 @@
       font-size: 10px;
     }
 
-    .content.grid-view.grid-4 .status-dot,
-    .content.grid-view.grid-5 .status-dot {
-      width: 16px;
-      height: 16px;
-      font-size: 12px;
+    .content.grid-view.grid-4 .status-icon,
+    .content.grid-view.grid-5 .status-icon {
+      width: 14px;
+      height: 14px;
     }
 
     /* 6 column grid - very compact */
@@ -902,10 +908,9 @@
       font-size: 9px;
     }
 
-    .content.grid-view.grid-6 .status-dot {
-      width: 14px;
-      height: 14px;
-      font-size: 10px;
+    .content.grid-view.grid-6 .status-icon {
+      width: 12px;
+      height: 12px;
     }
 
     .content.grid-view.grid-6 .bookmark-menu-btn {
@@ -1336,6 +1341,6 @@
     </div>
   </div>
 
-  <script src="sidebar.js?v=20"></script>
+  <script src="sidebar.js?v=21"></script>
 </body>
 </html>
