@@ -580,11 +580,19 @@ function createFolderElement(folder) {
       <button class="bookmark-menu-btn folder-menu-btn">⋮</button>
       <div class="bookmark-actions">
         <button class="action-btn" data-action="rename">
-          <span class="icon">✏️</span>
+          <span class="icon">
+            <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z"/>
+            </svg>
+          </span>
           <span>Rename</span>
         </button>
         <button class="action-btn danger" data-action="delete">
-          <span class="icon">🗑️</span>
+          <span class="icon">
+            <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/>
+            </svg>
+          </span>
           <span>Delete</span>
         </button>
       </div>
@@ -709,11 +717,19 @@ function createBookmarkElement(bookmark) {
     <button class="bookmark-menu-btn">⋮</button>
     <div class="bookmark-actions">
       <button class="action-btn" data-action="open">
-        <span class="icon">🔗</span>
+        <span class="icon">
+          <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M3.9,12C3.9,10.29 5.29,8.9 7,8.9H11V7H7A5,5 0 0,0 2,12A5,5 0 0,0 7,17H11V15.1H7C5.29,15.1 3.9,13.71 3.9,12M8,13H16V11H8V13M17,7H13V8.9H17C18.71,8.9 20.1,10.29 20.1,12C20.1,13.71 18.71,15.1 17,15.1H13V17H17A5,5 0 0,0 22,12A5,5 0 0,0 17,7Z"/>
+          </svg>
+        </span>
         <span>Open</span>
       </button>
       <button class="action-btn" data-action="open-new-tab">
-        <span class="icon">⧉</span>
+        <span class="icon">
+          <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z"/>
+          </svg>
+        </span>
         <span>Open in New Tab</span>
       </button>
       <button class="action-btn" data-action="reader-view">
@@ -725,7 +741,11 @@ function createBookmarkElement(bookmark) {
         <span>Open Text-Only Page</span>
       </button>
       <button class="action-btn" data-action="edit">
-        <span class="icon">✏️</span>
+        <span class="icon">
+          <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z"/>
+          </svg>
+        </span>
         <span>Edit</span>
       </button>
       <button class="action-btn" data-action="recheck">
@@ -737,7 +757,11 @@ function createBookmarkElement(bookmark) {
         <span>Recheck with VirusTotal</span>
       </button>
       <button class="action-btn danger" data-action="delete">
-        <span class="icon">🗑️</span>
+        <span class="icon">
+          <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/>
+          </svg>
+        </span>
         <span>Delete</span>
       </button>
     </div>
