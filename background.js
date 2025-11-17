@@ -230,17 +230,20 @@ const checkURLSafety = async (url) => {
   let result;
 
   try {
-    console.log(`[URLhaus] Checking ${url} via URLhaus API`);
+    const urlObj = new URL(url);
+    const hostname = urlObj.hostname.toLowerCase();
+
+    console.log(`[URLhaus] Checking ${hostname} via URLhaus HOST API`);
 
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 10000); // 10s timeout
 
-    // URLhaus API endpoint
-    const apiUrl = 'https://urlhaus-api.abuse.ch/v1/url/';
+    // Try URLhaus HOST endpoint instead of URL endpoint
+    const apiUrl = 'https://urlhaus-api.abuse.ch/v1/host/';
 
-    // Prepare POST body (URL-encoded)
+    // Prepare POST body (URL-encoded) - use hostname instead of full URL
     const formData = new URLSearchParams();
-    formData.append('url', url);
+    formData.append('host', hostname);
 
     console.log(`[URLhaus] Request body:`, formData.toString());
 
@@ -274,27 +277,32 @@ const checkURLSafety = async (url) => {
     const data = await response.json();
     console.log(`[URLhaus] API response:`, data);
 
-    // Parse URLhaus response
+    // Parse URLhaus HOST response
     if (data.query_status === 'no_results') {
-      // URL not in URLhaus database = likely safe (or not yet discovered)
-      console.log(`[URLhaus] No results found - URL not in database`);
+      // Host not in URLhaus database = likely safe (or not yet discovered)
+      console.log(`[URLhaus] No results found - host not in database`);
       result = 'safe';
     } else if (data.query_status === 'ok') {
-      // URL found in database - check status
-      const urlStatus = data.url_status; // 'online', 'offline', etc.
-      const threat = data.threat; // 'malware_download', etc.
+      // Host found in database - check URLs
+      const urls = data.urls || [];
+      const urlCount = data.url_count || 0;
 
-      console.log(`[URLhaus] URL status: ${urlStatus}, Threat: ${threat}`);
+      console.log(`[URLhaus] Host found with ${urlCount} URLs in database`);
 
-      if (urlStatus === 'online') {
-        // Active malware URL
-        result = 'unsafe';
-      } else if (urlStatus === 'offline') {
-        // Was malicious but now offline - still warn
-        result = 'warning';
+      if (urls.length === 0) {
+        // Host in DB but no URLs - probably old/cleaned
+        result = 'safe';
       } else {
-        // Unknown status
-        result = 'warning';
+        // Check if any URLs are currently online
+        const onlineUrls = urls.filter(u => u.url_status === 'online');
+
+        if (onlineUrls.length > 0) {
+          console.log(`[URLhaus] ${onlineUrls.length} active malware URLs found for this host`);
+          result = 'unsafe';
+        } else {
+          console.log(`[URLhaus] Host was malicious but URLs are now offline`);
+          result = 'warning';
+        }
       }
     } else {
       // Unexpected response
