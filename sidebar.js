@@ -1091,18 +1091,41 @@ function populateFolderDropdown(selectElement) {
 }
 
 // Open add bookmark modal
-function openAddBookmarkModal() {
+async function openAddBookmarkModal() {
   const modal = document.getElementById('addBookmarkModal');
   const titleInput = document.getElementById('newBookmarkTitle');
   const urlInput = document.getElementById('newBookmarkUrl');
   const folderSelect = document.getElementById('newBookmarkFolder');
 
-  titleInput.value = '';
-  urlInput.value = '';
+  // Try to get the current active tab to pre-populate fields
+  if (!isPreviewMode) {
+    try {
+      const tabs = await browser.tabs.query({ active: true, currentWindow: true });
+      if (tabs && tabs.length > 0) {
+        const currentTab = tabs[0];
+        titleInput.value = currentTab.title || '';
+        urlInput.value = currentTab.url || '';
+      } else {
+        titleInput.value = '';
+        urlInput.value = '';
+      }
+    } catch (error) {
+      console.error('Error getting current tab:', error);
+      titleInput.value = '';
+      urlInput.value = '';
+    }
+  } else {
+    // Preview mode: show example data
+    titleInput.value = 'Current Tab Title';
+    urlInput.value = 'https://example.com/current-page';
+  }
+
   populateFolderDropdown(folderSelect);
 
   modal.classList.remove('hidden');
   titleInput.focus();
+  // Select all text in title for easy editing
+  titleInput.select();
 }
 
 // Close add bookmark modal
