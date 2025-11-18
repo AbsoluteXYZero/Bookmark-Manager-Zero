@@ -895,18 +895,20 @@ function createFolderElement(folder) {
   const isExpanded = expandedFolders.has(folder.id);
   const childCount = countBookmarks(folder);
 
+  const folderTitle = folder.title || 'Unnamed Folder';
+
   folderDiv.innerHTML = `
-    <div class="folder-header" draggable="true">
-      ${multiSelectMode ? `<input type="checkbox" class="item-checkbox" data-id="${folder.id}" ${selectedItems.has(folder.id) ? 'checked' : ''}>` : ''}
-      <div class="folder-toggle ${isExpanded ? 'expanded' : ''}">▶</div>
-      <div class="folder-icon-container">
+    <div class="folder-header" draggable="true" role="button" aria-expanded="${isExpanded}" aria-label="${escapeHtml(folderTitle)} folder with ${childCount} items">
+      ${multiSelectMode ? `<input type="checkbox" class="item-checkbox" data-id="${folder.id}" ${selectedItems.has(folder.id) ? 'checked' : ''} aria-label="Select ${escapeHtml(folderTitle)} folder">` : ''}
+      <div class="folder-toggle ${isExpanded ? 'expanded' : ''}" aria-hidden="true">▶</div>
+      <div class="folder-icon-container" aria-hidden="true">
         <svg class="folder-icon-outline" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
           <path d="M3 7C3 5.89543 3.89543 5 5 5H9L11 7H19C20.1046 7 21 7.89543 21 9V17C21 18.1046 20.1046 19 19 19H5C3.89543 19 3 18.1046 3 17V7Z"/>
         </svg>
         <div class="folder-count" data-digits="${childCount.toString().length}">${childCount}</div>
       </div>
-      <div class="folder-title">${escapeHtml(folder.title || 'Unnamed Folder')}</div>
-      <button class="bookmark-menu-btn folder-menu-btn">⋮</button>
+      <div class="folder-title">${escapeHtml(folderTitle)}</div>
+      <button class="bookmark-menu-btn folder-menu-btn" aria-label="More actions for ${escapeHtml(folderTitle)} folder" aria-haspopup="true" aria-expanded="false">⋮</button>
       <div class="bookmark-actions">
         <button class="action-btn" data-action="rename">
           <span class="icon">
@@ -1050,15 +1052,17 @@ function createBookmarkElement(bookmark) {
     bookmarkInfoHtml += `<div class="bookmark-url">${escapeHtml(new URL(bookmark.url).hostname)}</div>`;
   }
 
+  const bookmarkTitle = bookmark.title || bookmark.url;
+
   bookmarkDiv.innerHTML = `
-    ${multiSelectMode ? `<input type="checkbox" class="item-checkbox" data-id="${bookmark.id}" ${selectedItems.has(bookmark.id) ? 'checked' : ''}>` : ''}
+    ${multiSelectMode ? `<input type="checkbox" class="item-checkbox" data-id="${bookmark.id}" ${selectedItems.has(bookmark.id) ? 'checked' : ''} aria-label="Select ${escapeHtml(bookmarkTitle)}">` : ''}
     <div class="status-indicators">
       ${statusIndicatorsHtml}
     </div>
     <div class="bookmark-info">
       ${bookmarkInfoHtml}
     </div>
-    <button class="bookmark-menu-btn">⋮</button>
+    <button class="bookmark-menu-btn" aria-label="More actions for ${escapeHtml(bookmarkTitle)}" aria-haspopup="true" aria-expanded="false">⋮</button>
     <div class="bookmark-actions">
       <button class="action-btn" data-action="open">
         <span class="icon">
@@ -3733,13 +3737,15 @@ function setupEventListeners() {
   multiSelectToggle.addEventListener('click', () => {
     multiSelectMode = !multiSelectMode;
 
-    // Toggle button appearance
+    // Toggle button appearance and ARIA state
     if (multiSelectMode) {
       multiSelectToggle.style.background = 'var(--md-sys-color-primary)';
       multiSelectToggle.style.color = 'var(--md-sys-color-on-primary)';
+      multiSelectToggle.setAttribute('aria-pressed', 'true');
     } else {
       multiSelectToggle.style.background = '';
       multiSelectToggle.style.color = '';
+      multiSelectToggle.setAttribute('aria-pressed', 'false');
       selectedItems.clear();
     }
 
