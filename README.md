@@ -23,7 +23,7 @@ Bookmark Manager Zero is a Firefox extension that provides a beautiful, feature-
 - 📁 **Folder Management** - Create, edit, move, and organize folders
 - 🏷️ **Smart Filters** - Filter by dead links, unsafe URLs, duplicates
 - 📊 **List & Grid Views** - Choose your preferred layout
-- 🔄 **Drag & Drop** - Reorder bookmarks and folders (coming soon)
+- 🔄 **Drag & Drop** - Reorder bookmarks and folders
 
 ### Link & Safety Checking
 - 🔗 **Link Status Checking** - Automatically detects broken/dead links
@@ -108,7 +108,6 @@ Click the gear icon to access:
 
 #### Global
 - `Ctrl+Shift+B` - Toggle sidebar
-- `Ctrl+F` or `/` - Focus search
 
 #### Navigation (when item selected)
 - `↑/↓` - Navigate bookmarks
