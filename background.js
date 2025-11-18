@@ -312,6 +312,115 @@ const checkGoogleSafeBrowsing = async (url) => {
   }
 };
 
+// Check URL using VirusTotal API
+// Get a free API key at: https://www.virustotal.com/gui/my-apikey
+// Free tier: 500 requests per day, 4 requests per minute
+// API key is stored in browser.storage.local.virusTotalApiKey
+const checkVirusTotal = async (url) => {
+  try {
+    // Get API key from storage
+    const storage = await browser.storage.local.get('virusTotalApiKey');
+    const apiKey = storage.virusTotalApiKey;
+
+    if (!apiKey || apiKey.trim() === '') {
+      console.log(`[VirusTotal] API key not configured, skipping`);
+      return 'unknown';
+    }
+
+    console.log(`[VirusTotal] Checking ${url}...`);
+
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 10000); // 10s timeout
+
+    // VirusTotal V3 API - URL scan
+    const response = await fetch(
+      `https://www.virustotal.com/api/v3/urls`,
+      {
+        method: 'POST',
+        signal: controller.signal,
+        headers: {
+          'x-apikey': apiKey,
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: `url=${encodeURIComponent(url)}`
+      }
+    );
+
+    clearTimeout(timeout);
+
+    if (!response.ok) {
+      console.error(`[VirusTotal] API error: ${response.status}`);
+      return 'unknown';
+    }
+
+    const data = await response.json();
+    const analysisId = data.data?.id;
+
+    if (!analysisId) {
+      console.error(`[VirusTotal] No analysis ID returned`);
+      return 'unknown';
+    }
+
+    // Wait a moment for analysis to complete
+    await new Promise(resolve => setTimeout(resolve, 2000));
+
+    // Get analysis results
+    const analysisController = new AbortController();
+    const analysisTimeout = setTimeout(() => analysisController.abort(), 10000);
+
+    const analysisResponse = await fetch(
+      `https://www.virustotal.com/api/v3/analyses/${analysisId}`,
+      {
+        method: 'GET',
+        signal: analysisController.signal,
+        headers: {
+          'x-apikey': apiKey
+        }
+      }
+    );
+
+    clearTimeout(analysisTimeout);
+
+    if (!analysisResponse.ok) {
+      console.error(`[VirusTotal] Analysis fetch error: ${analysisResponse.status}`);
+      return 'unknown';
+    }
+
+    const analysisData = await analysisResponse.json();
+    const stats = analysisData.data?.attributes?.stats;
+
+    if (!stats) {
+      console.error(`[VirusTotal] No stats in analysis results`);
+      return 'unknown';
+    }
+
+    // Check if any engines detected malicious/suspicious content
+    const malicious = stats.malicious || 0;
+    const suspicious = stats.suspicious || 0;
+
+    console.log(`[VirusTotal] Results: ${malicious} malicious, ${suspicious} suspicious`);
+
+    // If 2 or more engines flag as malicious, mark as unsafe
+    if (malicious >= 2) {
+      console.log(`[VirusTotal] ⚠️ Threat detected by ${malicious} engines`);
+      return 'unsafe';
+    }
+
+    // If flagged by 1 engine or suspicious, mark as warning
+    if (malicious >= 1 || suspicious >= 2) {
+      console.log(`[VirusTotal] ⚠ Warning: flagged by some engines`);
+      return 'warning';
+    }
+
+    console.log(`[VirusTotal] ✓ No threats found`);
+    return 'safe';
+
+  } catch (error) {
+    console.error(`[VirusTotal] Error:`, error.message);
+    return 'unknown';
+  }
+};
+
 // Parse different blocklist formats
 const parseBlocklistLine = (line, format) => {
   const trimmed = line.trim();
@@ -563,11 +672,13 @@ const checkURLSafety = async (url) => {
 
     console.log(`[Blocklist] ✓ Neither full URL nor domain found in malicious database`);
 
-    // Blocklists say safe - check Google Safe Browsing as redundancy if API key is configured
-    const storage = await browser.storage.local.get('googleSafeBrowsingApiKey');
-    const hasApiKey = storage.googleSafeBrowsingApiKey && storage.googleSafeBrowsingApiKey.trim() !== '';
+    // Blocklists say safe - check Google Safe Browsing and VirusTotal as redundancy if API keys are configured
+    const storage = await browser.storage.local.get(['googleSafeBrowsingApiKey', 'virusTotalApiKey']);
+    const hasGoogleKey = storage.googleSafeBrowsingApiKey && storage.googleSafeBrowsingApiKey.trim() !== '';
+    const hasVTKey = storage.virusTotalApiKey && storage.virusTotalApiKey.trim() !== '';
 
-    if (hasApiKey) {
+    // Check Google Safe Browsing
+    if (hasGoogleKey) {
       console.log(`[Safety Check] Blocklists say safe, checking Google Safe Browsing as redundancy...`);
       const googleResult = await checkGoogleSafeBrowsing(url);
 
@@ -576,6 +687,24 @@ const checkURLSafety = async (url) => {
         result = 'unsafe';
         await setCachedResult(url, result, 'safetyStatusCache');
         return { status: result, sources: ['Google Safe Browsing'] };
+      }
+    }
+
+    // Check VirusTotal
+    if (hasVTKey) {
+      console.log(`[Safety Check] Blocklists say safe, checking VirusTotal...`);
+      const vtResult = await checkVirusTotal(url);
+
+      if (vtResult === 'unsafe') {
+        console.log(`[Safety Check] VirusTotal flagged URL as unsafe!`);
+        result = 'unsafe';
+        await setCachedResult(url, result, 'safetyStatusCache');
+        return { status: result, sources: ['VirusTotal'] };
+      } else if (vtResult === 'warning') {
+        console.log(`[Safety Check] VirusTotal flagged URL as suspicious!`);
+        result = 'warning';
+        await setCachedResult(url, result, 'safetyStatusCache');
+        return { status: result, sources: ['VirusTotal'] };
       }
     }
 

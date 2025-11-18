@@ -3011,6 +3011,32 @@ function setupEventListeners() {
     closeAllMenus();
   });
 
+  // Set VirusTotal API Key
+  document.getElementById('setVirusTotalApiKeyBtn').addEventListener('click', async () => {
+    const currentKey = await browser.storage.local.get('virusTotalApiKey');
+    const hasKey = currentKey.virusTotalApiKey && currentKey.virusTotalApiKey.length > 0;
+
+    const promptMessage = hasKey
+      ? 'VirusTotal API Key is currently set.\n\nEnter a new key to update, or leave blank to remove:'
+      : 'Enter your VirusTotal API Key:\n\n(Get a free key at: https://www.virustotal.com/gui/my-apikey)\nFree tier: 500 requests/day, 4 requests/minute\n\nLeave blank to disable VirusTotal checking.';
+
+    const defaultValue = hasKey ? currentKey.virusTotalApiKey : '';
+    const apiKey = prompt(promptMessage, defaultValue);
+
+    if (apiKey !== null) { // User clicked OK (not Cancel)
+      if (apiKey.trim() === '') {
+        // Remove API key
+        await browser.storage.local.remove('virusTotalApiKey');
+        alert('VirusTotal API key removed.\n\nVirusTotal checking is now disabled.');
+      } else {
+        // Save API key
+        await browser.storage.local.set({ virusTotalApiKey: apiKey.trim() });
+        alert('VirusTotal API key saved!\n\nSafety checking will now include VirusTotal scans.');
+      }
+    }
+    closeAllMenus();
+  });
+
   // Close extension
   closeExtensionBtn.addEventListener('click', () => {
     closeExtension();
