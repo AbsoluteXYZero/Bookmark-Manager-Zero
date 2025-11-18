@@ -217,6 +217,7 @@ const checkLinkStatus = async (url) => {
 
 // Malicious URL/domain database (aggregated from multiple sources)
 let maliciousUrlsSet = new Set();
+let domainSourceMap = new Map(); // Track which source(s) flagged each domain
 let blocklistLastUpdate = 0;
 const BLOCKLIST_UPDATE_INTERVAL = 24 * 60 * 60 * 1000; // 24 hours
 
@@ -398,18 +399,29 @@ const updateBlocklistDatabase = async () => {
   try {
     console.log(`[Blocklist] Starting update from ${BLOCKLIST_SOURCES.length} sources...`);
 
-    // Clear existing set
+    // Clear existing data
     maliciousUrlsSet.clear();
+    domainSourceMap.clear();
 
     // Download all sources in parallel for speed
     const downloadPromises = BLOCKLIST_SOURCES.map(source => downloadBlocklistSource(source));
     const results = await Promise.all(downloadPromises);
 
-    // Combine all domains into the Set
+    // Combine all domains into the Set and track sources
     let totalCount = 0;
-    for (const result of results) {
+    for (let i = 0; i < results.length; i++) {
+      const result = results[i];
+      const sourceName = BLOCKLIST_SOURCES[i].name;
+
       for (const domain of result.domains) {
         maliciousUrlsSet.add(domain);
+
+        // Track which source(s) flagged this domain
+        if (domainSourceMap.has(domain)) {
+          domainSourceMap.get(domain).push(sourceName);
+        } else {
+          domainSourceMap.set(domain, [sourceName]);
+        }
       }
       totalCount += result.count;
     }
@@ -437,7 +449,8 @@ const checkURLSafety = async (url) => {
   const cached = await getCachedResult(url, 'safetyStatusCache');
   if (cached) {
     console.log(`[Safety Check] Using cached result for ${url}: ${cached}`);
-    return cached;
+    // Cached results are old format (string only), return with empty sources
+    return { status: cached, sources: [] };
   }
 
   console.log(`[Safety Check] Starting safety check for ${url}`);
@@ -477,20 +490,24 @@ const checkURLSafety = async (url) => {
 
     // Check if full URL is in the malicious set
     if (maliciousUrlsSet.has(normalizedUrl)) {
+      const sources = domainSourceMap.get(normalizedUrl) || [];
       console.log(`[Blocklist] ⚠️ Full URL found in malicious database!`);
+      console.log(`[Blocklist] Detected by: ${sources.join(', ')}`);
       result = 'unsafe';
       console.log(`[Safety Check] Final result for ${url}: ${result}`);
       await setCachedResult(url, result, 'safetyStatusCache');
-      return result;
+      return { status: result, sources };
     }
 
     // Also check if just the domain is flagged (entire domain compromised)
     if (maliciousUrlsSet.has(domain)) {
+      const sources = domainSourceMap.get(domain) || [];
       console.log(`[Blocklist] ⚠️ Domain found in malicious database!`);
+      console.log(`[Blocklist] Detected by: ${sources.join(', ')}`);
       result = 'unsafe';
       console.log(`[Safety Check] Final result for ${url}: ${result}`);
       await setCachedResult(url, result, 'safetyStatusCache');
-      return result;
+      return { status: result, sources };
     }
 
     console.log(`[Blocklist] ✓ Neither full URL nor domain found in malicious database`);
@@ -507,7 +524,7 @@ const checkURLSafety = async (url) => {
         console.log(`[Safety Check] Google Safe Browsing flagged URL as unsafe!`);
         result = 'unsafe';
         await setCachedResult(url, result, 'safetyStatusCache');
-        return result;
+        return { status: result, sources: ['Google Safe Browsing'] };
       }
     }
 
@@ -515,13 +532,13 @@ const checkURLSafety = async (url) => {
     result = 'safe';
     console.log(`[Safety Check] Final result for ${url}: ${result}`);
     await setCachedResult(url, result, 'safetyStatusCache');
-    return result;
+    return { status: result, sources: [] };
 
   } catch (error) {
-    console.error(`[URLhaus] Error checking URL safety:`, error);
+    console.error(`[Blocklist] Error checking URL safety:`, error);
     result = 'unknown';
     await setCachedResult(url, result, 'safetyStatusCache');
-    return result;
+    return { status: result, sources: [] };
   }
 };
 
@@ -535,8 +552,13 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
   }
 
   if (request.action === "checkURLSafety") {
-    checkURLSafety(request.url).then(status => {
-      sendResponse({ status });
+    checkURLSafety(request.url).then(result => {
+      // Handle both old cache format (string) and new format (object)
+      if (typeof result === 'string') {
+        sendResponse({ status: result, sources: [] });
+      } else {
+        sendResponse({ status: result.status, sources: result.sources || [] });
+      }
     });
     return true; // Required to indicate an asynchronous response.
   }
