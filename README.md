@@ -44,51 +44,51 @@ Stop blindly clicking old bookmarks. Know which links are dead, parked, or poten
 <table>
   <tr>
     <td width="33%">
-      <img src="screenshots/Screenshot 2025-11-18 025732.png" alt="Screenshot 1" width="100%">
+      <img src="screenshots/Screenshot-2025-11-18-025732.png" alt="Screenshot 1" width="100%">
     </td>
     <td width="33%">
-      <img src="screenshots/Screenshot 2025-11-18 025804.png" alt="Screenshot 2" width="100%">
+      <img src="screenshots/Screenshot-2025-11-18-025804.png" alt="Screenshot 2" width="100%">
     </td>
     <td width="33%">
-      <img src="screenshots/Screenshot 2025-11-18 025817.png" alt="Screenshot 3" width="100%">
-    </td>
-  </tr>
-  <tr>
-    <td width="33%">
-      <img src="screenshots/Screenshot 2025-11-18 025839.png" alt="Screenshot 4" width="100%">
-    </td>
-    <td width="33%">
-      <img src="screenshots/Screenshot 2025-11-18 025853.png" alt="Screenshot 5" width="100%">
-    </td>
-    <td width="33%">
-      <img src="screenshots/Screenshot 2025-11-18 025905.png" alt="Screenshot 6" width="100%">
+      <img src="screenshots/Screenshot-2025-11-18-025817.png" alt="Screenshot 3" width="100%">
     </td>
   </tr>
   <tr>
     <td width="33%">
-      <img src="screenshots/Screenshot 2025-11-18 025922.png" alt="Screenshot 7" width="100%">
+      <img src="screenshots/Screenshot-2025-11-18-025839.png" alt="Screenshot 4" width="100%">
     </td>
     <td width="33%">
-      <img src="screenshots/Screenshot 2025-11-18 025934.png" alt="Screenshot 8" width="100%">
+      <img src="screenshots/Screenshot-2025-11-18-025853.png" alt="Screenshot 5" width="100%">
     </td>
     <td width="33%">
-      <img src="screenshots/Screenshot 2025-11-18 025946.png" alt="Screenshot 9" width="100%">
-    </td>
-  </tr>
-  <tr>
-    <td width="33%">
-      <img src="screenshots/Screenshot 2025-11-18 032949.png" alt="Screenshot 10" width="100%">
-    </td>
-    <td width="33%">
-      <img src="screenshots/Screenshot 2025-11-18 030503.png" alt="Screenshot 11" width="100%">
-    </td>
-    <td width="33%">
-      <img src="screenshots/Screenshot 2025-11-18 031033.png" alt="Screenshot 12" width="100%">
+      <img src="screenshots/Screenshot-2025-11-18-025905.png" alt="Screenshot 6" width="100%">
     </td>
   </tr>
   <tr>
     <td width="33%">
-      <img src="screenshots/Screenshot 2025-11-18 025712.png" alt="Screenshot 13" width="100%">
+      <img src="screenshots/Screenshot-2025-11-18-025922.png" alt="Screenshot 7" width="100%">
+    </td>
+    <td width="33%">
+      <img src="screenshots/Screenshot-2025-11-18-025934.png" alt="Screenshot 8" width="100%">
+    </td>
+    <td width="33%">
+      <img src="screenshots/Screenshot-2025-11-18-025946.png" alt="Screenshot 9" width="100%">
+    </td>
+  </tr>
+  <tr>
+    <td width="33%">
+      <img src="screenshots/Screenshot-2025-11-18-032949.png" alt="Screenshot 10" width="100%">
+    </td>
+    <td width="33%">
+      <img src="screenshots/Screenshot-2025-11-18-030503.png" alt="Screenshot 11" width="100%">
+    </td>
+    <td width="33%">
+      <img src="screenshots/Screenshot-2025-11-18-031033.png" alt="Screenshot 12" width="100%">
+    </td>
+  </tr>
+  <tr>
+    <td width="33%">
+      <img src="screenshots/Screenshot-2025-11-18-025712.png" alt="Screenshot 13" width="100%">
     </td>
     <td width="33%"></td>
     <td width="33%"></td>
