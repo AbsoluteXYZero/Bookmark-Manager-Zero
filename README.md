@@ -85,7 +85,7 @@ Bookmark Manager Zero is a Firefox extension that provides a beautiful, feature-
 ### Core Functionality
 - ✅ **Native Bookmark Integration** - Works directly with Firefox's bookmark system
 - ✅ **Modern Material Design UI** - Clean, intuitive interface with multiple themes
-- ✅ **Sidebar Interface** - Quick access via `Ctrl+Shift+B`
+- ✅ **Sidebar Interface** - Quick access via toolbar icon or customizable keyboard shortcut
 - ✅ **Real-time Sync** - Instantly reflects bookmark changes made in Firefox
 
 ### Organization & Search
@@ -141,10 +141,12 @@ Coming soon - awaiting Mozilla review
 ## Usage
 
 ### Basic Usage
-1. Open the sidebar: Press `Ctrl+Shift+B` or click the toolbar icon
+1. Open the sidebar: Click the toolbar icon (bookmark icon in Firefox toolbar)
 2. Browse your bookmarks in the organized folder structure
 3. Click any bookmark to open it in a new tab
 4. Use the search bar to find specific bookmarks
+
+**Note:** You can set a custom keyboard shortcut in Firefox Settings → Extensions & Themes → Manage Extension Shortcuts
 
 ### Managing Bookmarks
 - **Add Bookmark:** Click the "+" button in the header
@@ -177,7 +179,7 @@ Click the gear icon to access:
 ### Keyboard Shortcuts
 
 #### Global
-- `Ctrl+Shift+B` - Toggle sidebar
+- Sidebar toggle - Can be customized in Firefox (Settings → Extensions & Themes → Manage Extension Shortcuts)
 
 #### Navigation (when item selected)
 - `↑/↓` - Navigate bookmarks
