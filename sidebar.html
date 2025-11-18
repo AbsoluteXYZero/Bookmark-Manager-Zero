@@ -791,6 +791,26 @@
       transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
+    /* Auto-shrink font size based on digit count */
+    .folder-count[data-digits="3"] {
+      font-size: 10px;
+      letter-spacing: -0.8px;
+    }
+
+    .folder-count[data-digits="4"],
+    .folder-count[data-digits="5"] {
+      font-size: 8px;
+      letter-spacing: -1px;
+    }
+
+    .folder-count[data-digits="6"],
+    .folder-count[data-digits="7"],
+    .folder-count[data-digits="8"],
+    .folder-count[data-digits="9"] {
+      font-size: 6px;
+      letter-spacing: -1.2px;
+    }
+
     .folder-header:hover .folder-count {
       color: var(--md-sys-color-secondary);
       transform: scale(1.1);
