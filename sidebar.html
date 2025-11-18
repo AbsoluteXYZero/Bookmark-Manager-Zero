@@ -1771,12 +1771,12 @@
   </div>
 
   <!-- Edit Modal -->
-  <div id="editModal" class="modal hidden">
-    <div class="modal-overlay"></div>
+  <div id="editModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="editModalTitle" aria-hidden="true">
+    <div class="modal-overlay" aria-hidden="true"></div>
     <div class="modal-content">
       <div class="modal-header">
         <h3 id="editModalTitle">Edit Bookmark</h3>
-        <button class="modal-close" id="editModalClose">×</button>
+        <button class="modal-close" id="editModalClose" aria-label="Close dialog">×</button>
       </div>
       <div class="modal-body">
         <div class="form-group">
@@ -1796,12 +1796,12 @@
   </div>
 
   <!-- Add Bookmark Modal -->
-  <div id="addBookmarkModal" class="modal hidden">
-    <div class="modal-overlay"></div>
+  <div id="addBookmarkModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="addBookmarkModalTitle" aria-hidden="true">
+    <div class="modal-overlay" aria-hidden="true"></div>
     <div class="modal-content">
       <div class="modal-header">
-        <h3>Add New Bookmark</h3>
-        <button class="modal-close" id="addBookmarkModalClose">×</button>
+        <h3 id="addBookmarkModalTitle">Add New Bookmark</h3>
+        <button class="modal-close" id="addBookmarkModalClose" aria-label="Close dialog">×</button>
       </div>
       <div class="modal-body">
         <div class="form-group">
@@ -1827,12 +1827,12 @@
   </div>
 
   <!-- Add Folder Modal -->
-  <div id="addFolderModal" class="modal hidden">
-    <div class="modal-overlay"></div>
+  <div id="addFolderModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="addFolderModalTitle" aria-hidden="true">
+    <div class="modal-overlay" aria-hidden="true"></div>
     <div class="modal-content">
       <div class="modal-header">
-        <h3>Create New Folder</h3>
-        <button class="modal-close" id="addFolderModalClose">×</button>
+        <h3 id="addFolderModalTitle">Create New Folder</h3>
+        <button class="modal-close" id="addFolderModalClose" aria-label="Close dialog">×</button>
       </div>
       <div class="modal-body">
         <div class="form-group">
@@ -1854,12 +1854,12 @@
   </div>
 
   <!-- Duplicates Modal -->
-  <div id="duplicatesModal" class="modal hidden">
-    <div class="modal-overlay"></div>
+  <div id="duplicatesModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="duplicatesModalTitle" aria-hidden="true">
+    <div class="modal-overlay" aria-hidden="true"></div>
     <div class="modal-content" style="max-width: 700px;">
       <div class="modal-header">
-        <h3>Duplicate Bookmarks</h3>
-        <button class="modal-close" id="duplicatesModalClose">×</button>
+        <h3 id="duplicatesModalTitle">Duplicate Bookmarks</h3>
+        <button class="modal-close" id="duplicatesModalClose" aria-label="Close dialog">×</button>
       </div>
       <div class="modal-body" style="max-height: 500px; overflow-y: auto;">
         <div id="duplicatesContent">

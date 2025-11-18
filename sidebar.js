@@ -75,6 +75,74 @@ async function getDecryptedApiKey(keyName) {
   return null;
 }
 
+// Focus trap utility for modal accessibility
+let previouslyFocusedElement = null;
+let focusTrapListener = null;
+
+function trapFocus(modal) {
+  // Store the element that had focus before modal opened
+  previouslyFocusedElement = document.activeElement;
+
+  // Get all focusable elements in modal
+  const getFocusableElements = () => {
+    return Array.from(modal.querySelectorAll(
+      'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"]):not([disabled])'
+    ));
+  };
+
+  // Focus first element
+  const focusableElements = getFocusableElements();
+  if (focusableElements.length > 0) {
+    focusableElements[0].focus();
+  }
+
+  // Remove previous listener if exists
+  if (focusTrapListener) {
+    document.removeEventListener('keydown', focusTrapListener);
+  }
+
+  // Add focus trap listener
+  focusTrapListener = (e) => {
+    if (e.key !== 'Tab') return;
+
+    const focusableElements = getFocusableElements();
+    if (focusableElements.length === 0) return;
+
+    const firstElement = focusableElements[0];
+    const lastElement = focusableElements[focusableElements.length - 1];
+
+    if (e.shiftKey) {
+      // Shift + Tab: moving backwards
+      if (document.activeElement === firstElement) {
+        e.preventDefault();
+        lastElement.focus();
+      }
+    } else {
+      // Tab: moving forwards
+      if (document.activeElement === lastElement) {
+        e.preventDefault();
+        firstElement.focus();
+      }
+    }
+  };
+
+  document.addEventListener('keydown', focusTrapListener);
+}
+
+function releaseFocusTrap() {
+  // Remove focus trap listener
+  if (focusTrapListener) {
+    document.removeEventListener('keydown', focusTrapListener);
+    focusTrapListener = null;
+  }
+
+  // Restore focus to previously focused element
+  if (previouslyFocusedElement && previouslyFocusedElement.focus) {
+    previouslyFocusedElement.focus();
+    previouslyFocusedElement = null;
+  }
+}
+
 // Check if running in preview mode (no browser API available)
 const isPreviewMode = typeof browser === 'undefined';
 
@@ -2365,13 +2433,16 @@ function openEditModal(item, isFolder = false) {
   }
 
   modal.classList.remove('hidden');
-  editTitle.focus();
+  modal.setAttribute('aria-hidden', 'false');
+  trapFocus(modal);
 }
 
 // Close edit modal
 function closeEditModal() {
   const modal = document.getElementById('editModal');
   modal.classList.add('hidden');
+  modal.setAttribute('aria-hidden', 'true');
+  releaseFocusTrap();
   currentEditItem = null;
 }
 
@@ -2537,7 +2608,8 @@ async function openAddBookmarkModal() {
   populateFolderDropdown(folderSelect);
 
   modal.classList.remove('hidden');
-  titleInput.focus();
+  modal.setAttribute('aria-hidden', 'false');
+  trapFocus(modal);
   // Select all text in title for easy editing
   titleInput.select();
 }
@@ -2546,6 +2618,8 @@ async function openAddBookmarkModal() {
 function closeAddBookmarkModal() {
   const modal = document.getElementById('addBookmarkModal');
   modal.classList.add('hidden');
+  modal.setAttribute('aria-hidden', 'true');
+  releaseFocusTrap();
 }
 
 // Save new bookmark
@@ -2603,13 +2677,16 @@ function openAddFolderModal() {
   populateFolderDropdown(parentSelect);
 
   modal.classList.remove('hidden');
-  nameInput.focus();
+  modal.setAttribute('aria-hidden', 'false');
+  trapFocus(modal);
 }
 
 // Close add folder modal
 function closeAddFolderModal() {
   const modal = document.getElementById('addFolderModal');
   modal.classList.add('hidden');
+  modal.setAttribute('aria-hidden', 'true');
+  releaseFocusTrap();
 }
 
 // Save new folder
@@ -2939,12 +3016,16 @@ function showDuplicatesModal(duplicates) {
 
   content.innerHTML = html;
   modal.classList.remove('hidden');
+  modal.setAttribute('aria-hidden', 'false');
+  trapFocus(modal);
 }
 
 // Close duplicates modal
 function closeDuplicatesModal() {
   const modal = document.getElementById('duplicatesModal');
   modal.classList.add('hidden');
+  modal.setAttribute('aria-hidden', 'true');
+  releaseFocusTrap();
 }
 
 // Delete selected duplicates
