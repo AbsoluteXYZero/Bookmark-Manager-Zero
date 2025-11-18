@@ -58,7 +58,7 @@ Bookmark Manager Zero is a Firefox extension that provides a beautiful, feature-
   </tr>
   <tr>
     <td width="33%">
-      <img src="screenshots/Screenshot 2025-11-18 025712.png" alt="Screenshot 10" width="100%">
+      <img src="screenshots/Screenshot 2025-11-18 032949.png" alt="Screenshot 10" width="100%">
     </td>
     <td width="33%">
       <img src="screenshots/Screenshot 2025-11-18 030503.png" alt="Screenshot 11" width="100%">
@@ -69,7 +69,7 @@ Bookmark Manager Zero is a Firefox extension that provides a beautiful, feature-
   </tr>
   <tr>
     <td width="33%">
-      <img src="screenshots/Screenshot 2025-11-18 032949.png" alt="Screenshot 13" width="100%">
+      <img src="screenshots/Screenshot 2025-11-18 025712.png" alt="Screenshot 13" width="100%">
     </td>
     <td width="33%"></td>
     <td width="33%"></td>
