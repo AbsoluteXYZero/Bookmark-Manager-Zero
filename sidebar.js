@@ -39,6 +39,8 @@ const filterBar = document.getElementById('filterBar');
 const displayToggle = document.getElementById('displayToggle');
 const displayBar = document.getElementById('displayBar');
 const themeBtn = document.getElementById('themeBtn');
+const headerCollapseBtn = document.getElementById('headerCollapseBtn');
+const collapsibleHeader = document.getElementById('collapsibleHeader');
 const themeMenu = document.getElementById('themeMenu');
 const viewBtn = document.getElementById('viewBtn');
 const viewMenu = document.getElementById('viewMenu');
@@ -3023,6 +3025,24 @@ function setupEventListeners() {
 
   // Find duplicates
   document.getElementById('findDuplicatesBtn').addEventListener('click', findDuplicates);
+
+  // Header collapse/expand
+  headerCollapseBtn.addEventListener('click', () => {
+    const isCollapsed = collapsibleHeader.classList.toggle('collapsed');
+    headerCollapseBtn.classList.toggle('collapsed');
+    headerCollapseBtn.title = isCollapsed ? 'Expand header' : 'Collapse header';
+
+    // Save state to localStorage
+    localStorage.setItem('headerCollapsed', isCollapsed);
+  });
+
+  // Restore header collapse state
+  const headerCollapsed = localStorage.getItem('headerCollapsed') === 'true';
+  if (headerCollapsed) {
+    collapsibleHeader.classList.add('collapsed');
+    headerCollapseBtn.classList.add('collapsed');
+    headerCollapseBtn.title = 'Expand header';
+  }
 
   // Close menus when clicking outside
   document.addEventListener('click', (e) => {

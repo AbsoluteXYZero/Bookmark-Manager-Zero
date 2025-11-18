@@ -141,6 +141,28 @@
       letter-spacing: 0.1px;
     }
 
+    /* Collapsible header styles */
+    .collapsible-header {
+      max-height: 500px;
+      overflow: hidden;
+      transition: max-height 0.3s ease, opacity 0.3s ease, margin 0.3s ease;
+      opacity: 1;
+    }
+
+    .collapsible-header.collapsed {
+      max-height: 0;
+      opacity: 0;
+      margin: 0;
+    }
+
+    #headerCollapseBtn svg {
+      transition: transform 0.3s ease;
+    }
+
+    #headerCollapseBtn.collapsed svg {
+      transform: rotate(180deg);
+    }
+
     .search-container {
       position: relative;
       margin-bottom: 12px;
@@ -1413,8 +1435,14 @@
         <div class="logo-title">Bookmark Manager Zero • <span style="color: var(--md-sys-color-primary); font-weight: 500; font-size: 11px;">Beta v0.3</span></div>
         <div class="logo-subtitle">A modern interface for your native bookmarks</div>
       </div>
+      <button id="headerCollapseBtn" class="btn btn-icon" title="Collapse header" style="margin-left: auto;">
+        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M7.41,15.41L12,10.83L16.59,15.41L18,14L12,8L6,14L7.41,15.41Z"/>
+        </svg>
+      </button>
     </div>
 
+    <div class="collapsible-header" id="collapsibleHeader">
     <div class="search-container">
       <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
@@ -1584,6 +1612,7 @@
       <input type="checkbox" id="displayUrl" checked>
       <span>URL</span>
     </label>
+  </div>
   </div>
 
   <div class="content" id="bookmarkList">
