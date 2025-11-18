@@ -269,13 +269,8 @@ Please report security vulnerabilities via GitHub Issues (mark as security issue
 
 ## Roadmap
 
-### Completed Features
-- [x] **Export bookmarks** - Full support for HTML (Netscape format) and JSON exports
-- [x] **Folder sorting** - Alphabetical sorting options for bookmark folders
-
-### Planned Features
+Planned future features:
 - [ ] **Local usage metrics** - Track bookmark access frequency and usage statistics (all data stored locally on your device, never sent online)
-- [ ] **Firefox Sync** - Sync bookmarks across devices
 
 ## Contributing
 
