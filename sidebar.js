@@ -384,7 +384,7 @@ const isPreviewMode = typeof browser === 'undefined';
 // State
 let bookmarkTree = [];
 let searchTerm = '';
-let activeFilter = null;
+let activeFilters = [];
 let expandedFolders = new Set();
 let theme = 'blue-dark';
 let viewMode = 'list';
@@ -3244,7 +3244,7 @@ function filterAndSearchBookmarks(nodes) {
   return nodes.reduce((acc, node) => {
     if (node.type === 'folder') {
       const filteredChildren = filterAndSearchBookmarks(node.children || []);
-      if (filteredChildren.length > 0 || (!searchTerm && !activeFilter)) {
+      if (filteredChildren.length > 0 || (!searchTerm && activeFilters.length === 0)) {
         acc.push({
           ...node,
           children: filteredChildren
@@ -3272,27 +3272,43 @@ function matchesSearch(bookmark) {
 
 // Check if bookmark matches filter
 function matchesFilter(bookmark) {
-  if (!activeFilter) return true;
+  if (activeFilters.length === 0) return true;
 
   const linkStatus = bookmark.linkStatus || 'unknown';
   const safetyStatus = bookmark.safetyStatus || 'unknown';
 
-  switch (activeFilter) {
-    case 'live':
-      return linkStatus === 'live';
-    case 'parked':
-      return linkStatus === 'parked';
-    case 'dead':
-      return linkStatus === 'dead';
-    case 'safe':
-      return safetyStatus === 'safe';
-    case 'suspicious':
-      return safetyStatus === 'warning';
-    case 'unsafe':
-      return safetyStatus === 'unsafe';
-    default:
-      return true;
+  // Separate filters by category
+  const linkFilters = activeFilters.filter(f => ['live', 'parked', 'dead'].includes(f));
+  const safetyFilters = activeFilters.filter(f => ['safe', 'suspicious', 'unsafe'].includes(f));
+
+  // Check link status (OR within category)
+  let matchesLink = true;
+  if (linkFilters.length > 0) {
+    matchesLink = linkFilters.some(filter => {
+      switch (filter) {
+        case 'live': return linkStatus === 'live';
+        case 'parked': return linkStatus === 'parked';
+        case 'dead': return linkStatus === 'dead';
+        default: return false;
+      }
+    });
   }
+
+  // Check safety status (OR within category)
+  let matchesSafety = true;
+  if (safetyFilters.length > 0) {
+    matchesSafety = safetyFilters.some(filter => {
+      switch (filter) {
+        case 'safe': return safetyStatus === 'safe';
+        case 'suspicious': return safetyStatus === 'warning';
+        case 'unsafe': return safetyStatus === 'unsafe';
+        default: return false;
+      }
+    });
+  }
+
+  // AND between categories
+  return matchesLink && matchesSafety;
 }
 
 // Count bookmarks in folder
@@ -4230,13 +4246,14 @@ function setupEventListeners() {
     chip.addEventListener('click', () => {
       const filter = chip.dataset.filter;
 
-      if (activeFilter === filter) {
-        activeFilter = null;
+      const index = activeFilters.indexOf(filter);
+      if (index > -1) {
+        // Remove filter if already active
+        activeFilters.splice(index, 1);
         chip.classList.remove('active');
       } else {
-        // Remove active from all chips
-        document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
-        activeFilter = filter;
+        // Add filter
+        activeFilters.push(filter);
         chip.classList.add('active');
       }
 
@@ -4423,6 +4440,18 @@ function setupEventListeners() {
       window.open(readmeUrl, '_blank');
     } else {
       browser.tabs.create({ url: readmeUrl });
+    }
+    closeAllMenus();
+  });
+
+  // Buy Me a Coffee
+  const buyMeCoffeeBtn = document.getElementById('buyMeCoffeeBtn');
+  buyMeCoffeeBtn.addEventListener('click', () => {
+    const coffeeUrl = 'https://buymeacoffee.com/absolutexyzero';
+    if (isPreviewMode) {
+      window.open(coffeeUrl, '_blank');
+    } else {
+      browser.tabs.create({ url: coffeeUrl });
     }
     closeAllMenus();
   });
