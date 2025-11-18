@@ -4444,6 +4444,18 @@ function setupEventListeners() {
     closeAllMenus();
   });
 
+  // Buy Me a Coffee
+  const buyMeCoffeeBtn = document.getElementById('buyMeCoffeeBtn');
+  buyMeCoffeeBtn.addEventListener('click', () => {
+    const coffeeUrl = 'https://buymeacoffee.com/absolutexyzero';
+    if (isPreviewMode) {
+      window.open(coffeeUrl, '_blank');
+    } else {
+      browser.tabs.create({ url: coffeeUrl });
+    }
+    closeAllMenus();
+  });
+
   // Close extension
   closeExtensionBtn.addEventListener('click', () => {
     closeExtension();
