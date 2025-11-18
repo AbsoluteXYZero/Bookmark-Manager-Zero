@@ -161,10 +161,8 @@ All external service usage is disclosed in [PRIVACY.md](PRIVACY.md).
 ```
 ├── manifest.json          # Extension manifest
 ├── sidebar.html          # Main UI
-├── sidebar.js            # Core logic (3300+ lines)
+├── sidebar.js            # Core logic (encryption, validation, UI)
 ├── background.js         # Background service worker
-├── crypto-utils.js       # Encryption utilities
-├── url-validator.js      # URL validation
 ├── icons/                # Extension icons
 └── PRIVACY.md           # Privacy policy
 ```
@@ -263,10 +261,21 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ## Acknowledgments
 
-- Material Design 3 color system by Google
-- URLhaus by abuse.ch
-- BlockList Project community
-- Firefox WebExtensions team
+### Design & Platform
+- **Material Design 3** - Color system by Google
+- **Firefox WebExtensions** - Mozilla Firefox team
+
+### Security & Malware Detection
+- **[URLhaus](https://urlhaus.abuse.ch/)** - Malware URL database by abuse.ch
+- **[BlockList Project](https://github.com/blocklistproject/Lists)** - Community-maintained malware, phishing, and scam domain lists
+- **[Google Safe Browsing API](https://developers.google.com/safe-browsing)** - Optional threat intelligence (requires API key)
+- **[VirusTotal](https://www.virustotal.com/)** - Optional multi-engine malware scanning (requires API key)
+
+### Services
+- **WordPress mShots** - Website screenshot preview service
+- **Google Favicons** - Website icon service
+
+Special thanks to the security research community for maintaining free, public malware databases that help keep users safe.
 
 ---
 

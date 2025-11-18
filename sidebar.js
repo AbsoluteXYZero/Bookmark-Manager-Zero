@@ -1485,14 +1485,6 @@ function createBookmarkElement(bookmark) {
         </span>
         <span>Open in New Tab</span>
       </button>
-      <button class="action-btn" data-action="open-private-tab">
-        <span class="icon">
-          <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M17,9V7A5,5 0 0,0 7,7V9A3,3 0 0,0 4,12V20A3,3 0 0,0 7,23H17A3,3 0 0,0 20,20V12A3,3 0 0,0 17,9M9,7A3,3 0 0,1 15,7V9H9V7M18,20A1,1 0 0,1 17,21H7A1,1 0 0,1 6,20V12A1,1 0 0,1 7,11H17A1,1 0 0,1 18,12V20M12,14A2,2 0 0,0 10,16A2,2 0 0,0 12,18A2,2 0 0,0 14,16A2,2 0 0,0 12,14Z"/>
-          </svg>
-        </span>
-        <span>Open in Private Tab</span>
-      </button>
       <button class="action-btn" data-action="open-new-window">
         <span class="icon">
           <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
@@ -2709,62 +2701,6 @@ async function handleBookmarkAction(action, bookmark) {
       }
       break;
 
-    case 'open-private-tab':
-      // Open in private/incognito tab
-      if (isPreviewMode) {
-        alert('🔒 In the Firefox extension, this would open the bookmark in a private tab.');
-      } else {
-        try {
-          // Try to find an existing private window
-          const windows = await browser.windows.getAll();
-          const privateWindow = windows.find(w => w.incognito);
-
-          if (privateWindow) {
-            // Open tab in existing private window
-            await browser.tabs.create({
-              url: bookmark.url,
-              windowId: privateWindow.id
-            });
-          } else {
-            // Firefox doesn't allow extensions to create private windows programmatically
-            // Inform user to open a private window manually
-            const confirmed = confirm(
-              '🔒 Firefox requires you to open a private window manually first.\n\n' +
-              'Would you like to copy the URL to your clipboard so you can paste it in a private window?\n\n' +
-              'Tip: Press Ctrl+Shift+P to open a new private window in Firefox.'
-            );
-
-            if (confirmed) {
-              // Copy URL to clipboard
-              try {
-                if (navigator.clipboard && navigator.clipboard.writeText) {
-                  await navigator.clipboard.writeText(bookmark.url);
-                  alert('✓ URL copied to clipboard!\n\nNow open a private window (Ctrl+Shift+P) and paste the URL.');
-                } else {
-                  // Fallback
-                  const textArea = document.createElement('textarea');
-                  textArea.value = bookmark.url;
-                  textArea.style.position = 'fixed';
-                  textArea.style.left = '-999999px';
-                  document.body.appendChild(textArea);
-                  textArea.select();
-                  document.execCommand('copy');
-                  document.body.removeChild(textArea);
-                  alert('✓ URL copied to clipboard!\n\nNow open a private window (Ctrl+Shift+P) and paste the URL.');
-                }
-              } catch (copyError) {
-                console.error('Error copying URL:', copyError);
-                alert(`Could not copy URL. Here it is:\n\n${bookmark.url}`);
-              }
-            }
-          }
-        } catch (error) {
-          console.error('Error opening private tab:', error);
-          alert('Failed to access private windows. The extension may not have permission to work with private windows.');
-        }
-      }
-      break;
-
     case 'open-new-window':
       // Open in new window
       if (isPreviewMode) {
@@ -3418,9 +3354,70 @@ async function openInNewTab() {
   }
 }
 
-// SAFETY: Export bookmarks as JSON backup
+// Convert bookmark tree to HTML format
+function bookmarksToHTML(bookmarkNodes, indent = 0) {
+  let html = '';
+  const indentStr = '    '.repeat(indent);
+
+  for (const node of bookmarkNodes) {
+    if (node.url) {
+      // It's a bookmark
+      const addDate = node.dateAdded ? Math.floor(node.dateAdded / 1000) : '';
+      html += `${indentStr}<DT><A HREF="${node.url}"${addDate ? ` ADD_DATE="${addDate}"` : ''}>${node.title || node.url}</A>\n`;
+    } else if (node.children) {
+      // It's a folder
+      const addDate = node.dateAdded ? Math.floor(node.dateAdded / 1000) : '';
+      html += `${indentStr}<DT><H3${addDate ? ` ADD_DATE="${addDate}"` : ''}>${node.title || 'Untitled Folder'}</H3>\n`;
+      html += `${indentStr}<DL><p>\n`;
+      html += bookmarksToHTML(node.children, indent + 1);
+      html += `${indentStr}</DL><p>\n`;
+    }
+  }
+
+  return html;
+}
+
+// Generate complete HTML bookmark file
+function generateBookmarkHTML(bookmarkTree) {
+  const timestamp = new Date().toISOString();
+  const date = new Date();
+
+  let html = `<!DOCTYPE NETSCAPE-Bookmark-file-1>
+<!-- This is an automatically generated file.
+     It will be read and overwritten.
+     DO NOT EDIT! -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
+<TITLE>Bookmarks</TITLE>
+<H1>Bookmarks</H1>
+<DL><p>
+`;
+
+  // Process the bookmark tree
+  // Firefox bookmark tree has a root node, we want to export its children
+  if (bookmarkTree && bookmarkTree.length > 0) {
+    const root = bookmarkTree[0];
+    if (root.children) {
+      html += bookmarksToHTML(root.children, 1);
+    }
+  }
+
+  html += `</DL><p>\n`;
+
+  return html;
+}
+
+// SAFETY: Export bookmarks as JSON or HTML backup
 async function exportBookmarks() {
   try {
+    // Ask user for format preference
+    const format = confirm(
+      'Choose export format:\n\n' +
+      'OK = HTML (compatible with all browsers)\n' +
+      'Cancel = JSON (Firefox native format)\n\n' +
+      'HTML format can be imported into any browser.\n' +
+      'JSON format preserves all Firefox bookmark metadata.'
+    ) ? 'html' : 'json';
+
     let data;
 
     if (isPreviewMode) {
@@ -3432,14 +3429,23 @@ async function exportBookmarks() {
       data = tree;
     }
 
-    // Create JSON file
-    const json = JSON.stringify(data, null, 2);
-    const blob = new Blob([json], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-
     // Generate filename with timestamp
     const date = new Date().toISOString().split('T')[0];
-    const filename = `bookmarks-backup-${date}.json`;
+    let filename, blob, url;
+
+    if (format === 'html') {
+      // Create HTML file
+      const html = generateBookmarkHTML(data);
+      blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+      url = URL.createObjectURL(blob);
+      filename = `bookmarks-${date}.html`;
+    } else {
+      // Create JSON file
+      const json = JSON.stringify(data, null, 2);
+      blob = new Blob([json], { type: 'application/json' });
+      url = URL.createObjectURL(blob);
+      filename = `bookmarks-backup-${date}.json`;
+    }
 
     // Create download link and trigger download
     const a = document.createElement('a');
@@ -3450,7 +3456,23 @@ async function exportBookmarks() {
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
 
-    alert(`✓ Bookmarks exported successfully!\n\nFile: ${filename}\n\nThis backup can be imported back into Firefox via:\nBookmarks → Manage Bookmarks → Import and Backup → Restore → Choose File`);
+    if (format === 'html') {
+      alert(
+        `✓ Bookmarks exported as HTML!\n\n` +
+        `File: ${filename}\n\n` +
+        `This file can be imported into:\n` +
+        `• Firefox: Bookmarks → Manage Bookmarks → Import and Backup → Import Bookmarks from HTML\n` +
+        `• Chrome/Edge: Bookmarks → Import bookmarks and settings\n` +
+        `• Any browser that supports Netscape bookmark format`
+      );
+    } else {
+      alert(
+        `✓ Bookmarks exported as JSON!\n\n` +
+        `File: ${filename}\n\n` +
+        `This backup can be imported back into Firefox via:\n` +
+        `Bookmarks → Manage Bookmarks → Import and Backup → Restore → Choose File`
+      );
+    }
   } catch (error) {
     console.error('Error exporting bookmarks:', error);
     alert('Failed to export bookmarks. Please try again.');

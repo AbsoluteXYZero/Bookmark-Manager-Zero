@@ -120,7 +120,7 @@ API keys (Google Safe Browsing, VirusTotal) are encrypted before storage:
 - Private browsing: keys only in memory
 
 ### Input Validation
-- URL validation before processing (url-validator.js)
+- URL validation before processing (background.js)
 - XSS protection on bookmark titles/URLs
 - Sanitization of user inputs
 
