@@ -20,6 +20,9 @@ let zoomLevel = 100;
 let checkedBookmarks = new Set(); // Track which bookmarks have been checked to prevent infinite loops
 let scanCancelled = false; // Flag to cancel ongoing scans
 
+// Track open menus to preserve state across re-renders
+let openMenuBookmarkId = null;
+
 // Undo system state
 let undoData = null;
 let undoTimer = null;
@@ -538,6 +541,20 @@ function renderBookmarks() {
 
   bookmarkList.innerHTML = '';
   renderNodes(filtered, bookmarkList);
+
+  // Restore open menu state if menu was open before re-render
+  if (openMenuBookmarkId) {
+    // Use setTimeout to ensure DOM is fully rendered
+    setTimeout(() => {
+      const bookmarkDiv = document.querySelector(`[data-bookmark-id="${openMenuBookmarkId}"], [data-folder-id="${openMenuBookmarkId}"]`);
+      if (bookmarkDiv) {
+        const menu = bookmarkDiv.querySelector('.bookmark-actions');
+        if (menu) {
+          menu.classList.add('show');
+        }
+      }
+    }, 0);
+  }
 
   // Add a drop zone at the end of the root to allow dropping items there
   const dropZone = document.createElement('div');
@@ -1418,6 +1435,7 @@ function toggleFolder(folderId, folderElement) {
 function toggleBookmarkMenu(bookmarkDiv) {
   const menu = bookmarkDiv.querySelector('.bookmark-actions');
   const isOpen = menu.classList.contains('show');
+  const bookmarkId = bookmarkDiv.dataset.bookmarkId;
 
   // Close all other menus
   closeAllMenus();
@@ -1425,6 +1443,9 @@ function toggleBookmarkMenu(bookmarkDiv) {
   // Toggle this menu
   if (!isOpen) {
     menu.classList.add('show');
+    openMenuBookmarkId = bookmarkId; // Track which menu is open
+  } else {
+    openMenuBookmarkId = null;
   }
 }
 
@@ -1432,6 +1453,7 @@ function toggleBookmarkMenu(bookmarkDiv) {
 function toggleFolderMenu(folderDiv) {
   const menu = folderDiv.querySelector('.bookmark-actions');
   const isOpen = menu.classList.contains('show');
+  const folderId = folderDiv.dataset.folderId;
 
   // Close all other menus
   closeAllMenus();
@@ -1439,6 +1461,9 @@ function toggleFolderMenu(folderDiv) {
   // Toggle this menu
   if (!isOpen) {
     menu.classList.add('show');
+    openMenuBookmarkId = folderId; // Track which menu is open
+  } else {
+    openMenuBookmarkId = null;
   }
 }
 
@@ -1768,6 +1793,7 @@ function adjustDropdownPosition(dropdown) {
 
 // Close all open menus
 function closeAllMenus() {
+  openMenuBookmarkId = null; // Clear tracked menu state
   document.querySelectorAll('.bookmark-actions.show').forEach(menu => {
     menu.classList.remove('show');
   });
