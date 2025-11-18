@@ -1,4 +1,6 @@
 // This script runs in the background and handles extension tasks.
+import { getDecryptedApiKey } from './crypto-utils.js';
+import { sanitizeUrl } from './url-validator.js';
 
 const PARKING_DOMAINS = [
   'hugedomains.com',
@@ -251,9 +253,8 @@ const BLOCKLIST_SOURCES = [
 // API key is stored in browser.storage.local.googleSafeBrowsingApiKey
 const checkGoogleSafeBrowsing = async (url) => {
   try {
-    // Get API key from storage
-    const storage = await browser.storage.local.get('googleSafeBrowsingApiKey');
-    const apiKey = storage.googleSafeBrowsingApiKey;
+    // Get encrypted API key from storage and decrypt it
+    const apiKey = await getDecryptedApiKey('googleSafeBrowsingApiKey');
 
     if (!apiKey || apiKey.trim() === '') {
       console.log(`[Google SB] API key not configured, skipping`);
@@ -318,9 +319,8 @@ const checkGoogleSafeBrowsing = async (url) => {
 // API key is stored in browser.storage.local.virusTotalApiKey
 const checkVirusTotal = async (url) => {
   try {
-    // Get API key from storage
-    const storage = await browser.storage.local.get('virusTotalApiKey');
-    const apiKey = storage.virusTotalApiKey;
+    // Get encrypted API key from storage and decrypt it
+    const apiKey = await getDecryptedApiKey('virusTotalApiKey');
 
     if (!apiKey || apiKey.trim() === '') {
       console.log(`[VirusTotal] API key not configured, skipping`);
@@ -734,14 +734,28 @@ const checkURLSafety = async (url) => {
 // Listen for messages from the frontend
 browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === "checkLinkStatus") {
-    checkLinkStatus(request.url).then(status => {
+    // Validate URL before checking
+    const safeUrl = sanitizeUrl(request.url);
+    if (!safeUrl) {
+      sendResponse({ status: 'dead' });
+      return true;
+    }
+
+    checkLinkStatus(safeUrl).then(status => {
       sendResponse({ status });
     });
     return true; // Required to indicate an asynchronous response.
   }
 
   if (request.action === "checkURLSafety") {
-    checkURLSafety(request.url).then(result => {
+    // Validate URL before checking
+    const safeUrl = sanitizeUrl(request.url);
+    if (!safeUrl) {
+      sendResponse({ status: 'unsafe', sources: ['Invalid URL'] });
+      return true;
+    }
+
+    checkURLSafety(safeUrl).then(result => {
       // Handle both old cache format (string) and new format (object)
       if (typeof result === 'string') {
         sendResponse({ status: result, sources: [] });

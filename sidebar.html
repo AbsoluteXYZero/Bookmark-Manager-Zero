@@ -1436,6 +1436,17 @@
             </div>
             <input type="checkbox" id="enableSafetyChecking" checked style="cursor: pointer;">
           </label>
+          <label class="action-btn" style="cursor: pointer; display: flex; justify-content: space-between; align-items: center;" title="Use DNS-over-HTTPS for enhanced privacy">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span class="icon">
+                <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M17,7H7A5,5 0 0,0 2,12A5,5 0 0,0 7,17H17A5,5 0 0,0 22,12A5,5 0 0,0 17,7M7,15A3,3 0 0,1 4,12A3,3 0 0,1 7,9A3,3 0 0,1 10,12A3,3 0 0,1 7,15Z"/>
+                </svg>
+              </span>
+              <span>Use DNS-over-HTTPS</span>
+            </div>
+            <input type="checkbox" id="enableDoH" style="cursor: pointer;">
+          </label>
           <div style="border-top: 1px solid var(--md-sys-color-outline-variant); margin: 6px 0;"></div>
           <button class="action-btn" id="setApiKeyBtn">
             <span class="icon">
@@ -1830,6 +1841,6 @@
     </div>
   </div>
 
-  <script src="sidebar.js?v=20251117012"></script>
+  <script type="module" src="sidebar.js?v=20251117013"></script>
 </body>
 </html>

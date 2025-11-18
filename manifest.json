@@ -46,6 +46,6 @@
     }
   },
   "content_security_policy": {
-    "extension_pages": "script-src 'self'; object-src 'self'; img-src 'self' data: https:;"
+    "extension_pages": "script-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; connect-src 'self' https://urlhaus.abuse.ch https://blocklistproject.github.io https://safebrowsing.googleapis.com https://www.virustotal.com https://s0.wp.com;"
   }
 }

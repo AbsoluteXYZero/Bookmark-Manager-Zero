@@ -1,5 +1,6 @@
 // Bookmark Manager Zero - Sidebar Script
 // Connects to Firefox native bookmarks API
+import { storeEncryptedApiKey, getDecryptedApiKey } from './crypto-utils.js';
 
 // Check if running in preview mode (no browser API available)
 const isPreviewMode = typeof browser === 'undefined';
@@ -184,16 +185,20 @@ function loadZoom() {
 function loadCheckingSettings() {
   const savedLinkChecking = localStorage.getItem('linkCheckingEnabled');
   const savedSafetyChecking = localStorage.getItem('safetyCheckingEnabled');
+  const savedDoH = localStorage.getItem('dohEnabled');
 
-  // Default to true if not set
+  // Default to true if not set (except DoH which defaults to false)
   linkCheckingEnabled = savedLinkChecking !== null ? savedLinkChecking === 'true' : true;
   safetyCheckingEnabled = savedSafetyChecking !== null ? savedSafetyChecking === 'true' : true;
+  const dohEnabled = savedDoH === 'true';
 
   // Update checkbox states
   const linkCheckbox = document.getElementById('enableLinkChecking');
   const safetyCheckbox = document.getElementById('enableSafetyChecking');
+  const dohCheckbox = document.getElementById('enableDoH');
   if (linkCheckbox) linkCheckbox.checked = linkCheckingEnabled;
   if (safetyCheckbox) safetyCheckbox.checked = safetyCheckingEnabled;
+  if (dohCheckbox) dohCheckbox.checked = dohEnabled;
 }
 
 // Apply zoom
@@ -3067,6 +3072,29 @@ function setupEventListeners() {
     console.log(`Safety checking ${safetyCheckingEnabled ? 'enabled' : 'disabled'}`);
   });
 
+  // DNS-over-HTTPS toggle
+  const enableDoHToggle = document.getElementById('enableDoH');
+  enableDoHToggle.addEventListener('change', async (e) => {
+    const enabled = e.target.checked;
+    localStorage.setItem('dohEnabled', enabled);
+
+    // Configure Firefox to use DoH
+    if (!isPreviewMode && browser.dns && browser.dns.setResolveMode) {
+      try {
+        if (enabled) {
+          await browser.dns.setResolveMode('TRR_ONLY'); // Trusted Recursive Resolver only
+          console.log('DNS-over-HTTPS enabled');
+        } else {
+          await browser.dns.setResolveMode('TRR_OFF'); // Use system DNS
+          console.log('DNS-over-HTTPS disabled');
+        }
+      } catch (error) {
+        console.error('Failed to set DNS mode:', error);
+        alert('Note: DNS-over-HTTPS setting requires Firefox 60+ and may need browser restart.');
+      }
+    }
+  });
+
   // Rescan all bookmarks
   rescanBookmarksBtn.addEventListener('click', async () => {
     await rescanAllBookmarks();
@@ -3075,8 +3103,8 @@ function setupEventListeners() {
 
   // Set Google API Key
   setApiKeyBtn.addEventListener('click', async () => {
-    const currentKey = await browser.storage.local.get('googleSafeBrowsingApiKey');
-    const hasKey = currentKey.googleSafeBrowsingApiKey && currentKey.googleSafeBrowsingApiKey.length > 0;
+    const currentKey = await getDecryptedApiKey('googleSafeBrowsingApiKey');
+    const hasKey = currentKey && currentKey.length > 0;
 
     const promptMessage = hasKey
       ? 'Google Safe Browsing API Key is currently set.\n\nEnter a new key to update, or leave blank to remove:'
@@ -3090,9 +3118,9 @@ function setupEventListeners() {
         await browser.storage.local.remove('googleSafeBrowsingApiKey');
         alert('Google Safe Browsing API key removed.\n\nOnly URLhaus will be used for safety checking.');
       } else {
-        // Save API key
-        await browser.storage.local.set({ googleSafeBrowsingApiKey: apiKey.trim() });
-        alert('Google Safe Browsing API key saved!\n\nSafety checking will now use:\n1. URLhaus (primary)\n2. Google Safe Browsing (redundancy)');
+        // Save encrypted API key
+        await storeEncryptedApiKey('googleSafeBrowsingApiKey', apiKey.trim());
+        alert('Google Safe Browsing API key saved securely!\n\nSafety checking will now use:\n1. URLhaus (primary)\n2. Google Safe Browsing (redundancy)');
       }
     }
     closeAllMenus();
@@ -3100,15 +3128,14 @@ function setupEventListeners() {
 
   // Set VirusTotal API Key
   document.getElementById('setVirusTotalApiKeyBtn').addEventListener('click', async () => {
-    const currentKey = await browser.storage.local.get('virusTotalApiKey');
-    const hasKey = currentKey.virusTotalApiKey && currentKey.virusTotalApiKey.length > 0;
+    const currentKey = await getDecryptedApiKey('virusTotalApiKey');
+    const hasKey = currentKey && currentKey.length > 0;
 
     const promptMessage = hasKey
       ? 'VirusTotal API Key is currently set.\n\nEnter a new key to update, or leave blank to remove:'
       : 'Enter your VirusTotal API Key:\n\n(Get a free key at: https://www.virustotal.com/gui/my-apikey)\nFree tier: 500 requests/day, 4 requests/minute\n\nLeave blank to disable VirusTotal checking.';
 
-    const defaultValue = hasKey ? currentKey.virusTotalApiKey : '';
-    const apiKey = prompt(promptMessage, defaultValue);
+    const apiKey = prompt(promptMessage, '');
 
     if (apiKey !== null) { // User clicked OK (not Cancel)
       if (apiKey.trim() === '') {
@@ -3116,9 +3143,9 @@ function setupEventListeners() {
         await browser.storage.local.remove('virusTotalApiKey');
         alert('VirusTotal API key removed.\n\nVirusTotal checking is now disabled.');
       } else {
-        // Save API key
-        await browser.storage.local.set({ virusTotalApiKey: apiKey.trim() });
-        alert('VirusTotal API key saved!\n\nSafety checking will now include VirusTotal scans.');
+        // Save encrypted API key
+        await storeEncryptedApiKey('virusTotalApiKey', apiKey.trim());
+        alert('VirusTotal API key saved securely!\n\nSafety checking will now include VirusTotal scans.');
       }
     }
     closeAllMenus();
