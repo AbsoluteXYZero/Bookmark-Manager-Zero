@@ -673,14 +673,20 @@
       width: 112px !important;
     }
 
+    /* Force preview to show (keyboard navigation) */
+    .bookmark-item.force-preview .bookmark-preview-container {
+      width: 112px !important;
+    }
+
     /* Collapse preview when not hovering */
-    .bookmark-item:not(:hover) .bookmark-preview-container {
+    .bookmark-item:not(:hover):not(.force-preview) .bookmark-preview-container {
       width: 0 !important;
     }
 
     /* Keep preview hidden when disabled */
     .bookmark-item.no-preview .bookmark-preview-container,
-    .bookmark-item.no-preview:hover .bookmark-preview-container {
+    .bookmark-item.no-preview:hover .bookmark-preview-container,
+    .bookmark-item.no-preview.force-preview .bookmark-preview-container {
       width: 0 !important;
       display: none;
     }

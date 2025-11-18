@@ -3594,10 +3594,10 @@ function setupEventListeners() {
 
       case 'ArrowRight':
         e.preventDefault();
-        // Expand folder if selected item is a folder
         if (selectedBookmarkIndex >= 0 && selectedBookmarkIndex < allElements.length) {
           const selectedElement = allElements[selectedBookmarkIndex];
           if (selectedElement.classList.contains('folder-header')) {
+            // Expand folder if it's a folder
             const folderItem = selectedElement.closest('.folder-item');
             const folderId = folderItem.dataset.id;
             const toggle = selectedElement.querySelector('.folder-toggle');
@@ -3614,16 +3614,35 @@ function setupEventListeners() {
                 highlightSelectedItem(updatedElements);
               }, 50);
             }
+          } else {
+            // Show preview for bookmark
+            const previewContainer = selectedElement.querySelector('.bookmark-preview-container');
+            if (previewContainer) {
+              selectedElement.classList.add('force-preview');
+              const previewImg = previewContainer.querySelector('.preview-image');
+              const url = previewImg.dataset.url;
+              if (url && !loadedPreviews.has(url)) {
+                // Trigger preview load
+                previewImg.src = `https://s0.wp.com/mshots/v1/${encodeURIComponent(url)}?w=400&h=300`;
+                previewImg.onload = () => {
+                  previewImg.classList.add('loaded');
+                  loadedPreviews.add(url);
+                };
+                loadedPreviews.add(url);
+              } else if (url) {
+                previewImg.classList.add('loaded');
+              }
+            }
           }
         }
         break;
 
       case 'ArrowLeft':
         e.preventDefault();
-        // Collapse folder if selected item is a folder
         if (selectedBookmarkIndex >= 0 && selectedBookmarkIndex < allElements.length) {
           const selectedElement = allElements[selectedBookmarkIndex];
           if (selectedElement.classList.contains('folder-header')) {
+            // Collapse folder if it's a folder
             const toggle = selectedElement.querySelector('.folder-toggle');
             // Only collapse if currently expanded
             if (toggle.classList.contains('expanded')) {
@@ -3638,6 +3657,9 @@ function setupEventListeners() {
                 highlightSelectedItem(updatedElements);
               }, 50);
             }
+          } else {
+            // Hide preview for bookmark
+            selectedElement.classList.remove('force-preview');
           }
         }
         break;
