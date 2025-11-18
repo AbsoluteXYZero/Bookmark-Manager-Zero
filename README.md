@@ -62,7 +62,7 @@ Coming soon - awaiting Mozilla review
 ### Manual Installation (Developer Mode)
 1. Clone this repository:
    ```bash
-   git clone https://github.com/AbsoluteXYZero/Bookmark-Manager-Zero-Webapp.git
+   git clone https://github.com/AbsoluteXYZero/Bookmark-Manager-Zero.git
    ```
 2. Open Firefox and navigate to `about:debugging`
 3. Click "This Firefox" → "Load Temporary Add-on"
@@ -259,8 +259,8 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ## Support
 
-- **Issues:** [GitHub Issues](https://github.com/AbsoluteXYZero/Bookmark-Manager-Zero-Webapp/issues)
-- **Source Code:** [GitHub Repository](https://github.com/AbsoluteXYZero/Bookmark-Manager-Zero-Webapp)
+- **Issues:** [GitHub Issues](https://github.com/AbsoluteXYZero/Bookmark-Manager-Zero/issues)
+- **Source Code:** [GitHub Repository](https://github.com/AbsoluteXYZero/Bookmark-Manager-Zero)
 
 ## Acknowledgments
 
