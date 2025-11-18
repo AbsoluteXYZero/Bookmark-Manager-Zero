@@ -1957,19 +1957,6 @@ async function handleDrop(draggedId, targetId, targetElement, dropState) {
     alert('Failed to move item');
   }
 }
-
-// Helper function to find bookmark by ID in tree
-function findBookmarkById(nodes, id) {
-  for (const node of nodes) {
-    if (node.id === id) return node;
-    if (node.children) {
-      const found = findBookmarkById(node.children, id);
-      if (found) return found;
-    }
-  }
-  return null;
-}
-
 // Helper function to find parent of bookmark by ID
 function findParentById(nodes, childId, parent = null) {
   for (const node of nodes) {
