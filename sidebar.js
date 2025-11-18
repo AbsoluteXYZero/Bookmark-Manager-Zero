@@ -3597,12 +3597,10 @@ function setupEventListeners() {
         if (selectedBookmarkIndex >= 0 && selectedBookmarkIndex < allElements.length) {
           const selectedElement = allElements[selectedBookmarkIndex];
           if (selectedElement.classList.contains('folder-header')) {
-            // Expand folder if it's a folder
-            const folderItem = selectedElement.closest('.folder-item');
-            const folderId = folderItem.dataset.id;
+            // Check if folder is already expanded
             const toggle = selectedElement.querySelector('.folder-toggle');
-            // Only expand if not already expanded
             if (!toggle.classList.contains('expanded')) {
+              // Expand folder if collapsed
               selectedElement.click();
               // After expanding, rebuild the list and maintain selection
               setTimeout(() => {
@@ -3613,24 +3611,35 @@ function setupEventListeners() {
                 });
                 highlightSelectedItem(updatedElements);
               }, 50);
+            } else {
+              // Folder already expanded, move down to next item
+              selectedBookmarkIndex = Math.min(selectedBookmarkIndex + 1, allElements.length - 1);
+              highlightSelectedItem(allElements);
             }
           } else {
-            // Show preview for bookmark
-            const previewContainer = selectedElement.querySelector('.bookmark-preview-container');
-            if (previewContainer) {
-              selectedElement.classList.add('force-preview');
-              const previewImg = previewContainer.querySelector('.preview-image');
-              const url = previewImg.dataset.url;
-              if (url && !loadedPreviews.has(url)) {
-                // Trigger preview load
-                previewImg.src = `https://s0.wp.com/mshots/v1/${encodeURIComponent(url)}?w=400&h=300`;
-                previewImg.onload = () => {
-                  previewImg.classList.add('loaded');
+            // For bookmarks, check if preview is already shown
+            if (selectedElement.classList.contains('force-preview')) {
+              // Preview already shown, move down to next item
+              selectedBookmarkIndex = Math.min(selectedBookmarkIndex + 1, allElements.length - 1);
+              highlightSelectedItem(allElements);
+            } else {
+              // Show preview for bookmark
+              const previewContainer = selectedElement.querySelector('.bookmark-preview-container');
+              if (previewContainer) {
+                selectedElement.classList.add('force-preview');
+                const previewImg = previewContainer.querySelector('.preview-image');
+                const url = previewImg.dataset.url;
+                if (url && !loadedPreviews.has(url)) {
+                  // Trigger preview load
+                  previewImg.src = `https://s0.wp.com/mshots/v1/${encodeURIComponent(url)}?w=400&h=300`;
+                  previewImg.onload = () => {
+                    previewImg.classList.add('loaded');
+                    loadedPreviews.add(url);
+                  };
                   loadedPreviews.add(url);
-                };
-                loadedPreviews.add(url);
-              } else if (url) {
-                previewImg.classList.add('loaded');
+                } else if (url) {
+                  previewImg.classList.add('loaded');
+                }
               }
             }
           }
@@ -3642,10 +3651,10 @@ function setupEventListeners() {
         if (selectedBookmarkIndex >= 0 && selectedBookmarkIndex < allElements.length) {
           const selectedElement = allElements[selectedBookmarkIndex];
           if (selectedElement.classList.contains('folder-header')) {
-            // Collapse folder if it's a folder
+            // Check if folder is expanded
             const toggle = selectedElement.querySelector('.folder-toggle');
-            // Only collapse if currently expanded
             if (toggle.classList.contains('expanded')) {
+              // Collapse folder if expanded
               selectedElement.click();
               // After collapsing, rebuild the list and maintain selection
               setTimeout(() => {
@@ -3656,10 +3665,21 @@ function setupEventListeners() {
                 });
                 highlightSelectedItem(updatedElements);
               }, 50);
+            } else {
+              // Folder already collapsed, move up to previous item
+              selectedBookmarkIndex = Math.max(selectedBookmarkIndex - 1, 0);
+              highlightSelectedItem(allElements);
             }
           } else {
-            // Hide preview for bookmark
-            selectedElement.classList.remove('force-preview');
+            // For bookmarks, check if preview is shown
+            if (selectedElement.classList.contains('force-preview')) {
+              // Hide preview for bookmark
+              selectedElement.classList.remove('force-preview');
+            } else {
+              // Preview already hidden, move up to previous item
+              selectedBookmarkIndex = Math.max(selectedBookmarkIndex - 1, 0);
+              highlightSelectedItem(allElements);
+            }
           }
         }
         break;
