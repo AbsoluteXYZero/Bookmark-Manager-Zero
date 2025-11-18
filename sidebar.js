@@ -1469,6 +1469,22 @@ function createBookmarkElement(bookmark) {
         </span>
         <span>Open in New Tab</span>
       </button>
+      <button class="action-btn" data-action="open-private-tab">
+        <span class="icon">
+          <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M17,9V7A5,5 0 0,0 7,7V9A3,3 0 0,0 4,12V20A3,3 0 0,0 7,23H17A3,3 0 0,0 20,20V12A3,3 0 0,0 17,9M9,7A3,3 0 0,1 15,7V9H9V7M18,20A1,1 0 0,1 17,21H7A1,1 0 0,1 6,20V12A1,1 0 0,1 7,11H17A1,1 0 0,1 18,12V20M12,14A2,2 0 0,0 10,16A2,2 0 0,0 12,18A2,2 0 0,0 14,16A2,2 0 0,0 12,14Z"/>
+          </svg>
+        </span>
+        <span>Open in Private Tab</span>
+      </button>
+      <button class="action-btn" data-action="open-new-window">
+        <span class="icon">
+          <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M19,19H5V5H19M19,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M13.96,12.29L11.21,15.83L9.25,13.47L6.5,17H17.5L13.96,12.29Z"/>
+          </svg>
+        </span>
+        <span>Open in New Window</span>
+      </button>
       <button class="action-btn" data-action="reader-view">
         <span class="icon">
           <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
@@ -2646,6 +2662,27 @@ async function handleBookmarkAction(action, bookmark) {
         window.open(bookmark.url, '_blank');
       } else {
         browser.tabs.create({ url: bookmark.url });
+      }
+      break;
+
+    case 'open-private-tab':
+      // Open in private/incognito tab
+      if (isPreviewMode) {
+        alert('🔒 In the Firefox extension, this would open the bookmark in a private tab.');
+      } else {
+        browser.windows.create({
+          url: bookmark.url,
+          incognito: true
+        });
+      }
+      break;
+
+    case 'open-new-window':
+      // Open in new window
+      if (isPreviewMode) {
+        window.open(bookmark.url, '_blank', 'noopener,noreferrer');
+      } else {
+        browser.windows.create({ url: bookmark.url });
       }
       break;
 
