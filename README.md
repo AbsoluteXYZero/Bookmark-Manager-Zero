@@ -22,15 +22,16 @@ Bookmark Manager Zero is a Firefox extension that provides a beautiful, feature-
 
 Other bookmark tools make you choose between organization OR security. Bookmark Manager Zero combines both:
 
-| Feature | Bookmark Manager Zero | Other Bookmark Extensions | Security Scanners |
-|---------|:--------------------:|:------------------------:|:-----------------:|
-| Modern bookmark UI | ✅ | ✅ | ❌ |
-| Dead link detection | ✅ | ✅ | ❌ |
-| Parked domain detection | ✅ | ❌ | ❌ |
-| Multi-source malware scanning | ✅ | ❌ | ✅ |
-| Safety indicators on bookmarks | ✅ | ❌ | ❌ |
-| Suspicious pattern detection | ✅ | ❌ | ❌ |
-| Whitelist management | ✅ | ❌ | ❌ |
+| Feature | Bookmark Manager Zero | Bookmarks clean up | Bookmarks Organizer | Malware & URL Scanner |
+|---------|:--------------------:|:------------------:|:-------------------:|:---------------------:|
+| Modern bookmark UI | ✅ | ❌ | ❌ | ❌ |
+| Dead link detection | ✅ | ✅ | ✅ | ❌ |
+| Parked domain detection | ✅ | ❌ | ❌ | ❌ |
+| Multi-source malware scanning | ✅ | ❌ | ❌ | ✅ |
+| Safety indicators on bookmarks | ✅ | ❌ | ❌ | ❌ |
+| Suspicious pattern detection | ✅ | ❌ | ❌ | ❌ |
+| Whitelist management | ✅ | ❌ | ❌ | ❌ |
+| Firefox support | ✅ | ✅ | ✅ | ❌ (Chrome only) |
 
 Stop blindly clicking old bookmarks. Know which links are dead, parked, or potentially dangerous before you visit them.
 
