@@ -148,7 +148,7 @@
     .collapsible-header {
       max-height: 500px;
       overflow: hidden;
-      transition: max-height 0.3s ease, opacity 0.3s ease, margin 0.3s ease;
+      transition: max-height 0.3s ease, opacity 0.3s ease, margin 0.3s ease, padding 0.3s ease;
       opacity: 1;
     }
 
@@ -156,6 +156,16 @@
       max-height: 0;
       opacity: 0;
       margin: 0;
+      padding: 0;
+    }
+
+    /* Reduce logo container margin when header is collapsed */
+    .logo-container {
+      transition: margin-bottom 0.3s ease;
+    }
+
+    body:has(.collapsible-header.collapsed) .logo-container {
+      margin-bottom: 8px;
     }
 
     #headerCollapseBtn svg {
