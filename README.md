@@ -85,7 +85,7 @@ Other bookmark managers make you choose between organization OR security. Bookma
 - **Advanced Search** - Real-time search across titles and URLs
 - **Drag & Drop** - Intuitive reordering and folder management
 - **List & Grid Views** - Choose your preferred layout
-- **8 Themes** - Enhanced themes with liquid glass effects, plus classic Light, Dark, Blue, and customizable Tinted
+- **8 Themes** - Enhanced themes with modern 3D depth effects, plus classic Light, Dark, Blue, and customizable Tinted
 - **Website Previews** - Visual thumbnails of bookmarked sites
 
 ### 🔒 **Privacy First**
@@ -151,7 +151,7 @@ Other bookmark managers make you choose between organization OR security. Bookma
 ## 🎨 Customization
 
 - **8 Built-in Themes** - Enhanced Blue (default), Enhanced Light, Enhanced Dark, Enhanced Gray, Blue, Light, Dark, and customizable Tinted theme
-- **Enhanced Themes** - Modern liquid glass aesthetics with 3D depth effects and rounded containers
+- **Enhanced Themes** - Modern design with 3D depth effects and rounded containers
 - **Custom Accent Colors** - Choose any color for theme highlights
 - **Adjustable Opacity** - Control bookmark background transparency (0-100%)
 - **Custom Text Colors** - Personalize bookmark and folder text
