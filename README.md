@@ -59,11 +59,18 @@ Other bookmark managers make you choose between organization OR security. Bookma
 
 ### 🛡️ **Multi-Layer Security Scanning**
 
-**3-Phase Protection System:**
-1. **Local Blocklists** - URLhaus + BlockList Project (726,000+ malicious domains)
-2. **Google Safe Browsing** - Real-time threat intelligence (optional API)
-3. **VirusTotal** - Multi-engine scanning from 70+ antivirus vendors (optional API)
+**4-Phase Protection System:**
+1. **Local Blocklists** - 8 sources with dual URLhaus coverage:
+   - URLhaus Active (~107K actively distributing malware URLs, updated every 5 minutes)
+   - URLhaus Historical (~37K historical threats, updated every 12 hours)
+   - BlockList Project (Malware, Phishing, Scam) - 626K domains
+   - HaGeZi TIF (608K), Phishing-Filter (21K), OISD Big (215K)
+   - Total: **~1.35M unique malicious domains** after deduplication
+2. **Google Safe Browsing** - Real-time threat intelligence (optional API, 10K requests/day)
+3. **Yandex Safe Browsing** - Geographic diversity with Russian/Eastern European threats (optional API, 100K requests/day)
+4. **VirusTotal** - Multi-engine scanning from 70+ antivirus vendors (optional API, 500 requests/day)
 
+- **Folder Rescan** - Right-click any folder to recursively scan all bookmarks in that folder and subfolders
 - **Suspicious Pattern Detection** - Flags URL shorteners, unusual TLDs, homograph attacks
 - **Safety History Tracking** - Monitor how link safety changes over time
 - **Clickable Shield Icons** - Click any shield for detailed threat information
@@ -74,7 +81,7 @@ Other bookmark managers make you choose between organization OR security. Bookma
 - **Advanced Search** - Real-time search across titles and URLs
 - **Drag & Drop** - Intuitive reordering and folder management
 - **List & Grid Views** - Choose your preferred layout
-- **Multiple Themes** - Light, Dark, and Blue Dark with custom accent colors
+- **8 Themes** - Enhanced themes with liquid glass effects, plus classic Light, Dark, Blue, and customizable Tinted
 - **Website Previews** - Visual thumbnails of bookmarked sites
 
 ### 🔒 **Privacy First**
@@ -114,8 +121,9 @@ Other bookmark managers make you choose between organization OR security. Bookma
 - 🔄 **Drag & Drop** - Intuitive reordering
 
 ### Safety & Security
-- 🛡️ **Multi-Source Scanning** - URLhaus, Google Safe Browsing, VirusTotal
+- 🛡️ **Multi-Source Scanning** - 8 blocklist sources (dual URLhaus coverage) + Google Safe Browsing + Yandex Safe Browsing + VirusTotal
 - 🔗 **Link Status Checking** - Dead, parked, and redirect detection
+- 📂 **Folder Rescan** - Recursively scan all bookmarks in a folder and subfolders with detailed statistics
 - ⚠️ **Suspicious Patterns** - URL shorteners, unusual TLDs, homograph attacks
 - 📜 **Safety History** - Track status changes over time
 - ✅ **Whitelist System** - Mark trusted URLs
@@ -138,11 +146,12 @@ Other bookmark managers make you choose between organization OR security. Bookma
 
 ## 🎨 Customization
 
-- **3 Built-in Themes** - Blue Dark (default), Light, Dark
+- **8 Built-in Themes** - Enhanced Blue (default), Enhanced Light, Enhanced Dark, Enhanced Gray, Blue, Light, Dark, and customizable Tinted theme
+- **Enhanced Themes** - Modern liquid glass aesthetics with 3D depth effects and rounded containers
 - **Custom Accent Colors** - Choose any color for theme highlights
-- **Adjustable Opacity** - Control bookmark background transparency
+- **Adjustable Opacity** - Control bookmark background transparency (0-100%)
 - **Custom Text Colors** - Personalize bookmark and folder text
-- **Background Images** - Upload your own backgrounds
+- **Background Images** - Upload your own backgrounds with positioning controls
 - **Zoom Control** - 50%-200% zoom levels
 - **GUI Scaling** - 80%-140% interface scaling
 
@@ -153,7 +162,7 @@ Other bookmark managers make you choose between organization OR security. Bookma
 - **Browser Compatibility:** Firefox 109+, Chrome/Edge 116+
 - **Manifest Version:** V3 (modern extension API)
 - **Storage:** IndexedDB for blocklists, browser.storage for settings
-- **APIs Used:** Native Bookmarks API, optional Google Safe Browsing, optional VirusTotal
+- **APIs Used:** Native Bookmarks API, optional Google Safe Browsing, optional Yandex Safe Browsing, optional VirusTotal
 - **Rate Limiting:** Built-in (5 bookmarks/batch, 1s delays)
 - **Cache TTL:** 24 hours (configurable)
 
