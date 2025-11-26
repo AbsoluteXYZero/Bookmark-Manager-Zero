@@ -63,8 +63,12 @@ Other bookmark managers make you choose between organization OR security. Bookma
 1. **Local Blocklists** - 8 sources with dual URLhaus coverage:
    - URLhaus Active (~107K actively distributing malware URLs, updated every 5 minutes)
    - URLhaus Historical (~37K historical threats, updated every 12 hours)
-   - BlockList Project (Malware, Phishing, Scam) - 626K domains
-   - HaGeZi TIF (608K), Phishing-Filter (21K), OISD Big (215K)
+   - BlockList Project - Malware (~300K domains)
+   - BlockList Project - Phishing (~214K domains)
+   - BlockList Project - Scam (~112K domains)
+   - HaGeZi TIF (~608K threat intelligence domains)
+   - Phishing-Filter (~21K phishing domains)
+   - OISD Big (~215K malicious domains)
    - Total: **~1.35M unique malicious domains** after deduplication
 2. **Google Safe Browsing** - Real-time threat intelligence (optional API, 10K requests/day)
 3. **Yandex Safe Browsing** - Geographic diversity with Russian/Eastern European threats (optional API, 100K requests/day)
