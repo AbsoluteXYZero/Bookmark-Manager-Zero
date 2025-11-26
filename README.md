@@ -1,45 +1,63 @@
-<div align="center">
+<p align="center">
+  <img src="icons/bookmark-96.svg" alt="Bookmark Manager Zero Logo" width="128" height="128">
+</p>
 
-<img src="icons/bookmark-96.svg" alt="Bookmark Manager Zero Logo" width="128" height="128">
+<h1 align="center">Bookmark Manager Zero</h1>
 
-# Bookmark Manager Zero
+<p align="center">
+  <strong>The only bookmark manager with integrated security scanning.</strong>
+</p>
 
-**The only bookmark manager with integrated security scanning.**
+<p align="center">
+  A modern, privacy-focused interface for managing your browser bookmarks with real-time link validation and multi-source malware detection.
+</p>
 
-A modern, privacy-focused interface for managing your browser bookmarks with real-time link validation and multi-source malware detection.
+<p align="center">
+  <a href="LICENSE">
+    <img src="https://img.shields.io/badge/license-MIT-green" alt="License">
+  </a>
+</p>
 
-[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
 ---
-
 ## 🚀 Get the Extension
+
+<div align="center">
 
 <table>
   <tr>
     <td align="center" width="50%">
       <a href="https://addons.mozilla.org/en-US/firefox/addon/bookmark-manager-zero/">
-        <img src="https://blog.mozilla.org/addons/files/2020/04/get-the-addon-fx-apr-2020.svg" alt="Get Firefox Addon" height="60">
+        <img src="https://blog.mozilla.org/addons/files/2020/04/get-the-addon-fx-apr-2020.svg" alt="Get Firefox Addon" height="60" />
       </a>
-      <br><br>
+      <br /><br />
       <a href="https://github.com/AbsoluteXYZero/Bookmark-Manager-Zero-Firefox">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a0/Firefox_logo%2C_2019.svg" alt="Firefox" width="60" height="60">
-        <br>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a0/Firefox_logo%2C_2019.svg" alt="Firefox" width="60" height="60" />
+        <br />
         <strong>Firefox Repository</strong>
       </a>
     </td>
     <td align="center" width="50%">
       <a href="https://chromewebstore.google.com/detail/bookmark-manager-zero/jbpiddimkkdfhoellbiegdopfpilnclc">
-        <img src="https://developer.chrome.com/static/docs/webstore/branding/image/HRs9MPufa1J1h5glNhut.png" alt="Available in Chrome Web Store" height="60">
+        <img src="https://developer.chrome.com/static/docs/webstore/branding/image/HRs9MPufa1J1h5glNhut.png" alt="Available in Chrome Web Store" height="60" />
       </a>
-      <br><br>
+      <br /><br />
       <a href="https://github.com/AbsoluteXYZero/Bookmark-Manager-Zero-Chrome">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/Google_Chrome_icon_%28February_2022%29.svg" alt="Chrome" width="60" height="60">
-        <br>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/Google_Chrome_icon_%28February_2022%29.svg" alt="Chrome" width="60" height="60" />
+        <br />
         <strong>Chrome Repository</strong>
       </a>
     </td>
   </tr>
 </table>
+
+</div>
+
+
+
+
+
+
 
 ---
 
