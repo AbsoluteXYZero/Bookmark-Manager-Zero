@@ -1,6 +1,5 @@
-<p align="center">
-  <img src="icons/bookmark-96.svg" alt="Bookmark Manager Zero Logo" width="128" height="128">
-</p>
+<div align="center"> <img src="icons/bookmark-96.svg" alt="Bookmark Manager Zero Logo" width="128" height="128">
+
 
 <h1 align="center">Bookmark Manager Zero</h1>
 
