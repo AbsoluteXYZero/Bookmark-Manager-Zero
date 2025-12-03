@@ -19,7 +19,7 @@
 
 
 
-## 🚀 Get the Extension
+ 🚀 Get the Extension
 
 <div align="center">
 
