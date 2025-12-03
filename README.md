@@ -87,9 +87,9 @@ Other bookmark managers make you choose between organization OR security. Bookma
    - Phishing-Filter (~21K phishing domains)
    - OISD Big (~215K malicious domains)
    - Total: **~1.35M unique malicious domains** after deduplication
-2. **Google Safe Browsing** - Real-time threat intelligence (optional API, 10K requests/day)
-3. **Yandex Safe Browsing** - Geographic diversity with Russian/Eastern European threats (optional API, 100K requests/day)
-4. **VirusTotal** - Multi-engine scanning from 70+ antivirus vendors (optional API, 500 requests/day)
+2. **Google Safe Browsing** - Real-time threat intelligence (optional API, 10K requests/day with free tier)
+3. **Yandex Safe Browsing** - Geographic diversity with Russian/Eastern European threats (optional API, 100K requests/day with free tier)
+4. **VirusTotal** - Multi-engine scanning from 70+ antivirus vendors (optional API, 500 requests/day with free tier)
 
 - **Folder Rescan** - Right-click any folder to recursively scan all bookmarks in that folder and subfolders
 - **Suspicious Pattern Detection** - Flags URL shorteners, unusual TLDs, homograph attacks
@@ -136,7 +136,7 @@ Other bookmark managers make you choose between organization OR security. Bookma
 
 ### Core Functionality
 - ✅ **Native Bookmark Integration** - Bi-directional sync with browser bookmarks
-- 🎨 **Material Design UI** - Clean, modern interface with 3 themes
+- 🎨 **Material Design UI** - Clean, modern interface with 8 themes
 - 🔍 **Advanced Search** - Real-time filtering across all bookmarks
 - 📁 **Smart Folder Management** - Create, edit, move, and organize
 - 🔄 **Drag & Drop** - Intuitive reordering
@@ -184,7 +184,7 @@ Other bookmark managers make you choose between organization OR security. Bookma
 - **Manifest Version:** V3 (modern extension API)
 - **Storage:** IndexedDB for blocklists, browser.storage for settings
 - **APIs Used:** Native Bookmarks API, optional Google Safe Browsing, optional Yandex Safe Browsing, optional VirusTotal
-- **Rate Limiting:** Built-in (5 bookmarks/batch, 1s delays)
+- **Scan Rate Limiting:** Built-in (5 bookmarks/batch, 1s delays)
 - **Cache TTL:** 24 hours (configurable)
 
 ---
