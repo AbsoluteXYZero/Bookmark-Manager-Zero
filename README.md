@@ -104,6 +104,7 @@ Other bookmark managers make you choose between organization OR security. Bookma
 - **List & Grid Views** - Choose your preferred layout
 - **8 Themes** - Enhanced themes with modern 3D depth effects, plus classic Light, Dark, Blue, and customizable Tinted
 - **Website Previews** - Visual thumbnails of bookmarked sites
+- **Bookmark Changelog** - Complete history tracking of all bookmark and folder changes
 
 ### 🔒 **Privacy First**
 - **Zero Tracking** - No analytics, no data collection
@@ -155,6 +156,7 @@ Other bookmark managers make you choose between organization OR security. Bookma
 - ⌨️ **Keyboard Navigation** - Full keyboard support
 - 🔍 **Smart Filters** - Filter by status and safety
 - ⏮️ **Undo System** - Restore deleted bookmarks
+- 📜 **Bookmark Changelog** - Track creates, moves, deletes, renames with persistent history
 
 ### Privacy & Control
 - 🔒 **No Tracking** - Zero analytics or data collection
