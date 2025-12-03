@@ -18,7 +18,7 @@
 </p>
 
 
----
+
 ## 🚀 Get the Extension
 
 <div align="center">
