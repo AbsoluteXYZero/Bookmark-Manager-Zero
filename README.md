@@ -47,8 +47,6 @@
 </div>
 
 
-
-
 📸 Gallery (Click to view full size)
 
 <table>
