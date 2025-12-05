@@ -17,6 +17,7 @@
 
 <table align="center">
   <tr>
+    <!-- Left column: Firefox Addon + Repo -->
     <td align="center">
       <a href="https://addons.mozilla.org/en-US/firefox/addon/bookmark-manager-zero/">
         <img src="https://blog.mozilla.org/addons/files/2020/04/get-the-addon-fx-apr-2020.svg" alt="Get Firefox Addon" height="60">
@@ -27,6 +28,7 @@
         <br><strong>Firefox Repository</strong>
       </a>
     </td>
+    <!-- Right column: Chrome Web Store + Repo -->
     <td align="center">
       <a href="https://chromewebstore.google.com/detail/bookmark-manager-zero/jbpiddimkkdfhoellbiegdopfpilnclc">
         <img src="https://developer.chrome.com/static/docs/webstore/branding/image/HRs9MPufa1J1h5glNhut.png" alt="Available in Chrome Web Store" height="45">
