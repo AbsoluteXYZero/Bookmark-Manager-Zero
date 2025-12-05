@@ -145,16 +145,19 @@ Other bookmark managers make you choose between organization OR security. Bookma
 ### Safety & Security
 - 🛡️ **Multi-Source Scanning** - 8 blocklist sources (dual URLhaus coverage) + Google Safe Browsing + Yandex Safe Browsing + VirusTotal
 - 🔗 **Link Status Checking** - Dead, parked, and redirect detection
-- 📂 **Folder Rescan** - Recursively scan all bookmarks in a folder and subfolders with detailed statistics
+- 🔄 **Background Scanning** - Scans continue in background even when panel/sidebar is closed, with automatic progress sync
+- 📂 **Folder Rescan** - Recursively scan all bookmarks in a folder and subfolders with real-time progress updates
 - ⚠️ **Suspicious Patterns** - URL shorteners, unusual TLDs, homograph attacks
 - 📜 **Safety History** - Track status changes over time
 - ✅ **Whitelist System** - Mark trusted URLs
 
 ### User Experience
-- 🖼️ **Website Previews** - Visual thumbnails
+- 🖼️ **Website Previews** - Visual thumbnails with high-quality hover popups
 - 📊 **Multiple Views** - List and grid layouts
 - ⌨️ **Keyboard Navigation** - Full keyboard support
 - 🔍 **Smart Filters** - Filter by status and safety
+- 📱 **QR Code Generator** - Generate QR codes for bookmarks (100% local, works offline)
+- 🎆 **First-Time Setup Card** - Welcoming onboarding experience for new users
 - ⏮️ **Undo System** - Restore deleted bookmarks
 - 📜 **Bookmark Changelog** - Track creates, moves, deletes, renames with persistent history
 
@@ -186,7 +189,8 @@ Other bookmark managers make you choose between organization OR security. Bookma
 - **Manifest Version:** V3 (modern extension API)
 - **Storage:** IndexedDB for blocklists, browser.storage for settings
 - **APIs Used:** Native Bookmarks API, optional Google Safe Browsing, optional Yandex Safe Browsing, optional VirusTotal
-- **Scan Rate Limiting:** Built-in (5 bookmarks/batch, 1s delays)
+- **Scan Performance:** ~33 bookmarks/second (10 bookmarks/batch, 300ms delays)
+- **Background Scanning:** Persistent scanning in service worker/background script
 - **Cache TTL:** 24 hours (configurable)
 
 ---
