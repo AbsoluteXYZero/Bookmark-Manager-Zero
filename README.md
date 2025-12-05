@@ -87,7 +87,6 @@
   </tr>
 </table>
 
-*Click any image to view full resolution. All screenshots show the extension running in Firefox.*
 
 </div>
 
