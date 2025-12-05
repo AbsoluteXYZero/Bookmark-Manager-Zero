@@ -11,12 +11,6 @@
   A modern, privacy-focused interface for managing your browser bookmarks with real-time link validation and multi-source malware detection.
 </p>
 
-<p align="center">
-  <a href="LICENSE">
-    <img src="https://img.shields.io/badge/license-MIT-green" alt="License">
-  </a>
-</p>
-
 
 
  🚀 Get the Extension
@@ -55,6 +49,46 @@
 
 
 
+📸 Gallery (Click to view full size)
+
+<table>
+  <tr>
+    <td width="33%">
+      <img src="screenshots/Screenshot 2025-11-19 204148.png" alt="Screenshot 1" width="100%">
+    </td>
+    <td width="33%">
+      <img src="screenshots/Screenshot 2025-11-19 204209.png" alt="Screenshot 2" width="100%">
+    </td>
+    <td width="33%">
+      <img src="screenshots/Screenshot 2025-11-19 204352.png" alt="Screenshot 3" width="100%">
+    </td>
+  </tr>
+  <tr>
+    <td width="33%">
+      <img src="screenshots/Screenshot 2025-11-19 204236.png" alt="Screenshot 4" width="100%">
+    </td>
+    <td width="33%">
+      <img src="screenshots/Screenshot 2025-11-19 204421.png" alt="Screenshot 5" width="100%">
+    </td>
+    <td width="33%">
+      <img src="screenshots/Screenshot 2025-11-19 204437.png" alt="Screenshot 6" width="100%">
+    </td>
+  </tr>
+  <tr>
+    <td width="33%">
+      <img src="screenshots/Screenshot 2025-11-19 215914.png" alt="Screenshot 7" width="100%">
+    </td>
+    <td width="33%">
+      <img src="screenshots/Screenshot 2025-11-19 224518.png" alt="Screenshot 8" width="100%">
+    </td>
+    <td width="33%">
+      <img src="screenshots/Screenshot 2025-12-05 133834.png" alt="Screenshot 9" width="100%">
+  </tr>
+</table>
+
+*Click any image to view full resolution. All screenshots show the extension running in Firefox.*
+
+</div>
 
 
 
