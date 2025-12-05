@@ -15,30 +15,51 @@
 
  🚀 Get the Extension
 
-<table>
+<table align="center">
   <tr>
-    <td width="50%">
-      <a href="https://addons.mozilla.org/en-US/firefox/addon/bookmark-manager-zero/">
-        <img src="https://blog.mozilla.org/addons/files/2020/04/get-the-addon-fx-apr-2020.svg" width="100%" height="60">
-      </a>
-      <br><br>
-      <a href="https://github.com/AbsoluteXYZero/Bookmark-Manager-Zero-Firefox">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a0/Firefox_logo%2C_2019.svg" width="100%" height="60">
-        <br><strong>Firefox Repository</strong>
-      </a>
+    <!-- Firefox Table -->
+    <td>
+      <table>
+        <tr>
+          <td>
+            <a href="https://addons.mozilla.org/en-US/firefox/addon/bookmark-manager-zero/">
+              <img src="https://blog.mozilla.org/addons/files/2020/04/get-the-addon-fx-apr-2020.svg" height="60">
+            </a>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <a href="https://github.com/AbsoluteXYZero/Bookmark-Manager-Zero-Firefox">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/a/a0/Firefox_logo%2C_2019.svg" width="60" height="60">
+              <br><strong>Firefox Repository</strong>
+            </a>
+          </td>
+        </tr>
+      </table>
     </td>
-    <td width="50%">
-      <a href="https://chromewebstore.google.com/detail/bookmark-manager-zero/jbpiddimkkdfhoellbiegdopfpilnclc">
-        <img src="https://developer.chrome.com/static/docs/webstore/branding/image/HRs9MPufa1J1h5glNhut.png" width="100%" height="60">
-      </a>
-      <br><br>
-      <a href="https://github.com/AbsoluteXYZero/Bookmark-Manager-Zero-Chrome">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/Google_Chrome_icon_%28February_2022%29.svg" width="100%" height="60">
-        <br><strong>Chrome Repository</strong>
-      </a>
+    <!-- Chrome Table -->
+    <td>
+      <table>
+        <tr>
+          <td>
+            <a href="https://chromewebstore.google.com/detail/bookmark-manager-zero/jbpiddimkkdfhoellbiegdopfpilnclc">
+              <img src="https://developer.chrome.com/static/docs/webstore/branding/image/HRs9MPufa1J1h5glNhut.png" height="60">
+            </a>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <a href="https://github.com/AbsoluteXYZero/Bookmark-Manager-Zero-Chrome">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/Google_Chrome_icon_%28February_2022%29.svg" width="60" height="60">
+              <br><strong>Chrome Repository</strong>
+            </a>
+          </td>
+        </tr>
+      </table>
     </td>
   </tr>
 </table>
+
 
 📸 Gallery (Click to view full size)
 
