@@ -224,24 +224,6 @@ Other bookmark managers make you choose between organization OR security. Bookma
 
 ---
 
-## 🤝 Contributing
-
-This project is open source (MIT License). Contributions are welcome!
-
-- **Report Issues:** Use GitHub Issues for bug reports or feature requests
-- **Submit PRs:** Fork the repository and submit pull requests
-- **Browser-Specific Repos:**
-  - [Firefox Version](https://github.com/AbsoluteXYZero/Bookmark-Manager-Zero-Firefox)
-  - [Chrome Version](https://github.com/AbsoluteXYZero/Bookmark-Manager-Zero-Chrome)
-
----
-
-## 📄 License
-
-MIT License - see [LICENSE](LICENSE) file for details.
-
----
-
 ## ☕ Support Development
 
 If you find this extension useful, consider supporting development:
