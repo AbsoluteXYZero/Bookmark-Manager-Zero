@@ -83,6 +83,7 @@
     </td>
     <td width="33%">
       <img src="screenshots/Screenshot 2025-12-05 133834.png" alt="Screenshot 9" width="100%">
+    </td>
   </tr>
 </table>
 
