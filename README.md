@@ -92,9 +92,6 @@
 
 
 
----
-
-</div>
 
 ## 🌟 Why Bookmark Manager Zero?
 
