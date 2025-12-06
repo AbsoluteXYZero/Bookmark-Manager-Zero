@@ -51,7 +51,7 @@
 <table width="100%">
   <tr>
     <!-- Left spacer -->
-    <td width="5%"></td>
+    <td width="25%"></td>
     <!-- Firefox Addon -->
     <td align="center">
       <a href="https://addons.mozilla.org/en-US/firefox/addon/bookmark-manager-zero/">
@@ -65,7 +65,7 @@
       </a>
     </td>
     <!-- Right spacer -->
-    <td width="5%"></td>
+    <td width="25%"></td>
   </tr>
   <tr>
     <!-- Left spacer -->
