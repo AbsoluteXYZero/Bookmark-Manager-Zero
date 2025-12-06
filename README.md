@@ -49,7 +49,9 @@
 
 
 
-<table align="center" cellspacing="20">
+<p align="center">
+
+<table cellspacing="30">
   <tr>
     <!-- Left column: Firefox -->
     <td align="center" valign="top">
@@ -57,7 +59,7 @@
       <a href="https://addons.mozilla.org/en-US/firefox/addon/bookmark-manager-zero/">
         <img src="https://blog.mozilla.org/addons/files/2020/04/get-the-addon-fx-apr-2020.svg" alt="Get Firefox Addon" height="60">
       </a>
-      <br><br>
+      <br>
       <!-- Firefox Repository -->
       <a href="https://github.com/AbsoluteXYZero/Bookmark-Manager-Zero-Firefox">
         <img src="https://upload.wikimedia.org/wikipedia/commons/a/a0/Firefox_logo%2C_2019.svg" width="60" height="60" alt="Firefox Repository">
@@ -70,7 +72,7 @@
       <a href="https://chromewebstore.google.com/detail/bookmark-manager-zero/jbpiddimkkdfhoellbiegdopfpilnclc">
         <img src="https://developer.chrome.com/static/docs/webstore/branding/image/HRs9MPufa1J1h5glNhut.png" alt="Available in Chrome Web Store" height="60">
       </a>
-      <br><br>
+      <br>
       <!-- Chrome Repository -->
       <a href="https://github.com/AbsoluteXYZero/Bookmark-Manager-Zero-Chrome">
         <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/Google_Chrome_icon_%28February_2022%29.svg" width="60" height="60" alt="Chrome Repository">
@@ -79,6 +81,8 @@
     </td>
   </tr>
 </table>
+
+</p>
 
 📸 Gallery (Click to view full size)
 
