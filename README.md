@@ -46,7 +46,6 @@
 </div>
 
 
-<iframe src="index-github.html" width="100%" height="400"></iframe>
 
 <br>
 
