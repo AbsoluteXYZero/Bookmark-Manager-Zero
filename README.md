@@ -51,25 +51,25 @@
 <table width="100%">
   <tr>
     <!-- Left spacer -->
-    <td width="15%"><div style="width:100%"></div></td>
+    <td width="5%"></td>
     <!-- Firefox Addon -->
-    <td align="center" width="35%">
+    <td align="center">
       <a href="https://addons.mozilla.org/en-US/firefox/addon/bookmark-manager-zero/">
         <img src="https://blog.mozilla.org/addons/files/2020/04/get-the-addon-fx-apr-2020.svg" height="60" />
       </a>
     </td>
     <!-- Chrome Web Store -->
-    <td align="center" width="35%">
+    <td align="center">
       <a href="https://chromewebstore.google.com/detail/bookmark-manager-zero/jbpiddimkkdfhoellbiegdopfpilnclc">
         <img src="https://developer.chrome.com/static/docs/webstore/branding/image/HRs9MPufa1J1h5glNhut.png" height="60" />
       </a>
     </td>
     <!-- Right spacer -->
-    <td width="15%"><div style="width:100%"></div></td>
+    <td width="5%"></td>
   </tr>
   <tr>
     <!-- Left spacer -->
-    <td><div style="width:100%"></div></td>
+    <td></td>
     <!-- Firefox Repository -->
     <td align="center">
       <a href="https://github.com/AbsoluteXYZero/Bookmark-Manager-Zero-Firefox">
@@ -85,7 +85,7 @@
       </a>
     </td>
     <!-- Right spacer -->
-    <td><div style="width:100%"></div></td>
+    <td></td>
   </tr>
 </table>
 
