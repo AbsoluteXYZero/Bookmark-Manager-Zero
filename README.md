@@ -14,7 +14,9 @@
 
 
  🚀 Get the Extension
+ 
 <br>
+
 <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; text-align: center;">
 
   <!-- Firefox Block -->
