@@ -29,7 +29,7 @@
       <strong>Firefox Repository</strong>
     </a>
   </div>
-
+  
   <!-- Chrome Block -->
   <div style="flex: 1 1 200px; max-width: 250px;">
     <a href="https://chromewebstore.google.com/detail/bookmark-manager-zero/jbpiddimkkdfhoellbiegdopfpilnclc">
@@ -45,6 +45,70 @@
 
 </div>
 
+<table width="100%">
+  <tr>
+    <td align="center">
+      <a href="https://addons.mozilla.org/en-US/firefox/addon/bookmark-manager-zero/">
+        <img src="https://blog.mozilla.org/addons/files/2020/04/get-the-addon-fx-apr-2020.svg" height="60" />
+      </a>
+      <br>
+      <a href="https://github.com/AbsoluteXYZero/Bookmark-Manager-Zero-Firefox">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a0/Firefox_logo%2C_2019.svg" width="60" height="60" />
+        <br><strong>Firefox Repository</strong>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://chromewebstore.google.com/detail/bookmark-manager-zero/jbpiddimkkdfhoellbiegdopfpilnclc">
+        <img src="https://developer.chrome.com/static/docs/webstore/branding/image/HRs9MPufa1J1h5glNhut.png" height="60" />
+      </a>
+      <br>
+      <a href="https://github.com/AbsoluteXYZero/Bookmark-Manager-Zero-Chrome">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/Google_Chrome_icon_%28February_2022%29.svg" width="60" height="60" />
+        <br><strong>Chrome Repository</strong>
+      </a>
+    </td>
+  </tr>
+  <!-- Second row if you had two more icons -->
+  <tr>
+    <td align="center">
+      <!-- Another icon/link -->
+    </td>
+    <td align="center">
+      <!-- Another icon/link -->
+    </td>
+  </tr>
+</table>
+
+
+<table align="center">
+  <!-- First row -->
+  <tr>
+    <td align="center" width="50%">
+      <!-- Firefox Addon -->
+      <a href="https://addons.mozilla.org/en-US/firefox/addon/bookmark-manager-zero/">
+        <img src="https://blog.mozilla.org/addons/files/2020/04/get-the-addon-fx-apr-2020.svg" height="60" alt="Get Firefox Addon">
+      </a>
+      <br><br>
+      <!-- Firefox Repository -->
+      <a href="https://github.com/AbsoluteXYZero/Bookmark-Manager-Zero-Firefox">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a0/Firefox_logo%2C_2019.svg" width="60" height="60" alt="Firefox Repository">
+        <br><strong>Firefox Repository</strong>
+      </a>
+    </td>
+    <td align="center" width="50%">
+      <!-- Chrome Web Store -->
+      <a href="https://chromewebstore.google.com/detail/bookmark-manager-zero/jbpiddimkkdfhoellbiegdopfpilnclc">
+        <img src="https://developer.chrome.com/static/docs/webstore/branding/image/HRs9MPufa1J1h5glNhut.png" height="60" alt="Chrome Web Store">
+      </a>
+      <br><br>
+      <!-- Chrome Repository -->
+      <a href="https://github.com/AbsoluteXYZero/Bookmark-Manager-Zero-Chrome">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/Google_Chrome_icon_%28February_2022%29.svg" width="60" height="60" alt="Chrome Repository">
+        <br><strong>Chrome Repository</strong>
+      </a>
+    </td>
+  </tr>
+</table>
 
 📸 Gallery (Click to view full size)
 
