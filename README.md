@@ -53,13 +53,13 @@
     <!-- Left spacer -->
     <td width="25%"></td>
     <!-- Firefox Addon -->
-    <td width="35%" align="center">
+    <td width="25%" align="center">
       <a href="https://addons.mozilla.org/en-US/firefox/addon/bookmark-manager-zero/">
         <img src="https://blog.mozilla.org/addons/files/2020/04/get-the-addon-fx-apr-2020.svg" height="60">
       </a>
     </td>
     <!-- Chrome Web Store -->
-    <td width="35%" align="center">
+    <td width="25%" align="center">
       <a href="https://chromewebstore.google.com/detail/bookmark-manager-zero/jbpiddimkkdfhoellbiegdopfpilnclc">
         <img src="https://developer.chrome.com/static/docs/webstore/branding/image/HRs9MPufa1J1h5glNhut.png" height="60">
       </a>
