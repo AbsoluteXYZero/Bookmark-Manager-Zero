@@ -18,7 +18,6 @@
 <br>
 
 <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; text-align: center;">
-
   <!-- Firefox Block -->
   <div style="flex: 1 1 200px; max-width: 250px;">
     <a href="https://addons.mozilla.org/en-US/firefox/addon/bookmark-manager-zero/">
@@ -31,7 +30,7 @@
       <strong>Firefox Repository</strong>
     </a>
   </div>
-  
+  <br>
   <!-- Chrome Block -->
   <div style="flex: 1 1 200px; max-width: 250px;">
     <a href="https://chromewebstore.google.com/detail/bookmark-manager-zero/jbpiddimkkdfhoellbiegdopfpilnclc">
