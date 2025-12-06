@@ -51,7 +51,7 @@
 <table width="100%">
   <tr>
     <!-- Left spacer -->
-    <td width="35%">
+    <td width="35%" style="border: none;">
       <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/1x1.png" width="1" height="1" />
     </td>
     <!-- Firefox Addon -->
@@ -67,7 +67,7 @@
       </a>
     </td>
     <!-- Right spacer -->
-    <td width="35%">
+    <td width="35%" style="border: none;">
       <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/1x1.png" width="1" height="1" />
     </td>
   </tr>
