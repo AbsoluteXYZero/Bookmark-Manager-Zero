@@ -47,6 +47,30 @@
 
 <br>
 
+
+<table width="100%">
+  <tr>
+    <!-- Firefox Column -->
+    <td width="50%" align="center">
+      <!-- Firefox Addon -->
+      <img src="https://blog.mozilla.org/addons/files/2020/04/get-the-addon-fx-apr-2020.svg" height="60" alt="Get Firefox Addon">
+      <br><br>
+      <!-- Firefox Repository -->
+      <img src="https://upload.wikimedia.org/wikipedia/commons/a/a0/Firefox_logo%2C_2019.svg" width="60" height="60" alt="Firefox Repository">
+      <br><strong>Firefox Repository</strong>
+    </td>
+    <!-- Chrome Column -->
+    <td width="50%" align="center">
+      <!-- Chrome Web Store -->
+      <img src="https://developer.chrome.com/static/docs/webstore/branding/image/HRs9MPufa1J1h5glNhut.png" height="60" alt="Chrome Web Store">
+      <br><br>
+      <!-- Chrome Repository -->
+      <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/Google_Chrome_icon_%28February_2022%29.svg" width="60" height="60" alt="Chrome Repository">
+      <br><strong>Chrome Repository</strong>
+    </td>
+  </tr>
+</table>
+
 📸 Gallery (Click to view full size)
 
 <table>
