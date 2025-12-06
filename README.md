@@ -65,7 +65,7 @@
       </a>
     </td>
     <!-- Right spacer -->
-    <td width="25%"></td>
+    <td width="28%"></td>
   </tr>
   <tr>
     <!-- Left spacer -->
