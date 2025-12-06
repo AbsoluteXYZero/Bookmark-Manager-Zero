@@ -15,33 +15,35 @@
 
  🚀 Get the Extension
 
-<table align="center" width="100%">
-  <tr>
-    <!-- Firefox Column -->
-    <td align="center" style="width:50%; vertical-align:top;">
-      <a href="https://addons.mozilla.org/en-US/firefox/addon/bookmark-manager-zero/">
-        <img src="https://blog.mozilla.org/addons/files/2020/04/get-the-addon-fx-apr-2020.svg" height="60">
-      </a>
-      <br><br>
-      <a href="https://github.com/AbsoluteXYZero/Bookmark-Manager-Zero-Firefox">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a0/Firefox_logo%2C_2019.svg" width="60" height="60">
-        <br><strong>Firefox Repository</strong>
-      </a>
-    </td>
-    <!-- Chrome Column -->
-    <td align="center" style="width:50%; vertical-align:top;">
-      <a href="https://chromewebstore.google.com/detail/bookmark-manager-zero/jbpiddimkkdfhoellbiegdopfpilnclc">
-        <img src="https://developer.chrome.com/static/docs/webstore/branding/image/HRs9MPufa1J1h5glNhut.png" height="45">
-      </a>
-      <br><br>
-      <a href="https://github.com/AbsoluteXYZero/Bookmark-Manager-Zero-Chrome">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/Google_Chrome_icon_%28February_2022%29.svg" width="60" height="60">
-        <br><strong>Chrome Repository</strong>
-      </a>
-    </td>
-  </tr>
-</table>
+<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; text-align: center;">
 
+  <!-- Firefox Block -->
+  <div style="flex: 1 1 200px; max-width: 250px;">
+    <a href="https://addons.mozilla.org/en-US/firefox/addon/bookmark-manager-zero/">
+      <img src="https://blog.mozilla.org/addons/files/2020/04/get-the-addon-fx-apr-2020.svg" alt="Get Firefox Addon" height="60" />
+    </a>
+    <br /><br />
+    <a href="https://github.com/AbsoluteXYZero/Bookmark-Manager-Zero-Firefox">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/a/a0/Firefox_logo%2C_2019.svg" alt="Firefox" width="60" height="60" />
+      <br />
+      <strong>Firefox Repository</strong>
+    </a>
+  </div>
+
+  <!-- Chrome Block -->
+  <div style="flex: 1 1 200px; max-width: 250px;">
+    <a href="https://chromewebstore.google.com/detail/bookmark-manager-zero/jbpiddimkkdfhoellbiegdopfpilnclc">
+      <img src="https://developer.chrome.com/static/docs/webstore/branding/image/HRs9MPufa1J1h5glNhut.png" alt="Available in Chrome Web Store" height="60" />
+    </a>
+    <br /><br />
+    <a href="https://github.com/AbsoluteXYZero/Bookmark-Manager-Zero-Chrome">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/Google_Chrome_icon_%28February_2022%29.svg" alt="Chrome" width="60" height="60" />
+      <br />
+      <strong>Chrome Repository</strong>
+    </a>
+  </div>
+
+</div>
 
 
 📸 Gallery (Click to view full size)
