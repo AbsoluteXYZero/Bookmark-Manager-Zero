@@ -50,22 +50,22 @@
 
 <table width="100%">
   <tr>
-    <td width="25%"></td> <!-- empty left column -->
+    <td width="30%"></td> <!-- wider empty left column -->
     <!-- Firefox Column -->
-    <td width="25%" align="center">
+    <td width="20%" align="center">
       <img src="https://blog.mozilla.org/addons/files/2020/04/get-the-addon-fx-apr-2020.svg" height="60">
       <br><br>
       <img src="https://upload.wikimedia.org/wikipedia/commons/a/a0/Firefox_logo%2C_2019.svg" width="60" height="60">
       <br><strong>Firefox Repository</strong>
     </td>
     <!-- Chrome Column -->
-    <td width="25%" align="center">
+    <td width="20%" align="center">
       <img src="https://developer.chrome.com/static/docs/webstore/branding/image/HRs9MPufa1J1h5glNhut.png" height="60">
       <br><br>
       <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/Google_Chrome_icon_%28February_2022%29.svg" width="60" height="60">
       <br><strong>Chrome Repository</strong>
     </td>
-    <td width="25%"></td> <!-- empty right column -->
+    <td width="30%"></td> <!-- wider empty right column -->
   </tr>
 </table>
 
