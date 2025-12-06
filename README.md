@@ -48,50 +48,71 @@
 <br>
 
 
-<table width="100%" border="0">
+<p align="center">
+  <span style="display:inline-block; margin:20px;">
+    <a href="https://addons.mozilla.org/en-US/firefox/addon/bookmark-manager-zero/">
+      <img src="https://blog.mozilla.org/addons/files/2020/04/get-the-addon-fx-apr-2020.svg" height="60" />
+    </a><br><br>
+    <a href="https://github.com/AbsoluteXYZero/Bookmark-Manager-Zero-Firefox">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/a/a0/Firefox_logo%2C_2019.svg" width="60" height="60" />
+      <br><strong>Firefox Repository</strong>
+    </a>
+  </span>
+  <span style="display:inline-block; margin:20px;">
+    <a href="https://chromewebstore.google.com/detail/bookmark-manager-zero/jbpiddimkkdfhoellbiegdopfpilnclc">
+      <img src="https://developer.chrome.com/static/docs/webstore/branding/image/HRs9MPufa1J1h5glNhut.png" height="50" />
+    </a><br><br>
+    <a href="https://github.com/AbsoluteXYZero/Bookmark-Manager-Zero-Chrome">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/Google_Chrome_icon_%28February_2022%29.svg" width="60" height="60" />
+      <br><strong>Chrome Repository</strong>
+    </a>
+  </span>
+</p>
+
+<table width="100%" bgcolor="#F0F0F0">
   <tr>
     <!-- Left spacer -->
-    <td width="35%">
+    <td width="35%" bgcolor="#F0F0F0">
       <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/1x1.png" width="1" height="1" />
     </td>
     <!-- Firefox Addon -->
-    <td align="center">
+    <td align="center" bgcolor="#FFFFFF">
       <a href="https://addons.mozilla.org/en-US/firefox/addon/bookmark-manager-zero/">
         <img src="https://blog.mozilla.org/addons/files/2020/04/get-the-addon-fx-apr-2020.svg" height="60" />
       </a>
     </td>
     <!-- Chrome Store -->
-    <td align="center">
+    <td align="center" bgcolor="#FFFFFF">
       <a href="https://chromewebstore.google.com/detail/bookmark-manager-zero/jbpiddimkkdfhoellbiegdopfpilnclc">
         <img src="https://developer.chrome.com/static/docs/webstore/branding/image/HRs9MPufa1J1h5glNhut.png" height="50" />
       </a>
     </td>
     <!-- Right spacer -->
-    <td width="35%">
+    <td width="35%" bgcolor="#F0F0F0">
       <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/1x1.png" width="1" height="1" />
     </td>
   </tr>
   <tr>
     <!-- Left spacer -->
-    <td>
+    <td bgcolor="#F0F0F0">
       <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/1x1.png" width="1" height="1" />
     </td>
     <!-- Firefox Repo -->
-    <td align="center">
+    <td align="center" bgcolor="#FFFFFF">
       <a href="https://github.com/AbsoluteXYZero/Bookmark-Manager-Zero-Firefox">
         <img src="https://upload.wikimedia.org/wikipedia/commons/a/a0/Firefox_logo%2C_2019.svg" width="60" height="60" />
         <br><strong>Firefox Repository</strong>
       </a>
     </td>
     <!-- Chrome Repo -->
-    <td align="center">
+    <td align="center" bgcolor="#FFFFFF">
       <a href="https://github.com/AbsoluteXYZero/Bookmark-Manager-Zero-Chrome">
         <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/Google_Chrome_icon_%28February_2022%29.svg" width="60" height="60" />
         <br><strong>Chrome Repository</strong>
       </a>
     </td>
     <!-- Right spacer -->
-    <td>
+    <td bgcolor="#F0F0F0">
       <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/1x1.png" width="1" height="1" />
     </td>
   </tr>
