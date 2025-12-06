@@ -49,41 +49,35 @@
 
 
 <table width="100%">
-  <!-- Top row: Addon links -->
   <tr>
-    <td width="10%"></td> <!-- left padding -->
     <!-- Firefox Addon -->
-    <td width="40%" align="center">
+    <td width="50%" align="center">
       <a href="https://addons.mozilla.org/en-US/firefox/addon/bookmark-manager-zero/">
         <img src="https://blog.mozilla.org/addons/files/2020/04/get-the-addon-fx-apr-2020.svg" alt="Get Firefox Addon" height="60">
       </a>
     </td>
     <!-- Chrome Web Store -->
-    <td width="40%" align="center">
+    <td width="50%" align="center">
       <a href="https://chromewebstore.google.com/detail/bookmark-manager-zero/jbpiddimkkdfhoellbiegdopfpilnclc">
-        <img src="https://developer.chrome.com/static/docs/webstore/branding/image/HRs9MPufa1J1h5glNhut.png" alt="Available in Chrome Web Store" height="60">
+        <img src="https://developer.chrome.com/static/docs/webstore/branding/image/HRs9MPufa1J1h5glNhut.png" alt="Chrome Web Store" height="60">
       </a>
     </td>
-    <td width="10%"></td> <!-- right padding -->
   </tr>
-  <!-- Bottom row: Repository links -->
   <tr>
-    <td width="10%"></td> <!-- left padding -->
     <!-- Firefox Repository -->
-    <td width="40%" align="center">
+    <td width="50%" align="center">
       <a href="https://github.com/AbsoluteXYZero/Bookmark-Manager-Zero-Firefox">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a0/Firefox_logo%2C_2019.svg" alt="Firefox Repository" width="60" height="60">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a0/Firefox_logo%2C_2019.svg" width="60" height="60">
         <br><strong>Firefox Repository</strong>
       </a>
     </td>
     <!-- Chrome Repository -->
-    <td width="40%" align="center">
+    <td width="50%" align="center">
       <a href="https://github.com/AbsoluteXYZero/Bookmark-Manager-Zero-Chrome">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/Google_Chrome_icon_%28February_2022%29.svg" alt="Chrome Repository" width="60" height="60">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/Google_Chrome_icon_%28February_2022%29.svg" width="60" height="60">
         <br><strong>Chrome Repository</strong>
       </a>
     </td>
-    <td width="10%"></td> <!-- right padding -->
   </tr>
 </table>
 
