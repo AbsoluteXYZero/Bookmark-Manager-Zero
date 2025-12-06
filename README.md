@@ -34,7 +34,7 @@
   <!-- Chrome Block -->
   <div style="flex: 1 1 200px; max-width: 250px;">
     <a href="https://chromewebstore.google.com/detail/bookmark-manager-zero/jbpiddimkkdfhoellbiegdopfpilnclc">
-      <img src="https://developer.chrome.com/static/docs/webstore/branding/image/HRs9MPufa1J1h5glNhut.png" alt="Available in Chrome Web Store" height="60" />
+      <img src="https://developer.chrome.com/static/docs/webstore/branding/image/HRs9MPufa1J1h5glNhut.png" alt="Available in Chrome Web Store" height="45" />
     </a>
     <br /><br />
     <a href="https://github.com/AbsoluteXYZero/Bookmark-Manager-Zero-Chrome">
