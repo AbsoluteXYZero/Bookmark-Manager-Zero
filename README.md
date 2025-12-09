@@ -30,7 +30,6 @@
       <strong>Firefox Repository</strong>
     </a>
   </div>
-  <br>
   <!-- Chrome Block -->
   <div style="flex: 1 1 200px; max-width: 250px;">
     <a href="https://chromewebstore.google.com/detail/bookmark-manager-zero/jbpiddimkkdfhoellbiegdopfpilnclc">
