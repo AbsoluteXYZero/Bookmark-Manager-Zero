@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cat:*)",
+      "Bash(curl -s \"https://corsproxy.io/?https%3A%2F%2Furlhaus.abuse.ch%2Fdownloads%2Ftext%2F\")",
+      "Bash(curl:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nAdd 9 new themes with liquid glass effects and improved menu system\n\nThis update introduces a comprehensive theming system with 9 total themes and significantly improves the UI/UX:\n\n**New Themes:**\n- Added 6 new liquid-style themes with rounded containers and 3D depth effects\n- Blue Liquid, Light Liquid, Dark Liquid themes with enhanced visual depth\n- Liquid Glass Dark (opaque), Clear (frosted), and Tinted (customizable) themes\n- Tinted theme includes hue and saturation controls for full customization\n\n**UI Improvements:**\n- Removed \"Invert Text Color\" toggle (no longer needed)\n- Fixed display menu overlay blocking folder interactions\n- Improved menu width system (280-450px auto-sizing with viewport constraints)\n- Restructured bookmark opacity slider layout for better visibility\n- Fixed header and status bar spacing in liquid themes (3px margins)\n\n**Menu System Enhancements:**\n- Auto-wrapping filter toggles for better responsive layout\n- Context-dependent pointer events to prevent invisible element blocking\n- Wider, more readable menu items that adapt to content width\n\n**README Updates:**\n- Documented all 9 themes with descriptions\n- Added details on liquid theme features and customization options\n- Updated responsive design capabilities\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git push)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nVersion 2.0.0 - Rename liquid themes to Enhanced and set Enhanced Blue as default\n\n**Theme Rebranding:**\n- Renamed \"Blue Liquid\" → \"Enhanced Blue\" (now default theme)\n- Renamed \"Light Liquid\" → \"Enhanced Light\"\n- Renamed \"Dark Liquid\" → \"Enhanced Dark\"\n- Reordered theme menu: Enhanced themes first, classic themes second, Glass themes last\n\n**Technical Changes:**\n- Updated all CSS classes: .blue-dark-liquid → .enhanced-blue, etc.\n- Changed default theme from ''blue-dark'' to ''enhanced-blue''\n- Updated theme switcher in sidebar.html and sidebar.js\n- Updated README documentation with new theme names\n\n**Version:**\n- Bumped version to 2.0.0 in manifest.json\n- Updated README badges and changelog\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git commit -m \"$(cat <<''EOF''\nVersion 2.0.0 - Rename liquid themes to Enhanced and set Enhanced Blue as default\n\n**Theme Rebranding:**\n- Renamed \"Blue Liquid\" → \"Enhanced Blue\" (now default theme)\n- Renamed \"Light Liquid\" → \"Enhanced Light\"\n- Renamed \"Dark Liquid\" → \"Enhanced Dark\"\n- Reordered theme menu: Enhanced themes first, classic themes second, Glass themes last\n\n**Technical Changes:**\n- Updated all CSS classes: .blue-dark-liquid → .enhanced-blue, etc.\n- Changed default theme from ''blue-dark'' to ''enhanced-blue''\n- Updated theme switcher in sidepanel.html and sidepanel.js\n- Updated README documentation with new theme names\n\n**Version:**\n- Bumped version to 2.0.0 in manifest.json\n- Updated README badges and changelog\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git commit:*)",
+      "Bash(git log:*)",
+      "Bash(find:*)",
+      "Bash(git pull:*)",
+      "Bash(rename:*)",
+      "Bash(powershell.exe:*)",
+      "Bash(git config:*)",
+      "Bash(zip:*)",
+      "Bash(npx web-ext build:*)",
+      "Bash(python:*)",
+      "Bash(npx web-ext:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
