@@ -47,8 +47,6 @@
   </div>
   <!-- Web App Block -->
   <div style="flex: 1 1 200px; max-width: 250px;">
-    <a href="https://bmzweb.absolutezero.fyi/">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/6/61/HTML5_logo_and_wordmark.svg" alt="Web App" height="60" />
     </a>
     <br /><br />
     <a href="https://bmzweb.absolutezero.fyi/">
