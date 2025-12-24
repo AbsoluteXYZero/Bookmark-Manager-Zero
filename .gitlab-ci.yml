@@ -1,0 +1,84 @@
+image: python:3.12-slim
+
+stages:
+  - deploy
+
+pages:
+  stage: deploy
+  script:
+    - pip install --no-cache-dir markdown
+
+    # Create Pages root
+    - mkdir -p public
+
+    # Copy all files to public/ (screenshots, icons, README, etc.)
+    - |
+      shopt -s dotglob
+      for item in *; do
+        if [[ "$item" != "public" && "$item" != ".git" && "$item" != ".gitlab-ci.yml" ]]; then
+          cp -r "$item" public/
+        fi
+      done
+
+    # Generate index.html from README.md with proper styling
+    - |
+      python << 'EOF'
+      import markdown, pathlib
+
+      readme_path = pathlib.Path("public/README.md")
+      if readme_path.exists():
+          # Convert markdown to HTML
+          html_content = markdown.markdown(
+              readme_path.read_text(encoding='utf-8'),
+              extensions=["tables","fenced_code","attr_list","sane_lists"]
+          )
+
+          # Wrap in a full HTML page with GitHub-style CSS
+          full_html = f'''<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookmark Manager Zero</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@5/github-markdown.min.css">
+    <style>
+        body {{
+            box-sizing: border-box;
+            min-width: 200px;
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 45px;
+            background-color: #ffffff;
+        }}
+        .markdown-body {{
+            box-sizing: border-box;
+            min-width: 200px;
+            max-width: 100%;
+        }}
+        .markdown-body img {{
+            max-width: 100%;
+            height: auto;
+        }}
+        @media (prefers-color-scheme: dark) {{
+            body {{
+                background-color: #0d1117;
+            }}
+        }}
+        @media (max-width: 767px) {{
+            body {{
+                padding: 15px;
+            }}
+        }}
+    </style>
+</head>
+<body class="markdown-body">
+{html_content}
+</body>
+</html>'''
+
+          pathlib.Path("public/index.html").write_text(full_html, encoding='utf-8')
+      EOF
+
+  artifacts:
+    paths:
+      - public
