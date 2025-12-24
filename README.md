@@ -39,7 +39,7 @@
     </a>
     <br /><br />
     <a href="https://bmzweb.absolutezero.fyi/">
-      <img src="icons/bookmark-96.png" alt="Website" width="60" height="60" />
+      <img src="icons/bookmark-96.png" alt="Website" width="80" height="80" />
       <br />
       <strong>Web Application</strong>
     </a>
