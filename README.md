@@ -109,37 +109,16 @@
 
 ## 🌟 Why Bookmark Manager Zero?
 
-Stop blindly clicking old bookmarks. **Know which links are dead, parked, or potentially dangerous before you visit them.**
+Stop blindly clicking old bookmarks. **Know which of your links are dead, parked, or potentially dangerous before you visit them.**
 
-Bookmark Manager Zero is available in three versions to fit your workflow:
-
-- **🦊 Firefox Extension** - Native Firefox sidebar integration with direct bookmark sync
-- **🔵 Chrome Extension** - Native Chrome side panel with seamless browser integration
-- **🌐 Web Application** - Cross-platform web app with GitLab Snippet cloud storage
-
-All three versions share the same powerful security features and modern interface. Choose the one that works best for you, or use multiple versions with GitLab Sync to keep your bookmarks synchronized across all platforms.
-
-### 📊 Version Comparison
-
-| Feature | Firefox Extension | Chrome Extension | Web Application |
-|---------|:----------------:|:----------------:|:---------------:|
-| **Platform** | Firefox 109+ | Chrome/Edge 116+ | Any modern browser |
-| **Installation** | Firefox Add-ons | Chrome Web Store | No install needed |
-| **Native Bookmarks** | ✅ Bi-directional sync | ✅ Bi-directional sync | ❌ GitLab Snippets only |
-| **GitLab Sync** | ✅ Optional | ✅ Optional | ✅ Required (or local mode) |
-| **Auto-Sync** | ✅ Every 5 min (sidebar open) | ✅ Every 5 min (panel open) | ✅ Every 5 min |
-| **Background Scanning** | ✅ Persistent | ✅ Persistent | ✅ Web Worker |
-| **Offline Support** | ✅ Full | ✅ Full | ✅ Full (with local mode) |
-| **Mobile Support** | ✅ Firefox Mobile | ❌ Desktop only | ✅ Touch optimized |
-| **Interface** | Sidebar | Side Panel | Full-page web app |
-| **Keyboard Shortcut** | ✅ Customizable | ❌ Click icon | N/A |
-| **Current Version** | v2.7.2 | v2.7.2 | v1.0.0 |
+Bookmark Manager Zero is available in three versions to fit your workflow: All three versions share the same powerful security features and modern interface. Choose the one that works best for you, or use multiple versions with GitLab Sync to keep your bookmarks synchronized across all platforms.
 
 ### Security & Safety Features
 
 Other bookmark managers make you choose between organization OR security. Bookmark Manager Zero combines both with:
 
 ### 🔗 **Intelligent Link Detection**
+
 - **Dead Link Detection** - Automatically identifies broken URLs (404s, server errors)
 - **Parked Domain Detection** - Spots expired domains redirecting to parking pages (22+ parking services)
 - **HTTP Redirect Detection** - Detects when HTTP bookmarks redirect to HTTPS
@@ -147,29 +126,28 @@ Other bookmark managers make you choose between organization OR security. Bookma
 
 ### 🛡️ **Multi-Layer Security Scanning**
 
-**4-Phase Protection System:**
-1. **Local Blocklists** - 8 sources with dual URLhaus coverage:
-   - URLhaus Active (~107K actively distributing malware URLs, updated every 5 minutes)
-   - URLhaus Historical (~37K historical threats, updated every 12 hours)
-   - BlockList Project - Malware (~300K domains)
-   - BlockList Project - Phishing (~214K domains)
-   - BlockList Project - Scam (~112K domains)
-   - HaGeZi TIF (~608K threat intelligence domains)
-   - Phishing-Filter (~21K phishing domains)
-   - OISD Big (~215K malicious domains)
-   - Total: **~1.35M unique malicious domains** after deduplication
-2. **Google Safe Browsing** - Real-time threat intelligence (optional API, 10K requests/day with free tier)
-3. **Yandex Safe Browsing** - Geographic diversity with Russian/Eastern European threats (optional API, 100K requests/day with free tier)
-4. **VirusTotal** - Multi-engine scanning from 70+ antivirus vendors (optional API, 500 requests/day with free tier)
-
-- **Folder Rescan** - Right-click any folder to recursively scan all bookmarks in that folder and subfolders
-- **Suspicious Pattern Detection** - Flags URL shorteners, unusual TLDs, homograph attacks
+- **8 Free Blocklist Sources** - Comprehensive malware/phishing protection with dual URLhaus coverage:
+  - URLhaus Active (~107K actively distributing malware URLs, updated every 5 minutes)
+  - URLhaus Historical (~37K historical threats, updated every 12 hours)
+  - BlockList Project - Malware (~300K domains)
+  - BlockList Project - Phishing (~214K domains)
+  - BlockList Project - Scam (~112K domains)
+  - HaGeZi TIF (~608K threat intelligence domains)
+  - Phishing-Filter (~21K phishing domains)
+  - OISD Big (~215K malicious domains)
+  - **Total: ~1.35M unique malicious domains** after deduplication
+  - URLVoid - Multi-engine reputation checking
+- **Optional API Integrations** for enhanced protection:
+  - Google Safe Browsing - Real-time threat intelligence (10K requests/day free tier)
+  - Yandex Safe Browsing - Geographic diversity with Russian/Eastern European threats (100K requests/day free tier)
+  - VirusTotal - Multi-engine scanning from 70+ antivirus vendors (500 requests/day free tier)
+- **Suspicious Pattern Detection** - Flags URL shorteners, unusual TLDs, homograph attacks, IP addresses
 - **Safety History Tracking** - Monitor how link safety changes over time
 - **Clickable Shield Icons** - Click any shield for detailed threat information
 - **Whitelist Support** - Mark trusted URLs to skip safety checks
 
 ### ✨ **Modern Organization & UI**
-- **Native Integration** - Works directly with your browser's bookmark system (bi-directional sync)
+- **Native Integration** - Extensions work directly with your browser's bookmark system (bi-directional sync), Website supports local bookmarks and Snippet sync
 - **Advanced Search** - Real-time search across titles and URLs
 - **Drag & Drop** - Intuitive reordering and folder management
 - **List & Grid Views** - Choose your preferred layout
@@ -259,7 +237,7 @@ Other bookmark managers make you choose between organization OR security. Bookma
 ### Browser Extensions (Firefox & Chrome)
 - **Browser Compatibility:**
   - Firefox: 109+ (Manifest V3)
-  - Chrome/Edge: 116+ (Manifest V3)
+  - Chrome: 116+ (Manifest V3)
 - **Storage:** IndexedDB for blocklists, browser.storage for settings
 - **APIs Used:** Native Bookmarks API, optional Google Safe Browsing, optional Yandex Safe Browsing, optional VirusTotal
 - **Scan Performance:** ~33 bookmarks/second (10 bookmarks/batch, 300ms delays)
@@ -271,7 +249,7 @@ Other bookmark managers make you choose between organization OR security. Bookma
 - **Platform:** 100% static web application (no backend required)
 - **Browser Compatibility:** Chrome, Firefox, Edge, Safari, Mobile browsers
 - **Storage:** IndexedDB with 5 separate stores (bookmarks, metadata, cache, blocklists, apiKeys)
-- **APIs Used:** GitLab Snippets API, optional Google Safe Browsing, optional Yandex Safe Browsing, optional VirusTotal, URLVoid
+- **APIs Used:** GitLab Snippets API, optional Google Safe Browsing, optional Yandex Safe Browsing, optional VirusTotal
 - **Scan Performance:** Web Worker background scanning with batch processing
 - **Cache TTL:** 7 days for scan results, 24 hours for blocklists
 - **Hosting:** GitLab Pages, Cloudflare Pages, or any static host
@@ -292,47 +270,37 @@ If you find this project useful, consider supporting development:
 
 ### 🦊 Firefox Extension
 
-**Best for:** Firefox users who want native browser integration
-
 - **Installation:** [Mozilla Add-ons Store](https://addons.mozilla.org/en-US/firefox/addon/bookmark-manager-zero/)
 - **Repository:** [https://bmzfirefox.absolutezero.fyi/](https://bmzfirefox.absolutezero.fyi/)
-- **Interface:** Native Firefox sidebar (customizable keyboard shortcut)
+- **Interface:** Native Firefox sidebar
 - **Bookmarks:** Works directly with Firefox's native bookmark system
 - **Sync:** Bi-directional sync with Firefox bookmarks + optional GitLab cloud backup
-- **Mobile:** Works on Firefox for Android
 - **Unique Features:**
-  - Customizable sidebar keyboard shortcut
   - Wider range of privileged URL schemes supported (about:, moz-extension:, resource:, jar:)
   - Firefox-specific separator handling
 
 ### 🔵 Chrome Extension
 
-**Best for:** Chrome/Edge users who want native browser integration
-
 - **Installation:** [Chrome Web Store](https://chromewebstore.google.com/detail/bookmark-manager-zero/jbpiddimkkdfhoellbiegdopfpilnclc)
 - **Repository:** [https://bmzchrome.absolutezero.fyi/](https://bmzchrome.absolutezero.fyi/)
-- **Interface:** Chrome Side Panel (click toolbar icon to open)
+- **Interface:** Chrome Side Panel
 - **Bookmarks:** Works directly with Chrome's native bookmark system
 - **Sync:** Bi-directional sync with Chrome bookmarks + optional GitLab cloud backup
-- **Compatibility:** Also works on Microsoft Edge (Chromium-based)
 - **Unique Features:**
-  - Side Panel API integration
   - Privileged URL support (chrome:, chrome-extension:)
-  - Chromium ecosystem compatibility
 
 ### 🌐 Web Application
 
-**Best for:** Users who want cross-platform access or don't want to install extensions
+**Best for:** Users who want to access their bookmarks on public devices without having to log into their google or mozilla accounts
 
 - **Access:** [https://bmzweb.absolutezero.fyi/](https://bmzweb.absolutezero.fyi/)
 - **Repository:** [GitLab Repository](https://gitlab.com/AbsoluteXYZero/BMZ-Web/)
-- **Interface:** Full-page web application (responsive design)
+- **Interface:** Full-page web application
 - **Bookmarks:** Stored in your private GitLab Snippet (or local IndexedDB in offline mode)
 - **Sync:** GitLab Snippet cloud sync across all devices
 - **Compatibility:** Works on any modern browser (Chrome, Firefox, Edge, Safari, mobile browsers)
 - **Unique Features:**
   - No installation required - just visit the website
-  - URLVoid integration for additional security scanning (no API key needed)
   - Local Mode - use completely offline without GitLab account
   - Touch-optimized interface with haptic feedback on mobile
   - Press-and-hold drag-and-drop for mobile devices
