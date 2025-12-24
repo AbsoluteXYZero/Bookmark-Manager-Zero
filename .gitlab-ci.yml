@@ -35,7 +35,7 @@ pages:
           )
 
           # Wrap in a full HTML page with GitHub-style CSS
-          html_template = """<!DOCTYPE html>
+          html_start = """<!DOCTYPE html>
       <html lang="en">
       <head>
           <meta charset="UTF-8">
@@ -73,11 +73,12 @@ pages:
           </style>
       </head>
       <body class="markdown-body">
-      {content}
+      """
+          html_end = """
       </body>
       </html>"""
 
-          full_html = html_template.format(content=html_content)
+          full_html = html_start + html_content + html_end
           pathlib.Path("public/index.html").write_text(full_html, encoding='utf-8')
       PYEOF
 
