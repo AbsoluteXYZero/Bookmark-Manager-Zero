@@ -8,13 +8,16 @@
 </p>
 
 <p align="center">
-  A modern, privacy-focused interface for managing your browser bookmarks with real-time link validation and multi-source malware detection.
+  A modern, privacy-focused bookmark management suite with real-time link validation and multi-source malware detection.
+</p>
+
+<p align="center">
+  <strong>Available as browser extensions and a web application</strong>
 </p>
 
 
+ 🚀 Get Started <br>
 
- 🚀 Get the Extension <br>
- 
 <br>
 
 <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; text-align: center;">
@@ -24,10 +27,10 @@
       <img src="https://blog.mozilla.org/addons/files/2020/04/get-the-addon-fx-apr-2020.svg" alt="Get Firefox Addon" height="60" />
     </a>
     <br /><br />
-    <a href="https://github.com/AbsoluteXYZero/Bookmark-Manager-Zero-Firefox">
+    <a href="https://bmzfirefox.absolutezero.fyi/">
       <img src="https://upload.wikimedia.org/wikipedia/commons/a/a0/Firefox_logo%2C_2019.svg" alt="Firefox" width="60" height="60" />
       <br />
-      <strong>Firefox Repository</strong>
+      <strong>Firefox Extension</strong>
     </a>
   </div>
   <!-- Chrome Block -->
@@ -36,10 +39,22 @@
       <img src="https://developer.chrome.com/static/docs/webstore/branding/image/HRs9MPufa1J1h5glNhut.png" alt="Available in Chrome Web Store" height="58" />
     </a>
     <br /><br />
-    <a href="https://github.com/AbsoluteXYZero/Bookmark-Manager-Zero-Chrome">
+    <a href="https://bmzchrome.absolutezero.fyi/">
       <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/Google_Chrome_icon_%28February_2022%29.svg" alt="Chrome" width="60" height="60" />
       <br />
-      <strong>Chrome Repository</strong>
+      <strong>Chrome Extension</strong>
+    </a>
+  </div>
+  <!-- Web App Block -->
+  <div style="flex: 1 1 200px; max-width: 250px;">
+    <a href="https://bmzweb.absolutezero.fyi/">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/6/61/HTML5_logo_and_wordmark.svg" alt="Web App" height="60" />
+    </a>
+    <br /><br />
+    <a href="https://bmzweb.absolutezero.fyi/">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/6/66/WWW_logo_by_Robert_Cailliau.svg" alt="Website" width="60" height="60" />
+      <br />
+      <strong>Web Application</strong>
     </a>
   </div>
 </div>
@@ -96,6 +111,32 @@
 ## 🌟 Why Bookmark Manager Zero?
 
 Stop blindly clicking old bookmarks. **Know which links are dead, parked, or potentially dangerous before you visit them.**
+
+Bookmark Manager Zero is available in three versions to fit your workflow:
+
+- **🦊 Firefox Extension** - Native Firefox sidebar integration with direct bookmark sync
+- **🔵 Chrome Extension** - Native Chrome side panel with seamless browser integration
+- **🌐 Web Application** - Cross-platform web app with GitLab Snippet cloud storage
+
+All three versions share the same powerful security features and modern interface. Choose the one that works best for you, or use multiple versions with GitLab Sync to keep your bookmarks synchronized across all platforms.
+
+### 📊 Version Comparison
+
+| Feature | Firefox Extension | Chrome Extension | Web Application |
+|---------|:----------------:|:----------------:|:---------------:|
+| **Platform** | Firefox 109+ | Chrome/Edge 116+ | Any modern browser |
+| **Installation** | Firefox Add-ons | Chrome Web Store | No install needed |
+| **Native Bookmarks** | ✅ Bi-directional sync | ✅ Bi-directional sync | ❌ GitLab Snippets only |
+| **GitLab Sync** | ✅ Optional | ✅ Optional | ✅ Required (or local mode) |
+| **Auto-Sync** | ✅ Every 5 min (sidebar open) | ✅ Every 5 min (panel open) | ✅ Every 5 min |
+| **Background Scanning** | ✅ Persistent | ✅ Persistent | ✅ Web Worker |
+| **Offline Support** | ✅ Full | ✅ Full | ✅ Full (with local mode) |
+| **Mobile Support** | ✅ Firefox Mobile | ❌ Desktop only | ✅ Touch optimized |
+| **Interface** | Sidebar | Side Panel | Full-page web app |
+| **Keyboard Shortcut** | ✅ Customizable | ❌ Click icon | N/A |
+| **Current Version** | v2.7.2 | v2.7.2 | v1.0.0 |
+
+### Security & Safety Features
 
 Other bookmark managers make you choose between organization OR security. Bookmark Manager Zero combines both with:
 
@@ -216,21 +257,90 @@ Other bookmark managers make you choose between organization OR security. Bookma
 
 ## 🔧 Technical Details
 
-- **Browser Compatibility:** Firefox 109+, Chrome/Edge 116+
-- **Manifest Version:** V3 (modern extension API)
+### Browser Extensions (Firefox & Chrome)
+- **Browser Compatibility:**
+  - Firefox: 109+ (Manifest V3)
+  - Chrome/Edge: 116+ (Manifest V3)
 - **Storage:** IndexedDB for blocklists, browser.storage for settings
 - **APIs Used:** Native Bookmarks API, optional Google Safe Browsing, optional Yandex Safe Browsing, optional VirusTotal
 - **Scan Performance:** ~33 bookmarks/second (10 bookmarks/batch, 300ms delays)
 - **Background Scanning:** Persistent scanning in service worker/background script
-- **Cache TTL:** 24 hours (configurable)
+- **Cache TTL:** 7 days for scan results, 24 hours for blocklists
+- **GitLab Sync:** Optional cloud backup via GitLab Snippets API
+
+### Web Application
+- **Platform:** 100% static web application (no backend required)
+- **Browser Compatibility:** Chrome, Firefox, Edge, Safari, Mobile browsers
+- **Storage:** IndexedDB with 5 separate stores (bookmarks, metadata, cache, blocklists, apiKeys)
+- **APIs Used:** GitLab Snippets API, optional Google Safe Browsing, optional Yandex Safe Browsing, optional VirusTotal, URLVoid
+- **Scan Performance:** Web Worker background scanning with batch processing
+- **Cache TTL:** 7 days for scan results, 24 hours for blocklists
+- **Hosting:** GitLab Pages, Cloudflare Pages, or any static host
+- **Security:** AES-256-GCM encryption with browser fingerprint-derived keys
+- **Architecture:** 24 ES6 modules, zero framework dependencies
 
 ---
 
 ## ☕ Support Development
 
-If you find this extension useful, consider supporting development:
+If you find this project useful, consider supporting development:
 
 **[Buy Me a Coffee](https://buymeacoffee.com/absolutexyzero)**
+
+---
+
+## 📦 Choose Your Version
+
+### 🦊 Firefox Extension
+
+**Best for:** Firefox users who want native browser integration
+
+- **Installation:** [Mozilla Add-ons Store](https://addons.mozilla.org/en-US/firefox/addon/bookmark-manager-zero/)
+- **Repository:** [https://bmzfirefox.absolutezero.fyi/](https://bmzfirefox.absolutezero.fyi/)
+- **Interface:** Native Firefox sidebar (customizable keyboard shortcut)
+- **Bookmarks:** Works directly with Firefox's native bookmark system
+- **Sync:** Bi-directional sync with Firefox bookmarks + optional GitLab cloud backup
+- **Mobile:** Works on Firefox for Android
+- **Unique Features:**
+  - Customizable sidebar keyboard shortcut
+  - Wider range of privileged URL schemes supported (about:, moz-extension:, resource:, jar:)
+  - Firefox-specific separator handling
+
+### 🔵 Chrome Extension
+
+**Best for:** Chrome/Edge users who want native browser integration
+
+- **Installation:** [Chrome Web Store](https://chromewebstore.google.com/detail/bookmark-manager-zero/jbpiddimkkdfhoellbiegdopfpilnclc)
+- **Repository:** [https://bmzchrome.absolutezero.fyi/](https://bmzchrome.absolutezero.fyi/)
+- **Interface:** Chrome Side Panel (click toolbar icon to open)
+- **Bookmarks:** Works directly with Chrome's native bookmark system
+- **Sync:** Bi-directional sync with Chrome bookmarks + optional GitLab cloud backup
+- **Compatibility:** Also works on Microsoft Edge (Chromium-based)
+- **Unique Features:**
+  - Side Panel API integration
+  - Privileged URL support (chrome:, chrome-extension:)
+  - Chromium ecosystem compatibility
+
+### 🌐 Web Application
+
+**Best for:** Users who want cross-platform access or don't want to install extensions
+
+- **Access:** [https://bmzweb.absolutezero.fyi/](https://bmzweb.absolutezero.fyi/)
+- **Repository:** [GitLab Repository](https://gitlab.com/AbsoluteXYZero/BMZ-Web/)
+- **Interface:** Full-page web application (responsive design)
+- **Bookmarks:** Stored in your private GitLab Snippet (or local IndexedDB in offline mode)
+- **Sync:** GitLab Snippet cloud sync across all devices
+- **Compatibility:** Works on any modern browser (Chrome, Firefox, Edge, Safari, mobile browsers)
+- **Unique Features:**
+  - No installation required - just visit the website
+  - URLVoid integration for additional security scanning (no API key needed)
+  - Local Mode - use completely offline without GitLab account
+  - Touch-optimized interface with haptic feedback on mobile
+  - Press-and-hold drag-and-drop for mobile devices
+  - Edit lock system prevents concurrent edits across devices
+  - Change preview with line-by-line diffs before syncing
+  - 100% static - host your own copy easily
+  - 24 modular ES6 JavaScript files, zero framework dependencies
 
 ---
 
