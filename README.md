@@ -52,7 +52,7 @@
     </a>
     <br /><br />
     <a href="https://bmzweb.absolutezero.fyi/">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/6/66/WWW_logo_by_Robert_Cailliau.svg" alt="Website" width="60" height="60" />
+      <img src="icons/bookmark-96.png" alt="Website" width="60" height="60" />
       <br />
       <strong>Web Application</strong>
     </a>
