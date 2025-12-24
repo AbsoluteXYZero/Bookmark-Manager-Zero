@@ -22,8 +22,9 @@ pages:
 
     # Generate index.html from README.md with proper styling
     - |
-      python << 'EOF'
-      import markdown, pathlib
+      python << 'PYEOF'
+      import markdown
+      import pathlib
 
       readme_path = pathlib.Path("public/README.md")
       if readme_path.exists():
@@ -34,50 +35,51 @@ pages:
           )
 
           # Wrap in a full HTML page with GitHub-style CSS
-          full_html = f'''<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bookmark Manager Zero</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@5/github-markdown.min.css">
-    <style>
-        body {{
-            box-sizing: border-box;
-            min-width: 200px;
-            max-width: 980px;
-            margin: 0 auto;
-            padding: 45px;
-            background-color: #ffffff;
-        }}
-        .markdown-body {{
-            box-sizing: border-box;
-            min-width: 200px;
-            max-width: 100%;
-        }}
-        .markdown-body img {{
-            max-width: 100%;
-            height: auto;
-        }}
-        @media (prefers-color-scheme: dark) {{
-            body {{
-                background-color: #0d1117;
-            }}
-        }}
-        @media (max-width: 767px) {{
-            body {{
-                padding: 15px;
-            }}
-        }}
-    </style>
-</head>
-<body class="markdown-body">
-{html_content}
-</body>
-</html>'''
+          html_template = """<!DOCTYPE html>
+      <html lang="en">
+      <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Bookmark Manager Zero</title>
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@5/github-markdown.min.css">
+          <style>
+              body {
+                  box-sizing: border-box;
+                  min-width: 200px;
+                  max-width: 980px;
+                  margin: 0 auto;
+                  padding: 45px;
+                  background-color: #ffffff;
+              }
+              .markdown-body {
+                  box-sizing: border-box;
+                  min-width: 200px;
+                  max-width: 100%;
+              }
+              .markdown-body img {
+                  max-width: 100%;
+                  height: auto;
+              }
+              @media (prefers-color-scheme: dark) {
+                  body {
+                      background-color: #0d1117;
+                  }
+              }
+              @media (max-width: 767px) {
+                  body {
+                      padding: 15px;
+                  }
+              }
+          </style>
+      </head>
+      <body class="markdown-body">
+      {content}
+      </body>
+      </html>"""
 
+          full_html = html_template.format(content=html_content)
           pathlib.Path("public/index.html").write_text(full_html, encoding='utf-8')
-      EOF
+      PYEOF
 
   artifacts:
     paths:
