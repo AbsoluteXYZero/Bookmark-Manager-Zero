@@ -33,6 +33,17 @@
       <strong>Firefox Extension</strong>
     </a>
   </div>
+  
+  <!-- Web App Block -->
+  <div style="flex: 1 1 200px; max-width: 250px;">
+    </a>
+    <br /><br />
+    <a href="https://bmzweb.absolutezero.fyi/">
+      <img src="icons/bookmark-96.png" alt="Website" width="60" height="60" />
+      <br />
+      <strong>Web Application</strong>
+    </a>
+  </div>
   <!-- Chrome Block -->
   <div style="flex: 1 1 200px; max-width: 250px;">
     <a href="https://chromewebstore.google.com/detail/bookmark-manager-zero/jbpiddimkkdfhoellbiegdopfpilnclc">
@@ -43,16 +54,6 @@
       <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/Google_Chrome_icon_%28February_2022%29.svg" alt="Chrome" width="60" height="60" />
       <br />
       <strong>Chrome Extension</strong>
-    </a>
-  </div>
-  <!-- Web App Block -->
-  <div style="flex: 1 1 200px; max-width: 250px;">
-    </a>
-    <br /><br />
-    <a href="https://bmzweb.absolutezero.fyi/">
-      <img src="icons/bookmark-96.png" alt="Website" width="60" height="60" />
-      <br />
-      <strong>Web Application</strong>
     </a>
   </div>
 </div>
