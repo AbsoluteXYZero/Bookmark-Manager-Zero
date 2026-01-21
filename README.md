@@ -271,7 +271,7 @@ If you find this project useful, consider supporting development:
 ### 🦊 Firefox Extension
 
 - **Installation:** [Mozilla Add-ons Store](https://addons.mozilla.org/en-US/firefox/addon/bookmark-manager-zero/)
-- **Repository:** [https://bmzfirefox.absolutezero.fyi/](https://bmzfirefox.absolutezero.fyi/)
+- **Repository:** [GitLab](https://gitlab.com/AbsoluteXYZero/BMZ-Firefox/), [Gitea](https://bmzfirefox.absolutezero.fyi/)
 - **Interface:** Native Firefox sidebar
 - **Bookmarks:** Works directly with Firefox's native bookmark system
 - **Sync:** Bi-directional sync with Firefox bookmarks + optional GitLab cloud backup
@@ -282,7 +282,7 @@ If you find this project useful, consider supporting development:
 ### 🔵 Chrome Extension
 
 - **Installation:** [Chrome Web Store](https://chromewebstore.google.com/detail/bookmark-manager-zero/jbpiddimkkdfhoellbiegdopfpilnclc)
-- **Repository:** [https://bmzchrome.absolutezero.fyi/](https://bmzchrome.absolutezero.fyi/)
+- **Repository:** [GitLab](https://gitlab.com/AbsoluteXYZero/BMZ-Chrome/), [Gitea](https://bmzchrome.absolutezero.fyi/)
 - **Interface:** Chrome Side Panel
 - **Bookmarks:** Works directly with Chrome's native bookmark system
 - **Sync:** Bi-directional sync with Chrome bookmarks + optional GitLab cloud backup
@@ -294,7 +294,7 @@ If you find this project useful, consider supporting development:
 **Best for:** Users who want to access their bookmarks on public devices without having to log into their google or mozilla accounts
 
 - **Access:** [https://bmzweb.absolutezero.fyi/](https://bmzweb.absolutezero.fyi/)
-- **Repository:** [GitLab Repository](https://gitlab.com/AbsoluteXYZero/BMZ-Web/)
+- **Repository:** [GitLab](https://gitlab.com/AbsoluteXYZero/BMZ-Web/), [Gitea](https://git.absolutezero.fyi/AbsoluteXYZero/BMZ-Web/)
 - **Interface:** Full-page web application
 - **Bookmarks:** Stored in your private GitLab Snippet (or local IndexedDB in offline mode)
 - **Sync:** GitLab Snippet cloud sync across all devices
