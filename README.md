@@ -126,7 +126,7 @@ Other bookmark managers make you choose between organization OR security. Bookma
 
 ### 🛡️ **Multi-Layer Security Scanning**
 
-- **8 Free Blocklist Sources** - Comprehensive malware/phishing protection with dual URLhaus coverage:
+- **9 Free Blocklist Sources** - Comprehensive malware/phishing protection with dual URLhaus coverage:
   - URLhaus Active (~107K actively distributing malware URLs, updated every 5 minutes)
   - URLhaus Historical (~37K historical threats, updated every 12 hours)
   - BlockList Project - Malware (~300K domains)
@@ -135,6 +135,7 @@ Other bookmark managers make you choose between organization OR security. Bookma
   - HaGeZi TIF (~608K threat intelligence domains)
   - Phishing-Filter (~21K phishing domains)
   - OISD Big (~215K malicious domains)
+  - FMHY Filterlist (~282 curated unsafe sites)
   - **Total: ~1.35M unique malicious domains** after deduplication
   - URLVoid - Multi-engine reputation checking
 - **Optional API Integrations** for enhanced protection:
@@ -192,7 +193,7 @@ Other bookmark managers make you choose between organization OR security. Bookma
 - 🔄 **Drag & Drop** - Intuitive reordering
 
 ### Safety & Security
-- 🛡️ **Multi-Source Scanning** - 8 blocklist sources (dual URLhaus coverage) + Google Safe Browsing + Yandex Safe Browsing + VirusTotal
+- 🛡️ **Multi-Source Scanning** - 9 blocklist sources (dual URLhaus coverage) + Google Safe Browsing + Yandex Safe Browsing + VirusTotal
 - 🔗 **Link Status Checking** - Dead, parked, and redirect detection
 - 🔄 **Background Scanning** - Scans continue in background even when panel/sidebar is closed, with automatic progress sync
 - 📂 **Folder Rescan** - Recursively scan all bookmarks in a folder and subfolders with real-time progress updates
