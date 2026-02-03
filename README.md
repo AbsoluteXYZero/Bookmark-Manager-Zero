@@ -36,6 +36,8 @@
   
   <!-- Web App Block -->
   <div style="flex: 1 1 200px; max-width: 250px;">
+    <a href="https://play.google.com/store/apps/details?id=com.absolutezero.bookmarkmanagerzero">
+      <img src="https://raw.githubusercontent.com/steverichey/google-play-badge-svg/266d2b2df26f10d3c00b8129a0bd9f6da6b19f00/img/en_get.svg" alt="Get it on Google Play" height="60" />
     </a>
     <br /><br />
     <a href="https://bmzweb.absolutezero.fyi/">
@@ -126,7 +128,7 @@ Other bookmark managers make you choose between organization OR security. Bookma
 
 ### 🛡️ **Multi-Layer Security Scanning**
 
-- **9 Free Blocklist Sources** - Comprehensive malware/phishing protection with dual URLhaus coverage:
+- **10 Free Blocklist Sources** - Comprehensive malware/phishing protection with dual URLhaus coverage:
   - URLhaus Active (~107K actively distributing malware URLs, updated every 5 minutes)
   - URLhaus Historical (~37K historical threats, updated every 12 hours)
   - BlockList Project - Malware (~300K domains)
@@ -136,7 +138,8 @@ Other bookmark managers make you choose between organization OR security. Bookma
   - Phishing-Filter (~21K phishing domains)
   - OISD Big (~215K malicious domains)
   - FMHY Filterlist (~282 curated unsafe sites)
-  - **Total: ~1.35M unique malicious domains** after deduplication
+  - Dandelion Sprout Anti-Malware (~5K curated malware, scam, and phishing domains)
+  - **Total: ~1.36M unique malicious domains** after deduplication
   - URLVoid - Multi-engine reputation checking
 - **Optional API Integrations** for enhanced protection:
   - Google Safe Browsing - Real-time threat intelligence (10K requests/day free tier)
@@ -193,7 +196,7 @@ Other bookmark managers make you choose between organization OR security. Bookma
 - 🔄 **Drag & Drop** - Intuitive reordering
 
 ### Safety & Security
-- 🛡️ **Multi-Source Scanning** - 9 blocklist sources (dual URLhaus coverage) + Google Safe Browsing + Yandex Safe Browsing + VirusTotal
+- 🛡️ **Multi-Source Scanning** - 10 blocklist sources (dual URLhaus coverage) + Google Safe Browsing + Yandex Safe Browsing + VirusTotal
 - 🔗 **Link Status Checking** - Dead, parked, and redirect detection
 - 🔄 **Background Scanning** - Scans continue in background even when panel/sidebar is closed, with automatic progress sync
 - 📂 **Folder Rescan** - Recursively scan all bookmarks in a folder and subfolders with real-time progress updates
