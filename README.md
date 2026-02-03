@@ -37,7 +37,7 @@
   <!-- Middle Column: Google Play + Web App -->
   <div style="flex: 1 1 200px; max-width: 250px;">
     <a href="https://play.google.com/store/apps/details?id=com.absolutezero.bookmarkmanagerzero">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Google Play url" style="width: 250px; transform: scaleY(1.11);" />
+      <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Google Play url" style="width: 250px; transform: scaleY(1.11) translateY(3px);" />
     </a>
     <br /><br />
     <a href="https://bmzweb.absolutezero.fyi/">
@@ -49,7 +49,7 @@
   <!-- Chrome Block -->
   <div style="flex: 1 1 200px; max-width: 250px;">
     <a href="https://chromewebstore.google.com/detail/bookmark-manager-zero/jbpiddimkkdfhoellbiegdopfpilnclc">
-      <img src="https://developer.chrome.com/static/docs/webstore/branding/image/HRs9MPufa1J1h5glNhut.png" alt="Available in Chrome Web Store" height="58" />
+      <img src="https://developer.chrome.com/static/docs/webstore/branding/image/HRs9MPufa1J1h5glNhut.png" alt="Available in Chrome Web Store" style="width: 250px; transform: scaleY(1.05) translateY(3px);" />
     </a>
     <br /><br />
     <a href="https://bmzchrome.absolutezero.fyi/">
