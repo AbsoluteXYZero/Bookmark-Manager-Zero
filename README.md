@@ -129,18 +129,18 @@ Your bookmarks break over time. Sites go offline, domains expire and get parked,
 - **Redirects** - HTTP to HTTPS redirects and other URL changes
 - **Visual indicators** - Color-coded icons show link status and safety at a glance
 
-### Security Scanning
+### Link Security Scanning
 
 Every bookmark gets checked against multiple threat databases:
 
 **Built-in protection (free, no API keys needed):**
 
+- URLVoid malware scanning
 - 10 blocklist sources covering ~1.36 million known malicious domains
 - Includes URLhaus, BlockList Project, HaGeZi, OISD, and more
 - Blocklists update automatically in the background
-- URLVoid malware scanning
 
-**Optional API integrations (free tiers available):**
+**Optional API integrations (free tier keys available):**
 
 - VirusTotal - Checks against 70+ antivirus engines
 - Google Safe Browsing - Real-time threat data
@@ -148,7 +148,7 @@ Every bookmark gets checked against multiple threat databases:
 
 The scanner also flags suspicious patterns like URL shorteners, unusual domain extensions, and homograph attacks (fake domains using lookalike characters).
 
-**A tool, not a gatekeeper:** Bookmark Manager Zero will never block you from visiting your bookmarks - it just tells you what it found. Scanning relies partly on community-maintained blocklists, so false positives and false negatives happen. If something gets flagged and you trust it, whitelist it and move on.
+**A tool, not a gatekeeper:** Bookmark Manager Zero will never block you from visiting your bookmarks - it just tells you what it found. Scanning relies partly on community-maintained blocklists, so false positives and false negatives can occur. If something gets flagged that you trust then whitelist it and move on.
 
 ### Organization
 
@@ -157,6 +157,7 @@ The scanner also flags suspicious patterns like URL shorteners, unusual domain e
 - Switch between list and grid views
 - See website preview thumbnails
 - Track and Undo changes with the built-in changelog
+- Import and export bookmarks as HTML or JSON files
 
 ### Privacy
 
@@ -180,23 +181,23 @@ All versions share the same features. Pick whichever fits your setup, or use mul
 
 ### Firefox Extension
 
-Install from the [Mozilla Add-ons Store](https://addons.mozilla.org/en-US/firefox/addon/bookmark-manager-zero/). Opens in the Firefox sidebar and syncs directly with your Firefox bookmarks.
+Install from the [Mozilla Add-ons Store](https://addons.mozilla.org/en-US/firefox/addon/bookmark-manager-zero/). Opens in the Firefox sidebar and interfaces directly with your Firefox bookmarks.
 
 [Source code on GitLab](https://gitlab.com/AbsoluteXYZero/BMZ-Firefox/)
 
 ### Chrome Extension
 
-Install from the [Chrome Web Store](https://chromewebstore.google.com/detail/bookmark-manager-zero/jbpiddimkkdfhoellbiegdopfpilnclc). Opens in Chrome's side panel and syncs with your Chrome bookmarks.
+Install from the [Chrome Web Store](https://chromewebstore.google.com/detail/bookmark-manager-zero/jbpiddimkkdfhoellbiegdopfpilnclc). Opens in Chrome's side panel and interfaces directly with your Chrome bookmarks.
 
 [Source code on GitLab](https://gitlab.com/AbsoluteXYZero/BMZ-Chrome/)
 
 ### Android App
 
-Install from [Google Play](https://play.google.com/store/apps/details?id=com.absolutezero.bookmarkmanagerzero). A dedicated kiosk-style app that wraps the web application for a native Android experience. Same features as the web version with the convenience of a standalone app.
+Install from [Google Play](https://play.google.com/store/apps/details?id=com.absolutezero.bookmarkmanagerzero). A dedicated kiosk-style app that wraps the web application for a native Android experience. Same features as the web version with the convenience of a standalone app. Get started by syncing with GitLab Snippets, importing bookmarks from an HTML or JSON file, or starting fresh in local mode.
 
 ### Web Application
 
-Use it at [bmzweb.absolutezero.fyi](https://bmzweb.absolutezero.fyi/) - no installation needed. Good for accessing bookmarks on shared or public computers without logging into browser accounts. Bookmarks sync via GitLab Snippets, or use it completely offline in local mode.
+Use it at [bmzweb.absolutezero.fyi](https://bmzweb.absolutezero.fyi/) - no installation needed. Good for accessing bookmarks on shared or public computers without logging into browser accounts. Get started by syncing with GitLab Snippets, importing bookmarks from an HTML or JSON file, or starting fresh in local mode.
 
 [Source code on GitLab](https://gitlab.com/AbsoluteXYZero/BMZ-Web/)
 
