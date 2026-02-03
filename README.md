@@ -134,12 +134,14 @@ Your bookmarks break over time. Sites go offline, domains expire and get parked,
 Every bookmark gets checked against multiple threat databases:
 
 **Built-in protection (free, no API keys needed):**
-- **10 blocklist sources covering ~1.36 million known malicious domains**
-- **Includes URLhaus, BlockList Project, HaGeZi, OISD, and more**
-- **Blocklists update automatically in the background**
-- **URLVoid malware scanning**
+
+- 10 blocklist sources covering ~1.36 million known malicious domains
+- Includes URLhaus, BlockList Project, HaGeZi, OISD, and more
+- Blocklists update automatically in the background
+- URLVoid malware scanning
 
 **Optional API integrations (free tiers available):**
+
 - VirusTotal - Checks against 70+ antivirus engines
 - Google Safe Browsing - Real-time threat data
 - Yandex Safe Browsing - Better coverage for Eastern European threats
