@@ -7,9 +7,6 @@
   The only modern, privacy-focused bookmark management suite with real-time link validation and multi-source malware detection.
 </p>
 </div>
-
-<br>
-
 <br>
 
 <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; text-align: center;">
