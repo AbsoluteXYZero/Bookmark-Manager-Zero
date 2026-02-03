@@ -1,4 +1,4 @@
-<div align="center"> <img src="icons/bookmark-96.png" alt="Bookmark Manager Zero Logo" width="128" height="128" style="margin-top: -30px;">
+<div align="center"> <img src="icons/bookmark-96.png" alt="Bookmark Manager Zero Logo" width="128" height="128" style="margin-top: -30px; margin-bottom: -15px;">
 
 
 <h1 align="center">Bookmark Manager Zero</h1>
