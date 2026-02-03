@@ -27,10 +27,10 @@
       <img src="https://blog.mozilla.org/addons/files/2020/04/get-the-addon-fx-apr-2020.svg" alt="Get Firefox Addon" height="60" />
     </a>
     <br /><br />
-    <a href="https://bmzfirefox.absolutezero.fyi/">
+    <a href="https://gitlab.com/AbsoluteXYZero/BMZ-Firefox">
       <img src="https://upload.wikimedia.org/wikipedia/commons/a/a0/Firefox_logo%2C_2019.svg" alt="Firefox" width="60" height="60" />
       <br />
-      <strong>Firefox Extension</strong>
+      <strong>Gitlab Firefox Repo</strong>
     </a>
   </div>
   
@@ -52,10 +52,10 @@
       <img src="https://developer.chrome.com/static/docs/webstore/branding/image/HRs9MPufa1J1h5glNhut.png" alt="Available in Chrome Web Store" style="width: 250px; transform: scaleY(1.05) translateY(3px);" />
     </a>
     <br /><br />
-    <a href="https://bmzchrome.absolutezero.fyi/">
+    <a href="https://gitlab.com/AbsoluteXYZero/BMZ-Chrome">
       <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/Google_Chrome_icon_%28February_2022%29.svg" alt="Chrome" width="60" height="60" />
       <br />
-      <strong>Chrome Extension</strong>
+      <strong>Gitlab Chrome Repo</strong>
     </a>
   </div>
 </div>
