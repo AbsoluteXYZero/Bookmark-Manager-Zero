@@ -37,7 +37,7 @@
   <!-- Middle Column: Google Play + Web App -->
   <div style="flex: 1 1 200px; max-width: 250px;">
     <a href="https://play.google.com/store/apps/details?id=com.absolutezero.bookmarkmanagerzero">
-      <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" height="60" />
+      <img src="https://cdn.freebiesupply.com/logos/large/2x/google-play-badge-logo-png-transparent.png" alt="Get it on Google Play" height="60" />
     </a>
     <br /><br />
     <a href="https://bmzweb.absolutezero.fyi/">
