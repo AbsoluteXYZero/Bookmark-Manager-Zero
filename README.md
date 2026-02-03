@@ -4,19 +4,11 @@
 <h1 align="center">Bookmark Manager Zero</h1>
 
 <p align="center">
-  <strong>The only bookmark manager with integrated security scanning.</strong>
-</p>
-
-<p align="center">
-  A modern, privacy-focused bookmark management suite with real-time link validation and multi-source malware detection.
-</p>
-
-<p align="center">
-  <strong>Available as browser extensions and a web application</strong>
+  The only modern, privacy-focused bookmark management suite with real-time link validation and multi-source malware detection.
 </p>
 
 
- 🚀 Get Started <br>
+<br>
 
 <br>
 
