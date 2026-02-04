@@ -54,7 +54,7 @@
 <br>
 
 
-📸 Gallery (Click to view full size)
+<h4 align="center">Gallery</h4>
 
 <table>
   <tr>
